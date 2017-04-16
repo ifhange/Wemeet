@@ -1,0 +1,77 @@
+    <html>
+
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  	<link rel="stylesheet" type="text/css" href="hoshi.css" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <link rel="stylesheet" type="text/css" href="ai.css" />
+  <body>
+
+    <div class="container">
+      <div class="logo">
+        <div id="in"><img src="index_logo.png"></div>
+      </div>
+
+      <div class="form">
+      <form>
+        <span class="input input--hoshi">
+          <input class="input__field input__field--hoshi" type="text" id="username" />
+          <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="username">
+            <span class="input__label-content input__label-content--hoshi">帳號</span>
+          </label>
+        </span>
+        <span class="input input--hoshi">
+          <input class="input__field input__field--hoshi" type="password" id="password" />
+          <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="password">
+            <span class="input__label-content input__label-content--hoshi">密碼
+            </span>
+          </label>
+        </span>
+        <input type="submit" class="myButton" name="login" id="login" value="登入">
+      </form></div> 
+
+      <div class="login_bottom">尚未成為會員？註冊</div>
+        
+      </div>
+    
+		<script src="classie.js"></script>
+		<script>
+			(function() {
+				// trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+				if (!String.prototype.trim) {
+					(function() {
+						// Make sure we trim BOM and NBSP
+						var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+						String.prototype.trim = function() {
+							return this.replace(rtrim, '');
+						};
+					})();
+				}
+
+				[].slice.call( document.querySelectorAll( 'input.input__field' ) ).forEach( function( inputEl ) {
+					// in case the input is already filled..
+					if( inputEl.value.trim() !== '' ) {
+						classie.add( inputEl.parentNode, 'input--filled' );
+					}
+
+					// events:
+					inputEl.addEventListener( 'focus', onInputFocus );
+					inputEl.addEventListener( 'blur', onInputBlur );
+				} );
+
+				function onInputFocus( ev ) {
+					classie.add( ev.target.parentNode, 'input--filled' );
+				}
+
+				function onInputBlur( ev ) {
+					if( ev.target.value.trim() === '' ) {
+						classie.remove( ev.target.parentNode, 'input--filled' );
+					}
+				}
+			})();
+		</script>
+  </body>
+
+
+</html>

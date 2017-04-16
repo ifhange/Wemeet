@@ -1,0 +1,16 @@
+#meet_list{
+  margin-left: 3%;
+  margin-top: 2% ; 
+  width: 90%;
+  height: 500px;
+  background-color: #fff;
+  color: black;
+  float: left;
+}
+
+#list {
+  margin-left: 3%;
+  margin-top: 3%;
+  float: left;
+  text-align: left;
+}

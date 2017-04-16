@@ -1,0 +1,5 @@
+# Dependency directory
+node_modules/
+public/bower_components/
+*.pem 
+*.md

@@ -1,0 +1,196 @@
+body {
+  font-family: Microsoft JhengHei;
+  background-image: url('../img/background.jpg');
+  text-align: center;
+  color: white;
+}
+
+#user_img {
+  width: 60px;
+  height: 60px;
+  padding: 1px;
+  border-color: #91d524;
+  border-style: solid;
+  float: left;
+  margin-left: 15px;
+  margin-top: 8px;
+  border-width: 2px;
+  border-radius: 50px;
+}
+
+#head {
+  width: 100%;
+  height: 90px;
+  display: block;
+  float: left;
+}
+#user_infro {
+  width: 15%;
+  height: 90px;
+  float: left;
+  display: block;
+}
+#status {
+  width: 84.5%;
+  height: 90px;
+  float: right;
+  display: block;
+  color: white;
+}
+#box-a {
+  background-color: #1a0315;
+  width: 15%;
+  height: 540px;
+  float: left;
+  display: block;
+  opacity: 0.7;
+  text-align: left;
+}
+#box-b {
+  background-color: #5b1d5c;
+  width: 84.5%;
+  height: 540px;
+  float: right;
+  display: block;
+  margin-left: 0.5%;
+  opacity: 0.9;
+}
+
+#user_image {
+  width: 60px;
+  height: 60px;
+}
+#user_name {
+  color: white;
+  margin-left: 5%;
+  margin-top: 10%;
+  margin-right: 30%;
+  float: left;
+}
+#user_status {
+  color: white;
+  font-size: 13px;
+  margin-left: 5%;
+  margin-top: 1%;
+  margin-right: 30%;
+  float: left;
+}
+#menu {
+  margin-top: 3%;
+  width: 100%;
+  height: 20px;
+  text-align: center;
+}
+#menu_icon {
+  width: 25px;
+  height: 25px;
+}
+#friendlist {
+  width: 90%;
+  height: 530px;
+  margin-left: 8%;
+  margin-top: 15%;
+  float: left;
+}
+#circle1 {
+  width: 30px;
+  height: 30px;
+  padding: 1px;
+  border-color: #91d524;
+  border-style: solid;
+  float: left;
+  border-width: 2px;
+  margin-right: 5%;
+  border-radius: 50px;
+}
+#firiend_person {
+  width: 98%;
+  height: 40px;
+  margin-bottom: 2%;
+  float: left;
+}
+#firiend_person1 {
+  width: 98%;
+  height: 40px;
+  background-color: #5b1d5c;
+  margin-bottom: 2%;
+  float: left;
+}
+#friend_image {
+  width: 30px;
+  height: 30px;
+}
+#friend_name {
+  margin-top: 3%;
+  color: white;
+}
+#online {
+  width: 100%;
+  margin-bottom: 5%;
+  color: white;
+  font-size: 13px;
+}
+#time {
+  width: 20%;
+  height: 88px;
+  background-image: url('time.png');
+  background-position: left center;
+  background-repeat: no-repeat;
+  margin-left: 5%;
+  line-height: 780%;
+  float: left;
+}
+#order {
+  width: 30%;
+  height: 88px;
+  background-image: url('order.png');
+  background-position: left center;
+  background-repeat: no-repeat;
+  margin-left: 6%;
+  line-height: 780%;
+  float: left;
+}
+#logo {
+  float: right;
+}
+#add_meet {
+  margin-top: 5%;
+  margin-left: 12%;
+  float: left;
+}
+#add {
+  margin-top: 5%;
+  font-size: 30px;
+  color: #91d524;
+}
+#add_text {
+  margin-top: 1%;
+  font-size: 13px;
+  color: #91d524;
+}
+#join_meet {
+  margin-top: 2%;
+  margin-right: 12%;
+  float: right;
+}
+.myButton {
+  box-shadow: 0px 0px 0px 0px #3dc21b;
+  background-color: transparent;
+  border-radius: 42px;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 8px 16px;
+  text-decoration: none;
+  text-shadow: 0px 1px 3px #2f6627;
+}
+.myButton:hover {
+  background-color: transparent;
+}
+.myButton:active {
+  position: relative;
+  top: 1px;
+}

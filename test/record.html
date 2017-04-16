@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link rel="stylesheet" type="text/css" href="ai.css" />
+  	<link rel="stylesheet" type="text/css" href="hoshi.css" />
+  	<link rel="stylesheet" type="text/css" href="record.css" />
+  </head>
+
+
+  <body>
+  <div id="head">
+    <div id="user_infro">
+      <div id="circle"><img id="user_image" src="logo_user.png"></div>
+      <div id="user_name">李佳怡</div><br>
+      <div id="user_status">線上</div>
+    </div>
+    <div id="status">
+      <div id="time">目前時間：4/6 21:00:31</div>
+      <div id="order">近期預約的會議：2017/4/6 18:00 專題開會</div>
+      <div id="logo"><img src='index_logo2.png'></div>
+    </div>
+  </div>
+
+  <div id="box-a">
+
+    <div id="menu">
+      <img id="menu_icon" src="friend.png" alt="好友">　
+      <img id="menu_icon" src="history.png"alt="開會歷史">　
+      <img id="menu_icon" src="settle1.png" alt="設定">　
+    </div>
+
+    <div id="search">
+    </div>
+
+    <div id="friendlist">
+
+      <div id="online">近期開會：</div>
+
+      <div id="firiend_person">
+      <div id="circle1"><img id="friend_image" src="logo_user.png"></div>
+      <div id="friend_name">Wemeet團隊</div>
+      </div>
+
+      <div id="firiend_person">
+      <div id="circle1"><img id="friend_image" src="logo_user.png"></div>
+      <div id="friend_name">吃貨團</div>
+      </div>
+
+      <div id="firiend_person">
+      <div id="circle1"><img id="friend_image" src="logo_user.png"></div>
+      <div id="friend_name">測試</div>
+      </div>
+
+      <div id="firiend_person">
+      <div id="circle1"><img id="friend_image" src="logo_user.png"></div>
+      <div id="friend_name">測試</div>
+      </div>
+
+    </div>
+
+  </div>
+  <div id="box-b">
+
+    <div id="meet_list">
+      <table id="list" RULES=none>
+      <tr><td>會議名稱：</td><td>WeMeet</td></tr>
+      <tr><td>會議長度：</td><td>3小時20分鐘</td></tr>
+      <tr><td>會議成員：</td><td>佳怡、威君、成財、騰輝</td></tr>
+      <tr><td>會議紀錄：</td><td>點我開啟</td></tr>
+      </table>
+    </div>
+
+    <div id="">
+      
+    </div>
+
+
+
+  </div>
+
+  		<script src="classie.js"></script>
+		<script>
+			(function() {
+				// trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+				if (!String.prototype.trim) {
+					(function() {
+						// Make sure we trim BOM and NBSP
+						var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+						String.prototype.trim = function() {
+							return this.replace(rtrim, '');
+						};
+					})();
+				}
+
+				[].slice.call( document.querySelectorAll( 'input.input__field' ) ).forEach( function( inputEl ) {
+					// in case the input is already filled..
+					if( inputEl.value.trim() !== '' ) {
+						classie.add( inputEl.parentNode, 'input--filled' );
+					}
+
+					// events:
+					inputEl.addEventListener( 'focus', onInputFocus );
+					inputEl.addEventListener( 'blur', onInputBlur );
+				} );
+
+				function onInputFocus( ev ) {
+					classie.add( ev.target.parentNode, 'input--filled' );
+				}
+
+				function onInputBlur( ev ) {
+					if( ev.target.value.trim() === '' ) {
+						classie.remove( ev.target.parentNode, 'input--filled' );
+					}
+				}
+			})();
+		</script>
+
+  </body>
+
+</html>
