@@ -4,20 +4,6 @@ body {
   text-align: center;
   color: white;
 }
-
-#user_img {
-  width: 60px;
-  height: 60px;
-  padding: 1px;
-  border-color: #91d524;
-  border-style: solid;
-  float: left;
-  margin-left: 15px;
-  margin-top: 8px;
-  border-width: 2px;
-  border-radius: 50px;
-}
-
 #head {
   width: 100%;
   height: 90px;
@@ -55,7 +41,18 @@ body {
   margin-left: 0.5%;
   opacity: 0.9;
 }
-
+#circle {
+  width: 60px;
+  height: 60px;
+  padding: 1px;
+  border-color: #91d524;
+  border-style: solid;
+  float: left;
+  margin-left: 15px;
+  margin-top: 8px;
+  border-width: 2px;
+  border-radius: 50px;
+}
 #user_image {
   width: 60px;
   height: 60px;

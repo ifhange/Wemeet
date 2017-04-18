@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
-import HeaderStore from '../stores/HeaderStore' ;
-import HeaderActions from '../actions/HeaderActions';
+import MenuStore from '../stores/MenuStore' ;
+import MenuActions from '../actions/MenuActions';
 
 class Header extends React.Component {
   constructor(props){

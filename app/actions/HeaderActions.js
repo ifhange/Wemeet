@@ -1,69 +1,26 @@
 import alt from '../alt';
 
 class HeaderActions {
-  constructor() {
+  constructor(){
     this.generateActions(
-      'getUserImgSuccess',
-      'getUserImgFail',
-      'getUserNameSuccess',
-      'getUserNameFail',
-      'getOnlineSuccess',
-      'getOnlineFail'
+      'getSystemTimeSuccess',
+      'getSystemTimeFail',
+      'getOrderTimeSuccess',
+      'getOrderTimeFail'
     );
   }
 
-    getUserName() {
-      fetch('https://140.123.175.95:8787/userName')
-      .then((res) => {
-        if(res.ok){
-          return res.json();
-        } 
-          this.actions.getUserNameFail(res);
-        })
-        .then((json)=>{
-            this.actions.getUserNameSuccess(json);
-        })
-      .catch(
-        function(error){
-          alert(error);
-      })
-    }
+  getSystemTime() {
+    //需要取得系統時間
+    this.actions.getSystemTimeSuccess(data);
+    this.actions.getSystemTimeFail(data);
+  }
 
-    getUserImg() {
-      fetch('https://140.123.175.95:8787/userImg')
-      .then((res) => {
-          if(res.ok){
-            return res.blob();
-          } 
-          this.actions.getUserImgFail(res);
-        })
-      .then(blob=>{
-          var objectURL = URL.createObjectURL(blob)
-          this.actions.getUserImgSuccess(objectURL);
-        })
-      .catch(
-      function(error){
-        alert(error);
-      })
-    }
-
-    getOnline() {
-      fetch('https://140.123.175.95:8787/userStatus')
-      .then((res) => {
-        if(res.ok){
-          return res.json();
-        } 
-          this.actions.getOnlineFail(res);
-        })
-        .then((json)=>{
-            console.log(json.status);
-            this.actions.getOnlineSuccess(json);
-        })
-      .catch(
-        function(error){
-          alert(error);
-      })
-    }
+  getOrderTime() {
+    //需要取得預約會議時間
+    this.actions.getOrderTimeSuccess(data);
+    this.actions.getOrderTimeFai(data);
+  }
 
 }
 

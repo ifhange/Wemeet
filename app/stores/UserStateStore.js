@@ -2,21 +2,32 @@ import alt from '../alt';
 import UserStateActions from '../actions/UserStateActions';
 
 class UserStateStore {
-  constructor() {
+  constructor(){
     this.bindActions(UserStateActions);
-    //bindActions用于将action绑定到store中定义的相应处理函数
     this.userName = '';
-  } 
-
-  onGetUserNameSuccess() {
-    this.userName = '李佳怡';
-    //還沒補
+    this.userImgURL = '';
+    this.Online = '';
   }
 
-  onGetUserNameFail() {
-    //還沒寫
-  } 
+    onGetUserNameSuccess(data) {
+      this.userName = data.name;
+  }
 
+    onGetUserImgSuccess(imgURL) {
+      this.userImgURL = imgURL;
+  }
+
+    onGetUserImgFail(data) {
+      alert('Fail');
+  }
+
+    onGetOnlineSuccess(data) {
+    this.Online = data.status;
+  }
+
+    onGetOnlineFail(data) {
+      alert('Fail');
+  }
 }
 
 export default alt.createStore(UserStateStore);

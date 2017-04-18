@@ -2,32 +2,32 @@ import alt from '../alt';
 import HeaderActions from '../actions/HeaderActions';
 
 class HeaderStore {
-  constructor(){
-    this.bindActions(HeaderActions);
-    this.userName = '';
-    this.userImgURL = '';
-    this.Online = '';
+  constrcutor(){
+    this.bingActions(HeaderActions);
+    this.SystemTime = ''; //系統時間
+    this.OrderTime = ''; //預約會議時間
   }
 
-    onGetUserNameSuccess(data) {
-      this.userName = data.name;
+  onGetSystemTimeSuccess(data){
+    this.SystemTime = this.data ; //將時間指派給傳來的值
   }
 
-    onGetUserImgSuccess(imgURL) {
-      this.userImgURL = imgURL;
+  onGetSystemTimeFail(data){
+    //錯誤顯示
   }
 
-    onGetUserImgFail(data) {
-      alert('Fail');
+  onGetOrderTimeSuccess(data){
+    this.OrderTime = this.data ;
   }
 
-    onGetOnlineSuccess(data) {
-    this.Online = data.status;
+  onGetOrderTimeFail(data){
+    //錯誤顯示
   }
 
-    onGetOnlineFail(data) {
-      alert('Fail');
-  }
+
+
+
+
 }
 
 export default alt.createStore(HeaderStore);

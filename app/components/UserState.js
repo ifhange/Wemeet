@@ -4,7 +4,7 @@ import UserStateStore from '../stores/UserStateStore';
 import UserStateActions from '../actions/UserStateActions';
 
 class UserState extends React.Component {
-  constructor(props) {
+  constructor(props){
     super(props);
     this.state = UserStateStore.getState();
     this.onChange = this.onChange.bind(this);
@@ -12,7 +12,9 @@ class UserState extends React.Component {
 
   componentDidMount() {
     UserStateStore.listen(this.onChange);
-    UserStateActions.getUserName();  
+    UserStateActions.getUserImg();
+    UserStateActions.getUserName();
+    UserStateActions.getOnline();
   }
 
   componentWillUnmount() {
@@ -21,17 +23,15 @@ class UserState extends React.Component {
 
   onChange(state) {
     this.setState(state);
-  }  
-  
+  }
+
   render() {
-    return (
-      <UserState>
-          <div id='user_infro'>
-            <div id='circle'></div>
-            <div id='user_name'>{this.state.userName}</div>
-            <div id='user_status'>線上</div>
-          </div>
-      </UserState>
+    return(
+        <div id="user_infro">
+          <div id="circle"><img id="user_img" src={this.state.userImgURL}></img></div>
+          <div id="user_name">{this.state.userName}</div>
+          <div id="user_status">{this.state.Online}</div>
+        </div> 
     );
   }
 }
