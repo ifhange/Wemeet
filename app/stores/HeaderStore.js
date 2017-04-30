@@ -3,13 +3,13 @@ import HeaderActions from '../actions/HeaderActions';
 
 class HeaderStore {
   constrcutor(){
-    this.bingActions(HeaderActions);
+    this.bindActions(HeaderActions);
     this.SystemTime = ''; //系統時間
     this.OrderTime = ''; //預約會議時間
   }
 
   onGetSystemTimeSuccess(data){
-    this.SystemTime = this.data ; //將時間指派給傳來的值
+    this.SystemTime = data ; //將時間指派給傳來的值
   }
 
   onGetSystemTimeFail(data){
@@ -23,11 +23,6 @@ class HeaderStore {
   onGetOrderTimeFail(data){
     //錯誤顯示
   }
-
-
-
-
-
 }
 
 export default alt.createStore(HeaderStore);

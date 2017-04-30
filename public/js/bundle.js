@@ -2,7 +2,7 @@
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-  value: true
+    value: true
 });
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -16,29 +16,40 @@ var _alt = require('../alt');
 var _alt2 = _interopRequireDefault(_alt);
 
 var HeaderActions = (function () {
-  function HeaderActions() {
-    _classCallCheck(this, HeaderActions);
+    function HeaderActions() {
+        _classCallCheck(this, HeaderActions);
 
-    this.generateActions('getSystemTimeSuccess', 'getSystemTimeFail', 'getOrderTimeSuccess', 'getOrderTimeFail');
-  }
-
-  _createClass(HeaderActions, [{
-    key: 'getSystemTime',
-    value: function getSystemTime() {
-      //需要取得系統時間
-      this.actions.getSystemTimeSuccess(data);
-      this.actions.getSystemTimeFail(data);
+        this.generateActions('getSystemTimeSuccess', 'getSystemTimeFail', 'getOrderTimeSuccess', 'getOrderTimeFail');
     }
-  }, {
-    key: 'getOrderTime',
-    value: function getOrderTime() {
-      //需要取得預約會議時間
-      this.actions.getOrderTimeSuccess(data);
-      this.actions.getOrderTimeFai(data);
-    }
-  }]);
 
-  return HeaderActions;
+    _createClass(HeaderActions, [{
+        key: 'getSystemTime',
+        value: function getSystemTime() {
+            try {
+                var d = new Date();
+                d = d.getFullYear() + "-" + ('0' + (d.getMonth() + 1)).slice(-2) + "-" + ('0' + d.getDate()).slice(-2) + " " + ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' + d.getSeconds()).slice(-2);
+                this.actions.getSystemTimeSuccess(d);
+                alert(d);
+            } catch (err) {
+                this.actions.getSystemTimeFail(err);
+            }
+        }
+
+        //等預約會議功能完成後，從資料庫取得最靠近的一筆預約會議
+        // getOrderTime() {
+        //     try {
+
+        //     } catch () {
+
+        //     }
+        //     //需要取得預約會議時間
+        //     this.actions.getOrderTimeSuccess(data);
+        //     this.actions.getOrderTimeFai(data);
+        // }
+
+    }]);
+
+    return HeaderActions;
 })();
 
 exports['default'] = _alt2['default'].createActions(HeaderActions);
@@ -408,19 +419,19 @@ var Main = (function (_React$Component) {
             ),
             _react2['default'].createElement(
               'span',
-              { 'class': 'input input--minoru' },
-              _react2['default'].createElement('input', { 'class': 'input__field input__field--yoko', type: 'text', id: 'input-16' }),
+              { className: 'input input--minoru' },
+              _react2['default'].createElement('input', { className: 'input__field input__field--yoko', type: 'text', id: 'input-16' }),
               _react2['default'].createElement(
                 'label',
-                { 'class': 'input__label input__label--yoko', 'for': 'input-16' },
+                { className: 'input__label input__label--yoko', htmlFor: 'input-16' },
                 _react2['default'].createElement(
                   'span',
-                  { 'class': 'input__label-content input__label-content--yoko' },
+                  { className: 'input__label-content input__label-content--yoko' },
                   '輸入朋友名稱'
                 )
               )
             ),
-            _react2['default'].createElement('input', { type: 'submit', 'class': 'myButton', name: 'login', id: 'login', value: 'GO!' })
+            _react2['default'].createElement('input', { type: 'submit', className: 'myButton', name: 'login', id: 'login', value: 'GO!' })
           ),
           _react2['default'].createElement(
             'div',
@@ -438,19 +449,19 @@ var Main = (function (_React$Component) {
             ),
             _react2['default'].createElement(
               'span',
-              { 'class': 'input input--minoru' },
-              _react2['default'].createElement('input', { 'class': 'input__field input__field--yoko', type: 'text', id: 'input-16' }),
+              { className: 'input input--minoru' },
+              _react2['default'].createElement('input', { className: 'input__field input__field--yoko', type: 'text', id: 'input-16' }),
               _react2['default'].createElement(
                 'label',
-                { 'class': 'input__label input__label--yoko', 'for': 'input-16' },
+                { className: 'input__label input__label--yoko', htmlFor: 'input-16' },
                 _react2['default'].createElement(
                   'span',
-                  { 'class': 'input__label-content input__label-content--yoko' },
+                  { className: 'input__label-content input__label-content--yoko' },
                   '會議代碼'
                 )
               )
             ),
-            _react2['default'].createElement('input', { type: 'submit', 'class': 'myButton', name: 'login', id: 'login', value: 'GO!' })
+            _react2['default'].createElement('input', { type: 'submit', className: 'myButton', name: 'login', id: 'login', value: 'GO!' })
           )
         )
       );
@@ -638,14 +649,14 @@ var HeaderStore = (function () {
   _createClass(HeaderStore, [{
     key: 'constrcutor',
     value: function constrcutor() {
-      this.bingActions(_actionsHeaderActions2['default']);
+      this.bindActions(_actionsHeaderActions2['default']);
       this.SystemTime = ''; //系統時間
       this.OrderTime = ''; //預約會議時間
     }
   }, {
     key: 'onGetSystemTimeSuccess',
     value: function onGetSystemTimeSuccess(data) {
-      this.SystemTime = this.data; //將時間指派給傳來的值
+      this.SystemTime = data; //將時間指派給傳來的值
     }
   }, {
     key: 'onGetSystemTimeFail',
@@ -699,7 +710,7 @@ var MainStore = (function () {
   _createClass(MainStore, [{
     key: 'constrcutor',
     value: function constrcutor() {
-      this.bingActions(_actionsMainActions2['default']);
+      this.bindActions(_actionsMainActions2['default']);
       //還未完成
     }
 

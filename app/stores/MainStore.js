@@ -3,7 +3,7 @@ import MainActions from '../actions/MainActions';
 
 class MainStore {
   constrcutor(){
-    this.bingActions(MainActions);
+    this.bindActions(MainActions);
     //還未完成
   }
 
