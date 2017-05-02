@@ -25,14 +25,9 @@ var HeaderActions = (function () {
     _createClass(HeaderActions, [{
         key: 'getSystemTime',
         value: function getSystemTime() {
-            try {
-                var d = new Date();
-                d = d.getFullYear() + "-" + ('0' + (d.getMonth() + 1)).slice(-2) + "-" + ('0' + d.getDate()).slice(-2) + " " + ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' + d.getSeconds()).slice(-2);
-                this.actions.getSystemTimeSuccess(d);
-                alert(d);
-            } catch (err) {
-                this.actions.getSystemTimeFail(err);
-            }
+            var d = new Date();
+            d = d.getFullYear() + "-" + ('0' + (d.getMonth() + 1)).slice(-2) + "-" + ('0' + d.getDate()).slice(-2) + " " + ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' + d.getSeconds()).slice(-2);
+            this.actions.getSystemTimeSuccess(d);
         }
 
         //等預約會議功能完成後，從資料庫取得最靠近的一筆預約會議
@@ -88,7 +83,7 @@ module.exports = exports['default'];
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-  value: true
+    value: true
 });
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -102,65 +97,65 @@ var _alt = require('../alt');
 var _alt2 = _interopRequireDefault(_alt);
 
 var UserStateActions = (function () {
-  function UserStateActions() {
-    _classCallCheck(this, UserStateActions);
+    function UserStateActions() {
+        _classCallCheck(this, UserStateActions);
 
-    this.generateActions('getUserImgSuccess', 'getUserImgFail', 'getUserNameSuccess', 'getUserNameFail', 'getOnlineSuccess', 'getOnlineFail');
-  }
-
-  _createClass(UserStateActions, [{
-    key: 'getUserName',
-    value: function getUserName() {
-      var _this = this;
-
-      fetch('https://140.123.175.95:8787/userName').then(function (res) {
-        if (res.ok) {
-          return res.json();
-        }
-        _this.actions.getUserNameFail(res);
-      }).then(function (json) {
-        _this.actions.getUserNameSuccess(json);
-      })['catch'](function (error) {
-        alert(error);
-      });
+        this.generateActions('getUserImgSuccess', 'getUserImgFail', 'getUserNameSuccess', 'getUserNameFail', 'getOnlineSuccess', 'getOnlineFail');
     }
-  }, {
-    key: 'getUserImg',
-    value: function getUserImg() {
-      var _this2 = this;
 
-      fetch('https://140.123.175.95:8787/userImg').then(function (res) {
-        if (res.ok) {
-          return res.blob();
+    _createClass(UserStateActions, [{
+        key: 'getUserName',
+        value: function getUserName() {
+            var _this = this;
+
+            fetch('https://140.123.175.95:8787/userName').then(function (res) {
+                if (res.ok) {
+                    return res.json();
+                }
+                _this.actions.getUserNameFail(res);
+            }).then(function (json) {
+                _this.actions.getUserNameSuccess(json);
+            })['catch'](function (error) {
+                //alert(error);
+            });
         }
-        _this2.actions.getUserImgFail(res);
-      }).then(function (blob) {
-        var objectURL = URL.createObjectURL(blob);
-        _this2.actions.getUserImgSuccess(objectURL);
-      })['catch'](function (error) {
-        alert(error);
-      });
-    }
-  }, {
-    key: 'getOnline',
-    value: function getOnline() {
-      var _this3 = this;
+    }, {
+        key: 'getUserImg',
+        value: function getUserImg() {
+            var _this2 = this;
 
-      fetch('https://140.123.175.95:8787/userStatus').then(function (res) {
-        if (res.ok) {
-          return res.json();
+            fetch('https://140.123.175.95:8787/userImg').then(function (res) {
+                if (res.ok) {
+                    return res.blob();
+                }
+                _this2.actions.getUserImgFail(res);
+            }).then(function (blob) {
+                var objectURL = URL.createObjectURL(blob);
+                _this2.actions.getUserImgSuccess(objectURL);
+            })['catch'](function (error) {
+                //alert(error);
+            });
         }
-        _this3.actions.getOnlineFail(res);
-      }).then(function (json) {
-        console.log(json.status);
-        _this3.actions.getOnlineSuccess(json);
-      })['catch'](function (error) {
-        alert(error);
-      });
-    }
-  }]);
+    }, {
+        key: 'getOnline',
+        value: function getOnline() {
+            var _this3 = this;
 
-  return UserStateActions;
+            fetch('https://140.123.175.95:8787/userStatus').then(function (res) {
+                if (res.ok) {
+                    return res.json();
+                }
+                _this3.actions.getOnlineFail(res);
+            }).then(function (json) {
+                console.log(json.status);
+                _this3.actions.getOnlineSuccess(json);
+            })['catch'](function (error) {
+                //alert(error);
+            });
+        }
+    }]);
+
+    return UserStateActions;
 })();
 
 exports['default'] = _alt2['default'].createActions(UserStateActions);
@@ -186,7 +181,7 @@ module.exports = exports['default'];
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-  value: true
+    value: true
 });
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -218,29 +213,29 @@ var _Main = require('./Main');
 var _Main2 = _interopRequireDefault(_Main);
 
 var App = (function (_React$Component) {
-  _inherits(App, _React$Component);
+    _inherits(App, _React$Component);
 
-  function App() {
-    _classCallCheck(this, App);
+    function App() {
+        _classCallCheck(this, App);
 
-    _get(Object.getPrototypeOf(App.prototype), 'constructor', this).apply(this, arguments);
-  }
-
-  _createClass(App, [{
-    key: 'render',
-    value: function render() {
-      return _react2['default'].createElement(
-        'div',
-        null,
-        _react2['default'].createElement(_UserState2['default'], null),
-        _react2['default'].createElement(_Header2['default'], null),
-        _react2['default'].createElement(_Main2['default'], null),
-        _react2['default'].createElement(_reactRouter.RouteHandler, null)
-      );
+        _get(Object.getPrototypeOf(App.prototype), 'constructor', this).apply(this, arguments);
     }
-  }]);
 
-  return App;
+    _createClass(App, [{
+        key: 'render',
+        value: function render() {
+            return _react2['default'].createElement(
+                'div',
+                null,
+                _react2['default'].createElement(_UserState2['default'], null),
+                _react2['default'].createElement(_Header2['default'], null),
+                _react2['default'].createElement(_Main2['default'], null),
+                _react2['default'].createElement(_reactRouter.RouteHandler, null)
+            );
+        }
+    }]);
+
+    return App;
 })(_react2['default'].Component);
 
 exports['default'] = App;
@@ -250,7 +245,7 @@ module.exports = exports['default'];
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-  value: true
+    value: true
 });
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -278,60 +273,60 @@ var _actionsHeaderActions = require('../actions/HeaderActions');
 var _actionsHeaderActions2 = _interopRequireDefault(_actionsHeaderActions);
 
 var Header = (function (_React$Component) {
-  _inherits(Header, _React$Component);
+    _inherits(Header, _React$Component);
 
-  function Header(props) {
-    _classCallCheck(this, Header);
+    function Header(props) {
+        _classCallCheck(this, Header);
 
-    _get(Object.getPrototypeOf(Header.prototype), 'constructor', this).call(this, props);
-    this.state = _storesHeaderStore2['default'].getState();
-    this.onChange = this.onChange.bind(this);
-  }
+        _get(Object.getPrototypeOf(Header.prototype), 'constructor', this).call(this, props);
+        this.state = _storesHeaderStore2['default'].getState();
+        this.onChange = this.onChange.bind(this);
+    }
 
-  _createClass(Header, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      _storesHeaderStore2['default'].listen(this.onChange);
-      _actionsHeaderActions2['default'].getSystemTime();
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      _storesHeaderStore2['default'].unlisten(this.onChange);
-    }
-  }, {
-    key: 'onChange',
-    value: function onChange(state) {
-      this.setState(state);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2['default'].createElement(
-        'div',
-        { id: 'status' },
-        _react2['default'].createElement(
-          'div',
-          { id: 'time' },
-          '目前時間：',
-          this.state.SystemTime
-        ),
-        _react2['default'].createElement(
-          'div',
-          { id: 'order' },
-          '近期預約的會議：',
-          this.state.OrderTime
-        ),
-        _react2['default'].createElement(
-          'div',
-          { id: 'logo' },
-          _react2['default'].createElement('img', { src: '/img/index_logo2.png' })
-        )
-      );
-    }
-  }]);
+    _createClass(Header, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            _storesHeaderStore2['default'].listen(this.onChange);
+            this.timerID = setInterval(_actionsHeaderActions2['default'].getSystemTime, 1000);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            _storesHeaderStore2['default'].unlisten(this.onChange);
+        }
+    }, {
+        key: 'onChange',
+        value: function onChange(state) {
+            this.setState(state);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2['default'].createElement(
+                'div',
+                { id: 'status' },
+                _react2['default'].createElement(
+                    'div',
+                    { id: 'time' },
+                    '目前時間:',
+                    this.state.systemTime
+                ),
+                _react2['default'].createElement(
+                    'div',
+                    { id: 'order' },
+                    '近期預約的會議：',
+                    this.state.orderTime
+                ),
+                _react2['default'].createElement(
+                    'div',
+                    { id: 'logo' },
+                    _react2['default'].createElement('img', { src: '/img/index_logo2.png' })
+                )
+            );
+        }
+    }]);
 
-  return Header;
+    return Header;
 })(_react2['default'].Component);
 
 exports['default'] = Header;
@@ -553,7 +548,7 @@ var UserState = (function (_React$Component) {
         _react2['default'].createElement(
           'div',
           { id: 'user_status' },
-          this.state.Online
+          this.state.online
         )
       );
     }
@@ -624,7 +619,7 @@ module.exports = exports['default'];
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-  value: true
+    value: true
 });
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -642,40 +637,37 @@ var _actionsHeaderActions = require('../actions/HeaderActions');
 var _actionsHeaderActions2 = _interopRequireDefault(_actionsHeaderActions);
 
 var HeaderStore = (function () {
-  function HeaderStore() {
-    _classCallCheck(this, HeaderStore);
-  }
+    function HeaderStore() {
+        _classCallCheck(this, HeaderStore);
 
-  _createClass(HeaderStore, [{
-    key: 'constrcutor',
-    value: function constrcutor() {
-      this.bindActions(_actionsHeaderActions2['default']);
-      this.SystemTime = ''; //系統時間
-      this.OrderTime = ''; //預約會議時間
+        this.bindActions(_actionsHeaderActions2['default']);
+        this.systemTime = ''; //系統時間
+        this.srderTime = ''; //預約會議時間
     }
-  }, {
-    key: 'onGetSystemTimeSuccess',
-    value: function onGetSystemTimeSuccess(data) {
-      this.SystemTime = data; //將時間指派給傳來的值
-    }
-  }, {
-    key: 'onGetSystemTimeFail',
-    value: function onGetSystemTimeFail(data) {
-      //錯誤顯示
-    }
-  }, {
-    key: 'onGetOrderTimeSuccess',
-    value: function onGetOrderTimeSuccess(data) {
-      this.OrderTime = this.data;
-    }
-  }, {
-    key: 'onGetOrderTimeFail',
-    value: function onGetOrderTimeFail(data) {
-      //錯誤顯示
-    }
-  }]);
 
-  return HeaderStore;
+    _createClass(HeaderStore, [{
+        key: 'onGetSystemTimeSuccess',
+        value: function onGetSystemTimeSuccess(data) {
+            this.systemTime = data; //將時間指派給傳來的值
+        }
+    }, {
+        key: 'onGetSystemTimeFail',
+        value: function onGetSystemTimeFail(data) {
+            alert('Can not get TIME!');
+        }
+    }, {
+        key: 'onGetOrderTimeSuccess',
+        value: function onGetOrderTimeSuccess(data) {
+            this.orderTime = data;
+        }
+    }, {
+        key: 'onGetOrderTimeFail',
+        value: function onGetOrderTimeFail(data) {
+            //錯誤顯示
+        }
+    }]);
+
+    return HeaderStore;
 })();
 
 exports['default'] = _alt2['default'].createStore(HeaderStore);
@@ -687,8 +679,6 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -702,24 +692,16 @@ var _actionsMainActions = require('../actions/MainActions');
 
 var _actionsMainActions2 = _interopRequireDefault(_actionsMainActions);
 
-var MainStore = (function () {
-  function MainStore() {
-    _classCallCheck(this, MainStore);
-  }
+var MainStore = function MainStore() {
+  _classCallCheck(this, MainStore);
 
-  _createClass(MainStore, [{
-    key: 'constrcutor',
-    value: function constrcutor() {
-      this.bindActions(_actionsMainActions2['default']);
-      //還未完成
-    }
+  this.bindActions(_actionsMainActions2['default']);
+  //還未完成
+}
 
-    //還未完成
+//還未完成
 
-  }]);
-
-  return MainStore;
-})();
+;
 
 exports['default'] = _alt2['default'].createStore(MainStore);
 module.exports = exports['default'];
@@ -728,7 +710,7 @@ module.exports = exports['default'];
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-  value: true
+    value: true
 });
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -746,43 +728,39 @@ var _actionsUserStateActions = require('../actions/UserStateActions');
 var _actionsUserStateActions2 = _interopRequireDefault(_actionsUserStateActions);
 
 var UserStateStore = (function () {
-  function UserStateStore() {
-    _classCallCheck(this, UserStateStore);
+    function UserStateStore() {
+        _classCallCheck(this, UserStateStore);
 
-    this.bindActions(_actionsUserStateActions2['default']);
-    this.userName = '';
-    this.userImgURL = '';
-    this.Online = '';
-  }
+        this.bindActions(_actionsUserStateActions2['default']);
+        this.userName = '';
+        this.userImgURL = '';
+        this.online = '';
+    }
 
-  _createClass(UserStateStore, [{
-    key: 'onGetUserNameSuccess',
-    value: function onGetUserNameSuccess(data) {
-      this.userName = data.name;
-    }
-  }, {
-    key: 'onGetUserImgSuccess',
-    value: function onGetUserImgSuccess(imgURL) {
-      this.userImgURL = imgURL;
-    }
-  }, {
-    key: 'onGetUserImgFail',
-    value: function onGetUserImgFail(data) {
-      alert('Fail');
-    }
-  }, {
-    key: 'onGetOnlineSuccess',
-    value: function onGetOnlineSuccess(data) {
-      this.Online = data.status;
-    }
-  }, {
-    key: 'onGetOnlineFail',
-    value: function onGetOnlineFail(data) {
-      alert('Fail');
-    }
-  }]);
+    _createClass(UserStateStore, [{
+        key: 'onGetUserNameSuccess',
+        value: function onGetUserNameSuccess(data) {
+            this.userName = data.name;
+        }
+    }, {
+        key: 'onGetUserImgSuccess',
+        value: function onGetUserImgSuccess(imgURL) {
+            this.userImgURL = imgURL;
+        }
+    }, {
+        key: 'onGetUserImgFail',
+        value: function onGetUserImgFail(data) {}
+    }, {
+        key: 'onGetOnlineSuccess',
+        value: function onGetOnlineSuccess(data) {
+            this.online = data.status;
+        }
+    }, {
+        key: 'onGetOnlineFail',
+        value: function onGetOnlineFail(data) {}
+    }]);
 
-  return UserStateStore;
+    return UserStateStore;
 })();
 
 exports['default'] = _alt2['default'].createStore(UserStateStore);

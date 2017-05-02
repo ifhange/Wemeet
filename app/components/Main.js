@@ -33,7 +33,7 @@ class Main extends React.Component {
             <span className="input input--minoru">
             <input className="input__field input__field--yoko" type="text" id="input-16" />
             <label className="input__label input__label--yoko" htmlFor="input-16">
-              <span className="input__label-content input__label-content--yoko">輸入朋友名稱</span>
+                <span className="input__label-content input__label-content--yoko">輸入朋友名稱</span>
             </label>
             </span>
             <input type="submit" className="myButton" name="login" id="login" value="GO!" />
