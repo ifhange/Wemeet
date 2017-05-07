@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
 import UserStateStore from '../stores/UserStateStore';
 import UserStateActions from '../actions/UserStateActions';
 

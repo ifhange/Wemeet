@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
-import MainStore from '../stores/MainStore';
+import MainStore from '../stores/MainStore' ;
 import MainActions from '../actions/MainActions';
 import Recorder from '../lib/record.js';
 import Recognizer from '../lib/recognize.js';
