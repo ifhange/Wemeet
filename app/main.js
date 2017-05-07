@@ -1,7 +1,13 @@
-import React from 'react';
-import Router from 'react-router';
-import routes from './routes';
+import React,{Component} from 'react';
+import App from './components/App';
+import ReactDOM from 'react-dom';
+import '../public/css/*';
 
-Router.run(routes, Router.HistoryLocation, function(Handler) {
-  React.render(<Handler />, document.getElementById('app'));
-});
+// import routes from './routes';
+
+// Router.run(routes, Router.HistoryLocation, function(Handler) {
+//   React.render(<Handler />, document.getElementById('app'));
+// });
+
+
+ReactDOM.render(<App/>,document.getElementById('app'));

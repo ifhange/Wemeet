@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
 import MainStore from '../stores/MainStore' ;
 import MainActions from '../actions/MainActions';
 
