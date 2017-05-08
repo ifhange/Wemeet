@@ -140,7 +140,7 @@ body {
 #order {
   width: 30%;
   height: 88px;
-  background-image: url('order.png');
+  background-image: url('../img/order.png');
   background-position: left center;
   background-repeat: no-repeat;
   margin-left: 6%;

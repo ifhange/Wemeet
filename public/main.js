@@ -1,3 +1,4 @@
 import React from 'react';
-import 'css/*.css';
+import main from './css/main.css';
+import hoshi from './css/hoshi.css';
 ReactDOM.render(<App/>, document.getElementById('app'));

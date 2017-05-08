@@ -1,5 +1,6 @@
 let path = require('path');
 let webpack = require('webpack');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: "./app/main.js",
@@ -8,30 +9,19 @@ module.exports = {
         filename: "bundle.js"
     },
     module: {
-        loaders: [{
-            test: /\.jsx?$/,
+        rules: [{
+            test: /\.(js|jsx)$/,
             exclude: /node_modules/,
-            loader: 'babel-loader'
-        }, {
-            test: /\.css$/,
-            loader: 'style-loader!css-loader'
-        }, {
-            test: /\.less$/,
-            use: [{
-                loader: "style-loader" // creates style nodes from JS strings
-            }, {
-                loader: "css-loader" // translates CSS into CommonJS
-            }, {
-                loader: "less-loader" // compiles Less to CSS
-            }]
-        }],
+            use: 'babel-loader'
+        }]
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('production')
-            }
-        }),
-        new webpack.optimize.UglifyJsPlugin()
+        new ExtractTextPlugin('styles.css')
+        // new webpack.DefinePlugin({
+        //     'process.env': {
+        //         NODE_ENV: JSON.stringify('production')
+        //     }
+        // }),
+        // new webpack.optimize.UglifyJsPlugin()
     ]
 }

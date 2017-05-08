@@ -63,34 +63,34 @@ class Main extends React.Component {
     render() {
         return (
             <div id="box-b">
-        <div id="in">
-          <div id="add_meet">
-            <img src='/img/addmeet1.png'></img>
-            <div id="add">建立會議？</div>
-            <div id="add_text">將朋友寫入在以下欄位，即可立即開始會議</div>
-            <span className="input input--minoru">
-            <input className="input__field input__field--yoko" type="text" id="input-16" />
-            <label className="input__label input__label--yoko" htmlFor="input-16">
-                <span className="input__label-content input__label-content--yoko">輸入朋友名稱</span>
-            </label>
-            </span>
-            <input type="submit" className="myButton" name="login" id="login" value="GO!" onClick={handleLogin} ref='login'/>
-          </div>
+                <div id="in">
+                    <div id="add_meet">
+                        <img src='/img/addmeet1.png'></img>
+                        <div id="add">建立會議？</div>
+                        <div id="add_text">將朋友寫入在以下欄位，即可立即開始會議</div>
+                        <span className="input input--minoru">
+                            <input className="input__field input__field--yoko" type="text" id="input-16" />
+                            <label className="input__label input__label--yoko" htmlFor="input-16">
+                                <span className="input__label-content input__label-content--yoko">輸入朋友名稱</span>
+                            </label>
+                        </span>
+                        <input type="submit" className="myButton" name="login" id="login" value="GO!" onClick={this.handleLogin} ref='login'/>
+                    </div>
 
-          <div id="join_meet">
-            <img src='/img/joinmeet1.png'></img>
-            <div id="add">加入會議？</div>
-            <div id="add_text">將朋友給您的代碼貼上再以下欄位</div>
-            <span className="input input--minoru">
-            <input className="input__field input__field--yoko" type="text" id="input-16" />
-            <label className="input__label input__label--yoko" htmlFor="input-16">
-              <span className="input__label-content input__label-content--yoko">會議代碼</span>
-            </label>
-            </span>
-            <input type="submit" className="myButton" name="login" id="login" value="GO!" onclick={handleJoin} ref='join'/>
+                    <div id="join_meet">
+                        <img src='/img/joinmeet1.png'></img>
+                        <div id="add">加入會議？</div>
+                        <div id="add_text">將朋友給您的代碼貼上再以下欄位</div>
+                        <span className="input input--minoru">
+                            <input className="input__field input__field--yoko" type="text" id="input-16" />
+                            <label className="input__label input__label--yoko" htmlFor="input-16">
+                                <span className="input__label-content input__label-content--yoko">會議代碼</span>
+                            </label>
+                        </span>
+                        <input type="submit" className="myButton" name="login" id="login" value="GO!" onClick={this.handleJoin} ref='join'/>
+                    </div>
+                </div>
           </div>
-        </div>
-      </div>
         );
     }
 }
