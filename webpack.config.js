@@ -1,28 +1,37 @@
 let path = require('path');
-var webpack = require('webpack');
+let webpack = require('webpack');
 
 module.exports = {
-    entry: "/app/main.js",
+    entry: "./app/main.js",
     output: {
         path: path.resolve(__dirname, "public/js"),
         filename: "bundle.js"
     },
     module: {
-        rules: [{
+        loaders: [{
             test: /\.jsx?$/,
-            exclude: /(node_modules|bower_components|vendor)/,
-            loader: 'babel?presets[]=es2015&cacheDirectory=true!preprocess?PROJECT=' + project
+            exclude: /node_modules/,
+            loader: 'babel-loader'
         }, {
             test: /\.css$/,
-            loader: ExtractTextPlugin.extract("style-loader", "css-loader!postcss-loader")
+            loader: 'style-loader!css-loader'
         }, {
             test: /\.less$/,
-            loader: ExtractTextPlugin.extract("style-loader", "css-loader!postcss-loader!less-loader")
-        }]
+            use: [{
+                loader: "style-loader" // creates style nodes from JS strings
+            }, {
+                loader: "css-loader" // translates CSS into CommonJS
+            }, {
+                loader: "less-loader" // compiles Less to CSS
+            }]
+        }],
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-
-        })
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin()
     ]
-};
+}

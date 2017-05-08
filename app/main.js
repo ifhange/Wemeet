@@ -1,7 +1,7 @@
-import React,{Component} from 'react';
+import React from 'react';
 import App from './components/App';
 import ReactDOM from 'react-dom';
-import '../public/css/*';
+//import '../public/css/*';
 
 // import routes from './routes';
 

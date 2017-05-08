@@ -130,7 +130,7 @@ body {
 #time {
   width: 20%;
   height: 88px;
-  background-image: url('time.png');
+  background-image: url('../img/time.png');
   background-position: left center;
   background-repeat: no-repeat;
   margin-left: 5%;

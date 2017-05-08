@@ -1,3 +1,5 @@
+'use strict';
+
 let Recognition = {
     createNew: (recongnitionObj, htmlObj) => {
         let recognizer = {};
@@ -192,7 +194,7 @@ let Recognition = {
         let first_char = /\S/;
 
         let capitalize = (s) => {
-            return s.replace(first_char, (m) {
+            return s.replace(first_char, (m) => {
                 return m.toUpperCase();
             });
         }
@@ -234,7 +236,7 @@ let Recognition = {
             current_style = style;
         }
         return recognizer;
-    };
+    }
 }
 
 module.exports = Recognition;
