@@ -2,32 +2,32 @@ import alt from '../alt';
 import UserStateActions from '../actions/UserStateActions';
 
 class UserStateStore {
-  constructor(){
-    this.bindActions(UserStateActions);
-    this.userName = '';
-    this.userImgURL = '';
-    this.Online = '';
-  }
+    constructor() {
+        this.bindActions(UserStateActions);
+        this.userName = '';
+        this.userImgURL = '';
+        this.online = '';
+    }
 
     onGetUserNameSuccess(data) {
-      this.userName = data.name;
-  }
+        this.userName = data.name;
+    }
 
     onGetUserImgSuccess(imgURL) {
-      this.userImgURL = imgURL;
-  }
+        this.userImgURL = imgURL;
+    }
 
     onGetUserImgFail(data) {
-      alert('Fail');
-  }
+
+    }
 
     onGetOnlineSuccess(data) {
-    this.Online = data.status;
-  }
+        this.online = data.status;
+    }
 
     onGetOnlineFail(data) {
-      alert('Fail');
-  }
+
+    }
 }
 
 export default alt.createStore(UserStateStore);

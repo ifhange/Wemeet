@@ -30,7 +30,7 @@ class UserState extends React.Component {
         <div id="user_infro">
           <div id="circle"><img id="user_img" src={this.state.userImgURL}></img></div>
           <div id="user_name">{this.state.userName}</div>
-          <div id="user_status">{this.state.Online}</div>
+          <div id="user_status">{this.state.online}</div>
         </div> 
     );
   }

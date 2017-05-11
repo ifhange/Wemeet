@@ -103,14 +103,11 @@ var HeaderActions = (function () {
     _createClass(HeaderActions, [{
         key: 'getSystemTime',
         value: function getSystemTime() {
-            try {
-                var d = new Date();
-                d = d.getFullYear() + "-" + ('0' + (d.getMonth() + 1)).slice(-2) + "-" + ('0' + d.getDate()).slice(-2) + " " + ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' + d.getSeconds()).slice(-2);
-                this.actions.getSystemTimeSuccess(d);
-                setTimeout("showTime()", 1000);
-            } catch (err) {
-                this.actions.getSystemTimeFail(err);
-            }
+
+            var d = new Date();
+            d = d.getFullYear() + "-" + ('0' + (d.getMonth() + 1)).slice(-2) + "-" + ('0' + d.getDate()).slice(-2) + " " + ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' + d.getSeconds()).slice(-2);
+            this.actions.getSystemTimeSuccess(d);
+
         }
 
         //等預約會議功能完成後，從資料庫取得最靠近的一筆預約會議
@@ -202,7 +199,7 @@ module.exports = exports['default'];
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-  value: true
+    value: true
 });
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -216,65 +213,29 @@ var _alt = require('../alt');
 var _alt2 = _interopRequireDefault(_alt);
 
 var UserStateActions = (function () {
-  function UserStateActions() {
-    _classCallCheck(this, UserStateActions);
+    function UserStateActions() {
+        _classCallCheck(this, UserStateActions);
 
-    this.generateActions('getUserImgSuccess', 'getUserImgFail', 'getUserNameSuccess', 'getUserNameFail', 'getOnlineSuccess', 'getOnlineFail');
-  }
-
-  _createClass(UserStateActions, [{
-    key: 'getUserName',
-    value: function getUserName() {
-      var _this = this;
-
-      fetch('https://140.123.175.95:8787/userName').then(function (res) {
-        if (res.ok) {
-          return res.json();
-        }
-        _this.actions.getUserNameFail(res);
-      }).then(function (json) {
-        _this.actions.getUserNameSuccess(json);
-      })['catch'](function (error) {
-        //alert(error);
-      });
     }
-  }, {
-    key: 'getUserImg',
-    value: function getUserImg() {
-      var _this2 = this;
 
-      fetch('https://140.123.175.95:8787/userImg').then(function (res) {
-        if (res.ok) {
-          return res.blob();
+    _createClass(UserStateActions, [{
+        key: 'getUserName',
+        value: function getUserName() {
+            var _this = this;
+
+            fetch('https://140.123.175.95:8787/userName').then(function (res) {
+                if (res.ok) {
+                    return res.json();
+                }
+                _this.actions.getUserNameFail(res);
+            }).then(function (json) {
+                _this.actions.getUserNameSuccess(json);
+            })['catch'](function (error) {
+                //alert(error);
+            });
         }
-        _this2.actions.getUserImgFail(res);
-      }).then(function (blob) {
-        var objectURL = URL.createObjectURL(blob);
-        _this2.actions.getUserImgSuccess(objectURL);
-      })['catch'](function (error) {
-        //alert(error);
-      });
-    }
-  }, {
-    key: 'getOnline',
-    value: function getOnline() {
-      var _this3 = this;
 
-      fetch('https://140.123.175.95:8787/userStatus').then(function (res) {
-        if (res.ok) {
-          return res.json();
-        }
-        _this3.actions.getOnlineFail(res);
-      }).then(function (json) {
-        console.log(json.status);
-        _this3.actions.getOnlineSuccess(json);
-      })['catch'](function (error) {
-        //alert(error);
-      });
-    }
-  }]);
-
-  return UserStateActions;
+    return UserStateActions;
 })();
 
 exports['default'] = _alt2['default'].createActions(UserStateActions);
@@ -300,7 +261,7 @@ module.exports = exports['default'];
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-  value: true
+    value: true
 });
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -344,30 +305,27 @@ var _Meeting = require('./Meeting');
 var _Meeting2 = _interopRequireDefault(_Meeting);
 
 var App = (function (_React$Component) {
-  _inherits(App, _React$Component);
+    _inherits(App, _React$Component);
 
-  function App() {
-    _classCallCheck(this, App);
-
-    _get(Object.getPrototypeOf(App.prototype), 'constructor', this).apply(this, arguments);
-  }
-
-  _createClass(App, [{
-    key: 'render',
-    value: function render() {
-      return _react2['default'].createElement(
-        'div',
-        null,
-        _react2['default'].createElement(_UserState2['default'], null),
-        _react2['default'].createElement(_Header2['default'], null),
-        _react2['default'].createElement(_Menu2['default'], null),
-        _react2['default'].createElement(_reactRouter.RouteHandler, null),
-        _react2['default'].createElement(_FriendList2['default'], null)
-      );
+    function App() {
+        _classCallCheck(this, App);
     }
-  }]);
 
-  return App;
+    _createClass(App, [{
+        key: 'render',
+        value: function render() {
+            return _react2['default'].createElement(
+                'div',
+                null,
+                _react2['default'].createElement(_UserState2['default'], null),
+                _react2['default'].createElement(_Header2['default'], null),
+                _react2['default'].createElement(_Main2['default'], null),
+                _react2['default'].createElement(_reactRouter.RouteHandler, null)
+            );
+        }
+    }]);
+
+    return App;
 })(_react2['default'].Component);
 
 exports['default'] = App;
@@ -377,7 +335,7 @@ module.exports = exports['default'];
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-  value: true
+    value: true
 });
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -404,198 +362,6 @@ var _actionsChatroomActions = require('../actions/ChatroomActions');
 
 var _actionsChatroomActions2 = _interopRequireDefault(_actionsChatroomActions);
 
-var Chatroom = (function (_React$Component) {
-  _inherits(Chatroom, _React$Component);
-
-  function Chatroom(props) {
-    _classCallCheck(this, Chatroom);
-
-    _get(Object.getPrototypeOf(Chatroom.prototype), 'constructor', this).call(this, props);
-    this.state = _storesChatroomStore2['default'].getState();
-    this.onChange = this.onChange.bind(this);
-  }
-
-  _createClass(Chatroom, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      _storesChatroomStore2['default'].listen(this.onChange);
-      ChatroomActions.getSystemTime();
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      _storesChatroomStore2['default'].unlisten(this.onChange);
-    }
-  }, {
-    key: 'onChange',
-    value: function onChange(state) {
-      this.setState(state);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2['default'].createElement(
-        'div',
-        { id: 'box-b' },
-        _react2['default'].createElement(
-          'div',
-          { id: 'chat_box' },
-          _react2['default'].createElement(
-            'div',
-            { id: 'friend_sent' },
-            _react2['default'].createElement(
-              'div',
-              { id: 'come_time' },
-              '22:00'
-            ),
-            _react2['default'].createElement(
-              'div',
-              { className: 'arrow_box' },
-              _react2['default'].createElement(
-                'div',
-                { id: 'text' },
-                '測試測試'
-              )
-            )
-          ),
-          _react2['default'].createElement(
-            'div',
-            { id: 'myself_sent' },
-            _react2['default'].createElement(
-              'div',
-              { id: 'sent_time' },
-              '22:01'
-            ),
-            _react2['default'].createElement(
-              'div',
-              { className: 'arrow_box1' },
-              _react2['default'].createElement(
-                'div',
-                { id: 'text' },
-                '測試測試'
-              )
-            )
-          ),
-          _react2['default'].createElement(
-            'div',
-            { id: 'friend_sent' },
-            _react2['default'].createElement(
-              'div',
-              { id: 'come_time' },
-              '22:00'
-            ),
-            _react2['default'].createElement(
-              'div',
-              { className: 'arrow_box' },
-              _react2['default'].createElement(
-                'div',
-                { id: 'text' },
-                '測試測試'
-              )
-            )
-          ),
-          _react2['default'].createElement(
-            'div',
-            { id: 'myself_sent' },
-            _react2['default'].createElement(
-              'div',
-              { id: 'sent_time' },
-              '22:01'
-            ),
-            _react2['default'].createElement(
-              'div',
-              { className: 'arrow_box1' },
-              _react2['default'].createElement(
-                'div',
-                { id: 'text' },
-                '測試測試'
-              )
-            )
-          ),
-          _react2['default'].createElement(
-            'div',
-            { id: 'friend_sent' },
-            _react2['default'].createElement(
-              'div',
-              { id: 'come_time' },
-              '22:00'
-            ),
-            _react2['default'].createElement(
-              'div',
-              { className: 'arrow_box' },
-              _react2['default'].createElement(
-                'div',
-                { id: 'text' },
-                '測試測試'
-              )
-            )
-          ),
-          _react2['default'].createElement(
-            'div',
-            { id: 'myself_sent' },
-            _react2['default'].createElement(
-              'div',
-              { id: 'sent_time' },
-              '22:01'
-            ),
-            _react2['default'].createElement(
-              'div',
-              { className: 'arrow_box1' },
-              _react2['default'].createElement(
-                'div',
-                { id: 'text' },
-                '測試測試'
-              )
-            )
-          ),
-          _react2['default'].createElement(
-            'div',
-            { id: 'friend_sent' },
-            _react2['default'].createElement(
-              'div',
-              { id: 'come_time' },
-              '22:00'
-            ),
-            _react2['default'].createElement(
-              'div',
-              { className: 'arrow_box' },
-              _react2['default'].createElement(
-                'div',
-                { id: 'text' },
-                '測試測試'
-              )
-            )
-          ),
-          _react2['default'].createElement(
-            'div',
-            { id: 'myself_sent' },
-            _react2['default'].createElement(
-              'div',
-              { id: 'sent_time' },
-              '22:01'
-            ),
-            _react2['default'].createElement(
-              'div',
-              { className: 'arrow_box1' },
-              _react2['default'].createElement(
-                'div',
-                { id: 'text' },
-                '測試測試'
-              )
-            )
-          )
-        ),
-        _react2['default'].createElement(
-          'div',
-          { id: 'chat_input' },
-          _react2['default'].createElement('textarea', { id: 'input' }),
-          _react2['default'].createElement('input', { className: 'sent', type: 'submit' })
-        )
-      );
-    }
-  }]);
-
-  return Chatroom;
 })(_react2['default'].Component);
 
 exports['default'] = Chatroom;
@@ -1414,7 +1180,7 @@ var UserState = (function (_React$Component) {
         _react2['default'].createElement(
           'div',
           { id: 'user_status' },
-          this.state.Online
+          this.state.online
         )
       );
     }
@@ -1601,7 +1367,7 @@ module.exports = exports['default'];
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-  value: true
+    value: true
 });
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1619,37 +1385,30 @@ var _actionsHeaderActions = require('../actions/HeaderActions');
 var _actionsHeaderActions2 = _interopRequireDefault(_actionsHeaderActions);
 
 var HeaderStore = (function () {
-  function HeaderStore() {
-    _classCallCheck(this, HeaderStore);
 
-    this.bindActions(_actionsHeaderActions2['default']);
-    this.SystemTime = ''; //系統時間
-    this.OrderTime = ''; //預約會議時間
-  }
+    _createClass(HeaderStore, [{
+        key: 'onGetSystemTimeSuccess',
+        value: function onGetSystemTimeSuccess(data) {
+            this.systemTime = data; //將時間指派給傳來的值
+        }
+    }, {
+        key: 'onGetSystemTimeFail',
+        value: function onGetSystemTimeFail(data) {
+            alert('Can not get TIME!');
+        }
+    }, {
+        key: 'onGetOrderTimeSuccess',
+        value: function onGetOrderTimeSuccess(data) {
+            this.orderTime = data;
+        }
+    }, {
+        key: 'onGetOrderTimeFail',
+        value: function onGetOrderTimeFail(data) {
+            //錯誤顯示
+        }
+    }]);
 
-  _createClass(HeaderStore, [{
-    key: 'onGetSystemTimeSuccess',
-    value: function onGetSystemTimeSuccess(data) {
-      this.SystemTime = data; //將時間指派給傳來的值
-    }
-  }, {
-    key: 'onGetSystemTimeFail',
-    value: function onGetSystemTimeFail(data) {
-      //錯誤顯示
-    }
-  }, {
-    key: 'onGetOrderTimeSuccess',
-    value: function onGetOrderTimeSuccess(data) {
-      this.OrderTime = this.data;
-    }
-  }, {
-    key: 'onGetOrderTimeFail',
-    value: function onGetOrderTimeFail(data) {
-      //錯誤顯示
-    }
-  }]);
-
-  return HeaderStore;
+    return HeaderStore;
 })();
 
 exports['default'] = _alt2['default'].createStore(HeaderStore);
@@ -1661,8 +1420,6 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -1676,24 +1433,16 @@ var _actionsMainActions = require('../actions/MainActions');
 
 var _actionsMainActions2 = _interopRequireDefault(_actionsMainActions);
 
-var MainStore = (function () {
-  function MainStore() {
-    _classCallCheck(this, MainStore);
-  }
+var MainStore = function MainStore() {
+  _classCallCheck(this, MainStore);
 
-  _createClass(MainStore, [{
-    key: 'constrcutor',
-    value: function constrcutor() {
-      this.bindActions(_actionsMainActions2['default']);
-      //還未完成
-    }
+  this.bindActions(_actionsMainActions2['default']);
+  //還未完成
+}
 
-    //還未完成
+//還未完成
 
-  }]);
-
-  return MainStore;
-})();
+;
 
 exports['default'] = _alt2['default'].createStore(MainStore);
 module.exports = exports['default'];
@@ -1747,7 +1496,7 @@ module.exports = exports['default'];
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-  value: true
+    value: true
 });
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1765,43 +1514,39 @@ var _actionsUserStateActions = require('../actions/UserStateActions');
 var _actionsUserStateActions2 = _interopRequireDefault(_actionsUserStateActions);
 
 var UserStateStore = (function () {
-  function UserStateStore() {
-    _classCallCheck(this, UserStateStore);
+    function UserStateStore() {
+        _classCallCheck(this, UserStateStore);
 
-    this.bindActions(_actionsUserStateActions2['default']);
-    this.userName = '';
-    this.userImgURL = '';
-    this.Online = '';
-  }
+        this.bindActions(_actionsUserStateActions2['default']);
+        this.userName = '';
+        this.userImgURL = '';
+        this.online = '';
+    }
 
-  _createClass(UserStateStore, [{
-    key: 'onGetUserNameSuccess',
-    value: function onGetUserNameSuccess(data) {
-      this.userName = data.name;
-    }
-  }, {
-    key: 'onGetUserImgSuccess',
-    value: function onGetUserImgSuccess(imgURL) {
-      this.userImgURL = imgURL;
-    }
-  }, {
-    key: 'onGetUserImgFail',
-    value: function onGetUserImgFail(data) {
-      alert('Fail');
-    }
-  }, {
-    key: 'onGetOnlineSuccess',
-    value: function onGetOnlineSuccess(data) {
-      this.Online = data.status;
-    }
-  }, {
-    key: 'onGetOnlineFail',
-    value: function onGetOnlineFail(data) {
-      alert('Fail');
-    }
-  }]);
+    _createClass(UserStateStore, [{
+        key: 'onGetUserNameSuccess',
+        value: function onGetUserNameSuccess(data) {
+            this.userName = data.name;
+        }
+    }, {
+        key: 'onGetUserImgSuccess',
+        value: function onGetUserImgSuccess(imgURL) {
+            this.userImgURL = imgURL;
+        }
+    }, {
+        key: 'onGetUserImgFail',
+        value: function onGetUserImgFail(data) {}
+    }, {
+        key: 'onGetOnlineSuccess',
+        value: function onGetOnlineSuccess(data) {
+            this.online = data.status;
+        }
+    }, {
+        key: 'onGetOnlineFail',
+        value: function onGetOnlineFail(data) {}
+    }]);
 
-  return UserStateStore;
+    return UserStateStore;
 })();
 
 exports['default'] = _alt2['default'].createStore(UserStateStore);
