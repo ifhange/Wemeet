@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
-import Store from '../stores/FriendListStore';
-import Actions from '../actions/FriendListAction';
+import FriendListStore from '../stores/FriendListStore';
+import FriendListActions from '../actions/FriendListActions';
 
 class FriendList extends React.Component {
   constructor(props){
@@ -24,35 +24,78 @@ class FriendList extends React.Component {
   }
 
   render() {
-    let leaderboardCharacters = this.state.characters.map((character) => {
+    //好友名單上限資料
+    let friendonline = this.state.characters.map((character) => {
       return (
-        <li key={character.characterId}>
-          <Link to={'/characters/' + character.characterId}>
-            <img className='thumb-md' src={'http://image.eveonline.com/Character/' + character.characterId + '_128.jpg'} />
-          </Link>
-        </li>
+      <div id="firiend_person">
+        <div id="circle1">
+          <img id="friend_image" src={character.img}></img>
+        </div>
+        <div id="friend_name">安
+        </div>
+      </div>
+      )
+    });
+
+    //好友名單離線資料
+    let friendoff = this.state.characters.map((character) => {
+      return (
+      <div id="firiend_person">
+        <div id="circle1">
+          <img id="friend_image" src={character.img}></img>
+        </div>
+        <div id="friend_name">安
+        </div>
+      </div>
       )
     });
 
     return (
-      <footer>
-        <div className='container'>
-          <div className='row'>
-            <div className='col-sm-5'>
-              <h3 className='lead'><strong>Information</strong> and <strong>Copyright</strong></h3>
-              <p>Powered by <strong>Node.js</strong>, <strong>MongoDB</strong> and <strong>React</strong> with Flux architecture and server-side rendering.</p>
-              <p>You may view the <a href='https://github.com/sahat/newedenfaces-react'>Source Code</a> behind this project on GitHub.</p>
-              <p>© 2015 Sahat Yalkabov.</p>
-            </div>
-            <div className='col-sm-7 hidden-xs'>
-              <h3 className='lead'><strong>Leaderboard</strong> Top 5 Characters</h3>
-              <ul className='list-inline'>
-                {leaderboardCharacters}
-              </ul>
-            </div> 
-          </div>
+      <div id="friendlist">
+        <div id="online">
+          <div id='text'>正在線上：</div>
+          <a href="chatroom"><div id="friend_person">
+          <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
+          <div id="friend_name">安</div>
+          </div></a>
+
+          <a href="chatroom"><div id="friend_person">
+          <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
+          <div id="friend_name">安</div>
+          </div></a>
+
+          <a href="chatroom"><div id="friend_person">
+          <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
+          <div id="friend_name">安</div>
+          </div></a>
+
+          <a href="chatroom"><div id="friend_person">
+          <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
+          <div id="friend_name">安</div>
+          </div></a>
+
+
+          <a href="chatroom"><div id="friend_person">
+          <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
+          <div id="friend_name">安</div>
+          </div></a>
+
+
+          <a href="chatroom"><div id="friend_person">
+          <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
+          <div id="friend_name">安</div>
+          </div></a>
+    
         </div>
-      </footer>
+
+        <div id="off">
+          <div id='text'>離線：</div>
+          <a href="chatroom"><div id="friend_person">
+          <div id="circle2"><img id="friend_image" src="../img/logo_user.png"></img></div>
+          <div id="friend_name">煩</div>
+          </div></a>
+        </div>
+      </div>
     );
   }
 }

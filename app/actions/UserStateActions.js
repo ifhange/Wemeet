@@ -25,7 +25,7 @@ class UserStateActions {
         })
       .catch(
         function(error){
-          alert(error);
+          //alert(error);
       })
     }
 
@@ -43,7 +43,7 @@ class UserStateActions {
         })
       .catch(
       function(error){
-        alert(error);
+        //alert(error);
       })
     }
 
@@ -61,7 +61,7 @@ class UserStateActions {
         })
       .catch(
         function(error){
-          alert(error);
+          //alert(error);
       })
     }
 

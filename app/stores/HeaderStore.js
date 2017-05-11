@@ -2,7 +2,7 @@ import alt from '../alt';
 import HeaderActions from '../actions/HeaderActions';
 
 class HeaderStore {
-  constrcutor(){
+  constructor(){
     this.bindActions(HeaderActions);
     this.SystemTime = ''; //系統時間
     this.OrderTime = ''; //預約會議時間

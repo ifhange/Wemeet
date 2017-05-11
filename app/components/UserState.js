@@ -24,7 +24,7 @@ class UserState extends React.Component {
   onChange(state) {
     this.setState(state);
   }
-
+ 
   render() {
     return(
         <div id="user_infro">

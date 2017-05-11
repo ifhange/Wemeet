@@ -6,7 +6,7 @@ import FriendListActions from '../actions/FriendListActions';
 
 class FriendListStore {
   constructor() {
-    this.bindActions(FriensListActions);
+    this.bindActions(FriendListActions);
     //bindActions用于将action绑定到store中定义的相应处理函数
     this.characters = [];
   }
