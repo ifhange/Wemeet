@@ -8,7 +8,6 @@ import FriendList from './FriendList';
 import Meeting from './Meeting';
 
 class App extends React.Component {
-<<<<<<< HEAD
     render() {
         return (
         	<Router history={browserHistory}>
@@ -23,18 +22,5 @@ class App extends React.Component {
             </Router>
         );
     }
-=======
-  render() {
-    return (
-      	<div>
-      		<UserState />	
-          <Header />
-          <Menu />
-          <RouteHandler />
-          <FriendList />
-      	</div>
-    );
-  }
->>>>>>> refs/remotes/origin/master
 }
 export default App;

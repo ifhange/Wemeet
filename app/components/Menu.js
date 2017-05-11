@@ -1,11 +1,6 @@
 import React from 'react';
-<<<<<<< HEAD
 import MenuStore from '../stores/MenuStore' ;
 import MenuActions from '../actions/MenuActions';
-=======
-import {Link} from 'react-router';
->>>>>>> refs/remotes/origin/master
-
 class Menu extends React.Component {
 
   render() {

@@ -11,10 +11,7 @@ class Header extends React.Component {
 
     componentDidMount() {
         HeaderStore.listen(this.onChange);
-        this.timerID = setInterval(
-            HeaderActions.getSystemTime,
-            1000
-        );
+        this.timerID = setInterval(HeaderActions.getSystemTime,1000);
     }
 
     componentWillUnmount() {
