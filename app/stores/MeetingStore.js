@@ -126,7 +126,6 @@ class MeetingStore {
       this.inviteState = 'invite_detail_off';
     }
   }
-
   changeVideoReadyState() {
     this.isStreaming = !this.isStreaming;
     this.videoIsReady = !this.videoIsReady;
@@ -143,8 +142,6 @@ class MeetingStore {
     this.interim_result = temp;
     this.final_result = final;
   }
-
-
 }
 
 export default alt.createStore(MeetingStore);

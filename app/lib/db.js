@@ -1,26 +1,26 @@
 var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
-var grid = require('gridfs-stream');
+//var grid = require('gridfs-stream');
 var fs = require('fs');
 mongoose.Promise = global.Promise;
 var conn = mongoose.createConnection('mongodb://admin:admin@140.123.175.95:9487/main');
 
-function storeFileToDB() {
-    console.log('db is on!');
-    var gfs = grid(conn, mongoose.mongo);
+// function storeFileToDB() {
+//     console.log('db is on!');
+//     var gfs = grid(conn, mongoose.mongo);
 
-    // streaming to gridfs
-    //filename to store in mongodb
-    var writestream = gfs.createWriteStream({
-        filename: 'je.jpg'
-    });
-    fs.createReadStream('W:/WeMeet/public/src/je.jpg').pipe(writestream);
+//     // streaming to gridfs
+//     //filename to store in mongodb
+//     var writestream = gfs.createWriteStream({
+//         filename: 'je.jpg'
+//     });
+//     fs.createReadStream('W:/WeMeet/public/src/je.jpg').pipe(writestream);
 
-    writestream.on('close', function(file) {
-        // do something with 'file'
-        console.log(file + 'Has written To DB');
-    });
-}
+//     writestream.on('close', function(file) {
+//         // do something with 'file'
+//         console.log(file + 'Has written To DB');
+//     });
+// }
 
 //storeFileToDB();
 

@@ -13,21 +13,21 @@ class UserStateStore {
       this.userName = data.name;
   }
 
-    onGetUserImgSuccess(imgURL) {
-      this.userImgURL = imgURL;
-  }
+  //   onGetUserImgSuccess(imgURL) {
+  //     this.userImgURL = imgURL;
+  // }
 
-    onGetUserImgFail(data) {
-      alert('Fail');
-  }
+  //   onGetUserImgFail(data) {
+  //     alert('Fail');
+  // }
 
     onGetOnlineSuccess(data) {
     this.Online = data.status;
   }
 
-    onGetOnlineFail(data) {
-      alert('Fail');
-  }
+  //   onGetOnlineFail(data) {
+  //     alert('Fail');
+  // }
 }
 
 export default alt.createStore(UserStateStore);

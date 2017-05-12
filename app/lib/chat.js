@@ -1,17 +1,17 @@
 'use strict';
 
 let Chat = {
-    createNew: (changeVideoReadyState,) => {
+    createNew: (changeVideoReadyState, ) => {
         Chat.isReady = false;
         let localStream = '';
         let fileChannels = {};
         let msgChannels = {};
         //取得使用者端的影像
-        Chat.getUserMedia = ( gotLocalVideo) => {
+        Chat.getUserMedia = (gotLocalVideo) => {
             navigator.mediaDevices.getUserMedia({
-                    audio: true,
-                    video: true
-                })
+                audio: true,
+                video: true
+            })
                 .then((stream) => {
                     var track = stream.getTracks()[0];
                     let videoURL = window.URL.createObjectURL(stream);
@@ -138,11 +138,11 @@ let Chat = {
 
             for (let id in msgChannels) {
                 msgChannels[id].send(localUserID + '[' + formattedTime + ']: ' + value);
-            } 
+            }
             return ({
-                'UserID' : localUserID,
-                'Sendtime' : formattedTime ,
-                'MyText' : value
+                'UserID': localUserID,
+                'Sendtime': formattedTime,
+                'MyText': value
             })
         };
 
