@@ -8,6 +8,7 @@ class MeetingStore {
     this.videoIsReady = false;
     this.audioOn = false;
     this.localVideoURL = '';
+    this.isStreaming = false;
     this.langs = [
       ['Afrikaans', ['af-ZA']],
       ['Bahasa Indonesia', ['id-ID']],
@@ -125,8 +126,8 @@ class MeetingStore {
       this.inviteState = 'invite_detail_off';
     }
   }
-
   changeVideoReadyState() {
+    this.isStreaming = !this.isStreaming;
     this.videoIsReady = !this.videoIsReady;
   }
   gotLocalVideo(videoURL) {
@@ -134,13 +135,9 @@ class MeetingStore {
   }
 
   newParticipant({ a, b }) {
-    this.connections[a] = b;
+    connections[a] = b;
   }
 
-  changeAudioState() {
-
-  }
-  
   updateResult({ temp, final }) {
     this.interim_result = temp;
     this.final_result = final;

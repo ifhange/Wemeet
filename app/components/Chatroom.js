@@ -26,7 +26,7 @@ class Chatroom extends React.Component {
   render() {
     return(
 
-        <div id="box-b">
+        <div className="box-b">
           <div id='in'>
             <div id="chat_box_content">
               <div id="friend_sent">

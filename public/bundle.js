@@ -15483,7 +15483,7 @@ var Chatroom = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { id: 'box-b' },
+        { className: 'box-b' },
         _react2.default.createElement(
           'div',
           { id: 'in' },
@@ -16069,7 +16069,7 @@ var History = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { id: 'box-b' },
+        { className: 'box-b' },
         _react2.default.createElement(
           'div',
           { id: 'in' },
@@ -16510,7 +16510,7 @@ var Main = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                { id: 'box-b' },
+                { className: 'box-b' },
                 _react2.default.createElement(
                     'div',
                     { id: 'in' },
@@ -16662,6 +16662,7 @@ var Meeting = function (_React$Component) {
         // this.tagList = {};
         _this.isRecording = true;
         _this.isPlaying = true;
+        _this.meetpage = window.location.href;
         return _this;
     }
 
@@ -16845,6 +16846,11 @@ var Meeting = function (_React$Component) {
             _MeetingActions2.default.changeInviteState();
         }
     }, {
+        key: 'onClick_backtoindex',
+        value: function onClick_backtoindex() {
+            window.location = 'https://140.123.175.95:8787/';
+        }
+    }, {
         key: 'render',
         value: function render() {
             // for (let id in this.state.connections) {
@@ -16855,7 +16861,7 @@ var Meeting = function (_React$Component) {
                 { id: 'in' },
                 _react2.default.createElement(
                     'div',
-                    { id: 'box-b' },
+                    { className: 'box-b' },
                     _react2.default.createElement(
                         'div',
                         { id: 'meet_chat' },
@@ -16961,7 +16967,7 @@ var Meeting = function (_React$Component) {
                             { className: 'right' },
                             _react2.default.createElement(
                                 'button',
-                                { id: 'end', onClick: this.state.invite },
+                                { id: 'end', onClick: this.onClick_backtoindex },
                                 '\u7D50\u675F\u6703\u8B70'
                             )
                         )
@@ -16989,7 +16995,7 @@ var Meeting = function (_React$Component) {
                                 this.meetpage
                             )
                         ),
-                        _react2.default.createElement('video', { id: 'uservideo', src: this.state.videoIsReady ? this.state.localVideoURL : "" }),
+                        _react2.default.createElement('video', { className: 'userVideo', id: 'user', src: this.state.videoIsReady ? this.state.localVideoURL : "" }),
                         _react2.default.createElement(
                             'div',
                             { id: 'meet_agenda' },
@@ -17129,7 +17135,7 @@ var UserState = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _UserStateStore2.default.listen(this.onChange);
-      //UserStateActions.getUserImg();
+      _UserStateActions2.default.getUserImg();
       //UserStateActions.getUserName();
       //UserStateActions.getOnline();
     }
@@ -17181,19 +17187,18 @@ exports.default = UserState;
 
 
 var Chat = {
-    createNew: function createNew() {
+    createNew: function createNew(changeVideoReadyState) {
         Chat.isReady = false;
         var localStream = '';
         var fileChannels = {};
         var msgChannels = {};
         //取得使用者端的影像
-        Chat.getUserMedia = function (changeVideoReadyState, gotLocalVideo) {
+        Chat.getUserMedia = function (gotLocalVideo) {
             navigator.mediaDevices.getUserMedia({
                 audio: true,
                 video: true
             }).then(function (stream) {
                 var track = stream.getTracks()[0];
-                alert(track);
                 var videoURL = window.URL.createObjectURL(stream);
                 changeVideoReadyState();
                 gotLocalVideo(videoURL);
@@ -17205,6 +17210,7 @@ var Chat = {
 
         Chat.toggleUserMedia = function () {
             if (localStream) {
+                changeVideoReadyState();
                 localStream.getTracks().forEach(function (track) {
                     track.stop();
                 });
@@ -17319,7 +17325,11 @@ var Chat = {
             for (var id in msgChannels) {
                 msgChannels[id].send(localUserID + '[' + formattedTime + ']: ' + value);
             }
-            return 'localUserID + '[' + formattedTime + '];
+            return {
+                'UserID': localUserID,
+                'Sendtime': formattedTime,
+                'MyText': value
+            };
         };
 
         Chat.sendFileToUser = function (files) {
@@ -17890,6 +17900,7 @@ var MeetingStore = function () {
     this.videoIsReady = false;
     this.audioOn = false;
     this.localVideoURL = '';
+    this.isStreaming = false;
     this.langs = [['Afrikaans', ['af-ZA']], ['Bahasa Indonesia', ['id-ID']], ['Bahasa Melayu', ['ms-MY']], ['Català', ['ca-ES']], ['Čeština', ['cs-CZ']], ['Dansk', ['da-DK']], ['Deutsch', ['de-DE']], ['English', ['en-AU', 'Australia'], ['en-CA', 'Canada'], ['en-IN', 'India'], ['en-NZ', 'New Zealand'], ['en-ZA', 'South Africa'], ['en-GB', 'United Kingdom'], ['en-US', 'United States']], ['Español', ['es-AR', 'Argentina'], ['es-BO', 'Bolivia'], ['es-CL', 'Chile'], ['es-CO', 'Colombia'], ['es-CR', 'Costa Rica'], ['es-EC', 'Ecuador'], ['es-SV', 'El Salvador'], ['es-ES', 'España'], ['es-US', 'Estados Unidos'], ['es-GT', 'Guatemala'], ['es-HN', 'Honduras'], ['es-MX', 'México'], ['es-NI', 'Nicaragua'], ['es-PA', 'Panamá'], ['es-PY', 'Paraguay'], ['es-PE', 'Perú'], ['es-PR', 'Puerto Rico'], ['es-DO', 'República Dominicana'], ['es-UY', 'Uruguay'], ['es-VE', 'Venezuela']], ['Euskara', ['eu-ES']], ['Filipino', ['fil-PH']], ['Français', ['fr-FR']], ['Galego', ['gl-ES']], ['Hrvatski', ['hr_HR']], ['IsiZulu', ['zu-ZA']], ['Íslenska', ['is-IS']], ['Italiano', ['it-IT', 'Italia'], ['it-CH', 'Svizzera']], ['Lietuvių', ['lt-LT']], ['Magyar', ['hu-HU']], ['Nederlands', ['nl-NL']], ['Norsk bokmål', ['nb-NO']], ['Polski', ['pl-PL']], ['Português', ['pt-BR', 'Brasil'], ['pt-PT', 'Portugal']], ['Română', ['ro-RO']], ['Slovenščina', ['sl-SI']], ['Slovenčina', ['sk-SK']], ['Suomi', ['fi-FI']], ['Svenska', ['sv-SE']], ['Tiếng Việt', ['vi-VN']], ['Türkçe', ['tr-TR']], ['Ελληνικά', ['el-GR']], ['български', ['bg-BG']], ['Pусский', ['ru-RU']], ['Српски', ['sr-RS']], ['Українська', ['uk-UA']], ['한국어', ['ko-KR']], ['中文', ['cmn-Hans-CN', '普通话 (中国大陆)'], ['cmn-Hans-HK', '普通话 (香港)'], ['cmn-Hant-TW', '中文 (台灣)'], ['yue-Hant-HK', '粵語 (香港)']], ['日本語', ['ja-JP']], ['हिन्दी', ['hi-IN']], ['ภาษาไทย', ['th-TH']]];
     this.interim_result = '';
     this.final_result = '';
@@ -17937,6 +17948,7 @@ var MeetingStore = function () {
   }, {
     key: 'changeVideoReadyState',
     value: function changeVideoReadyState() {
+      this.isStreaming = !this.isStreaming;
       this.videoIsReady = !this.videoIsReady;
     }
   }, {
@@ -17950,11 +17962,8 @@ var MeetingStore = function () {
       var a = _ref.a,
           b = _ref.b;
 
-      this.connections[a] = b;
+      connections[a] = b;
     }
-  }, {
-    key: 'changeAudioState',
-    value: function changeAudioState() {}
   }, {
     key: 'updateResult',
     value: function updateResult(_ref2) {

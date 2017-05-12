@@ -10,11 +10,11 @@ import socketIO from 'socket.io-client';
 let io = socketIO();
 let socket = io.connect('https://140.123.175.95.8787');
 let configuration = {
-    'iceServers': [{
-        'url': 'stun:stun.l.google.com:19302'
-    }, {
-        'url': 'stun:stun.services.mozilla.com'
-    }]
+	'iceServers': [{
+		'url': 'stun:stun.l.google.com:19302'
+	}, {
+		'url': 'stun:stun.services.mozilla.com'
+	}]
 };
 let room = window.location.hash;
 
@@ -31,6 +31,7 @@ class Meeting extends React.Component {
         // this.tagList = {};
         this.isRecording = true;
         this.isPlaying = true;
+        this.meetpage = window.location.href;
     }
 
     componentDidMount() {
@@ -202,13 +203,17 @@ class Meeting extends React.Component {
         MeetingActions.changeInviteState();
     }
 
+    onClick_backtoindex() {
+        window.location = 'https://140.123.175.95:8787/';
+    }
+
     render() {
         // for (let id in this.state.connections) {
         // 	this.tagList[id] = <video key={id} className={xxx} ></video>;
         // }
         return (
             <div id='in'>
-				<div id="box-b">
+				<div className="box-b">
 					<div id="meet_chat">
 						<div id="chat_menu">
 							<div id="button"></div>
@@ -216,7 +221,6 @@ class Meeting extends React.Component {
 						</div>
 
 						<div id="chatbox">
-
 							<div id="number_sent">
 								<div className="arrow_box"><div id="meet_text">{this.myself_text}</div></div>
 							</div>
@@ -253,7 +257,7 @@ class Meeting extends React.Component {
 						</div>
 
 						<div className="right">
-							<button id="end" onClick={this.state.invite}>結束會議</button>
+							<button id="end" onClick={this.onClick_backtoindex}>結束會議</button>
 						</div>
 					</div>
 					<div id="meet_main" ref="meet_main">						
@@ -268,8 +272,8 @@ class Meeting extends React.Component {
 							<div id='meetpage'>網址：</div>
 							<textarea id='pagetext' >{this.meetpage}</textarea>
 						</div>			
-						<video id='uservideo' src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
-						
+						<video className='userVideo' id='user' src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
+
 						<div id='meet_agenda'>
 							<div id='now_agenda'>目前議程</div>
 							<textarea id='agenda_text'>
@@ -283,8 +287,8 @@ class Meeting extends React.Component {
 
 				</div>
 			</div>
-        );
-    }
+		)
+	}
 }
-
 export default Meeting;
+
