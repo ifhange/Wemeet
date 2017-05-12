@@ -23,7 +23,7 @@ class Meeting extends React.Component {
         this.onChange = this.onChange.bind(this);
         this.recorder = new Recorder();
         this.Chat = chat.createNew();
-        //this.Recognizer = recognition.createNew();
+        this.Recognizer = recognition.createNew(MeetingActions.updateReslt);
         this.localUserID = "";
         // this.videoList = [];
         // this.tagList = {};
@@ -32,12 +32,19 @@ class Meeting extends React.Component {
     }
 
     componentDidMount() {
+        for (var i = 0; i < this.state.langs.length; i++) {
+            this.refs.select_language.options[i] = new Option(this.state.langs[i][0], i);
+        }
+        this.refs.select_language.selectedIndex = 36;
+        this.updateCountry();
+        this.refs.select_dialect.selectedIndex = 2;
+
+        socket.emit('join', room);
         MeetingStore.listen(this.onChange);
         this.Chat.getUserMedia(MeetingActions.changeVideoReadyState, MeetingActions.gotLocalVideo);
         if (!room) {
             room = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);;
         };
-        socket.emit('join', room);
 
         //加入房間訊息
         socket.on('joined', (room, clientID) => {
@@ -151,167 +158,189 @@ class Meeting extends React.Component {
         this.Chat.sendFileToUser(file);
     }
 
-   	toggleRecording(){
-   		if(isRecording){
-   			this.isRecording = false;
-   		}
-   	    this.isRecording = true;
+    toggleRecording() {
+        if (isRecording) {
+            this.isRecording = false;
+        }
+        this.isRecording = true;
         this.isPlaying = false;
     }
 
+    toggleRecognizing(){
+        this.Recognizer.toggleButtonOnclick();
+    }
+
     download() {
-		this.recorder.download()
-	}
+        this.recorder.download()
+    }
 
-	play() {
-		this.recorder.play()
-		this.isPlaying = true;
-	}
+    play() {
+        this.recorder.play()
+        this.isPlaying = true;
+    }
 
-render() {
-    // for (let id in this.state.connections) {
-    // 	this.tagList[id] = <video key={id} className={xxx} ></video>;
-    // }
-    return (
-        <div id='in'>
-				<div id="box-b">
-					<div id="meet_chat">
-						<div id="chat_menu">
-							<div id="button"></div>
-							<div id="meet_name">WeMeet開會群組</div>
-						</div>
+    updateCountry() {
+        for (let i = this.refs.select_dialect.options.length - 1; i >= 0; i--) {
+            this.refs.select_dialect.remove(i);
+        }
+        //方言
+        let list = this.state.langs[this.refs.select_language.selectedIndex];
+        for (let i = 1; i < list.length; i++) {
+            this.refs.select_dialect.options.add(new Option(list[i][1], list[i][0]));
+        }
+    }
 
-						<div id="chatbox">
+    render() {
+        // for (let id in this.state.connections) {
+        //  this.tagList[id] = <video key={id} className={xxx} ></video>;
+        // }
+        return (
+            <div id='in'>
+            <select ref='select_language' onChange={this.updateCountry.bind(this)}>
+                
+            </select>
+            <select ref='select_dialect'>
+                
+            </select>
+            
+                <div id="box-b">
+                    <div id="meet_chat">
+                        <div id="chat_menu">
+                            <div id="button"></div>
+                            <div id="meet_name">WeMeet開會群組</div>
+                        </div>
 
-							<div id="number_sent">
-								<div className="arrow_box"><div id="meet_text">測試測試</div></div>
-							</div>
+                        <div id="chatbox">
 
-							<div id="me_sent">
-								<div className="arrow_box1"><div id="meet_text">測試測試</div></div>
-							</div>
+                            <div id="number_sent">
+                                <div className="arrow_box"><div id="meet_text">測試測試</div></div>
+                            </div>
 
-							<div id="me_sent">
-								<div className="arrow_box1"><a ref='meet_filedowload'><div id="meet_text">測試測試</div></a></div>
-							</div>
+                            <div id="me_sent">
+                                <div className="arrow_box1"><div id="meet_text">測試測試</div></div>
+                            </div>
 
-						</div>
+                            <div id="me_sent">
+                                <div className="arrow_box1"><a ref='meet_filedowload'><div id="meet_text">測試測試</div></a></div>
+                            </div>
 
-						<div id='meet_upload'>
-							<input id='fileicon' type='file' ref='meet_fileupload' />
-						</div>
+                        </div>
 
-						<div id="meet_chat_input">
-							<textarea id="meet_input" ref='meet_input' ></textarea>
-							<button className="sent" type="submit" ref='meet_submit' onClick={this.sendText.bind(this)}>送出</button>
-						</div>
+                        <div id='meet_upload'>
+                            <input id='fileicon' type='file' ref='meet_fileupload' />
+                        </div>
 
-					</div>
+                        <div id="meet_chat_input">
+                            <textarea id="meet_input" ref='meet_input' ></textarea>
+                            <button className="sent" type="submit" ref='meet_submit' onClick={this.sendText.bind(this)}>送出</button>
+                        </div>
 
-					<div id="feature">
+                    </div>
 
-						<div className="left">
-							<button id='audio-on' onClick={this.state.invite} >靜音</button>
-							<button id='video-on' onClick={this.Chat.toggleUserMedia} >視訊</button>
-						</div>
+                    <div id="feature">
 
-						<div className="center">
-							<button id="invite" onClick={this.state.invite}>邀請</button>
-							<button id="number" onClick={this.state.invite}>目前成員</button>
-							<button id="brainstorming" onClick={this.state.invite}>腦力激盪</button>
-							<button id="collaborative" onClick={this.state.invite}>共筆</button>
-						</div>
+                        <div className="left">
+                            <button id='audio-on' onClick={this.state.invite} >辨識</button>
+                            <button id='video-on' onClick={this.Chat.toggleUserMedia} >視訊</button>
+                        </div>
 
-						<div className="right">
-							<button id="end" onClick={this.state.invite}>結束會議</button>
-						</div>
-					</div>
+                        <div className="center">
+                            <button id="invite" onClick={this.state.invite}>邀請</button>
+                            <button id="number" onClick={this.state.invite}>目前成員</button>
+                            <button id="brainstorming" onClick={this.state.invite}>腦力激盪</button>
+                            <button id="collaborative" onClick={this.state.invite}>共筆</button>
+                        </div>
 
-					<div id="meet_main" ref="meet_main">
-						<video src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
-					</div>
-				</div>
-			</div>
-    );
-}
+                        <div className="right">
+                            <button id="end" onClick={this.state.invite}>結束會議</button>
+                        </div>
+                    </div>
+
+                    <div id="meet_main" ref="meet_main">
+                        <video src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 export default Meeting;
 
 
 /*const styles = {
-	button: {
-		margin: "1em"
-	}
+    button: {
+        margin: "1em"
+    }
 }
 class MyTest extends React.Component {
-	constructor(props) {
-		super(props)
-		this.recorder = new Recorder();
-		this.state = {
-			ready: false,
-			isRecording: this.recorder.isRecording
-		}
-	}
-	// async componentDidMount() {
-	// 	let that=this
-	//     await navigator.mediaDevices.getUserMedia({
-	//             audio: false,
-	//             video: true
-	//         })
-	//         .then((stream) => {
-	//             return new Promise(
-	//                 (res, rej) => {
-	// 					that.recorder.setStream(stream)
-	//                     res()
-	//                 }
-	//             )
-	//         })
-	//         .catch((error) => {
-	//             console.log('navigator.getUserMedia error: ', error);
-	//         })
-	// 	this.setState({ready:true})
-	// }
-	startRecording() {
-		//alert(1)
-		this.recorder.toggleRecording()
-		this.setState({
-			isRecording: this.recorder.isRecording,
-			isPlaying: this.recorder.isPlaying
-		})
+    constructor(props) {
+        super(props)
+        this.recorder = new Recorder();
+        this.state = {
+            ready: false,
+            isRecording: this.recorder.isRecording
+        }
+    }
+    // async componentDidMount() {
+    //  let that=this
+    //     await navigator.mediaDevices.getUserMedia({
+    //             audio: false,
+    //             video: true
+    //         })
+    //         .then((stream) => {
+    //             return new Promise(
+    //                 (res, rej) => {
+    //                  that.recorder.setStream(stream)
+    //                     res()
+    //                 }
+    //             )
+    //         })
+    //         .catch((error) => {
+    //             console.log('navigator.getUserMedia error: ', error);
+    //         })
+    //  this.setState({ready:true})
+    // }
+    startRecording() {
+        //alert(1)
+        this.recorder.toggleRecording()
+        this.setState({
+            isRecording: this.recorder.isRecording,
+            isPlaying: this.recorder.isPlaying
+        })
 
-	}
-	stopRecording() {
-		this.recorder.toggleRecording()
-		this.setState({
-			isRecording: this.recorder.isRecording
-		})
-	}
-	download() {
-		console.log(this)
-		this.recorder.download()
-	}
-	play() {
-		this.recorder.play()
-		this.setState({
-			isPlaying: this.recorder.isPlaying
-		})
-	}
-	render() {
-		let { recorder } = this
-		return (
-			<div>
-				Andy感謝祭
-				<div>
-					<button style={styles.button} disabled={!this.state.ready} onClick={this.startRecording.bind(this)}>開始錄影</button>
-					<button style={styles.button} disabled={!this.state.ready} onClick={this.stopRecording.bind(this)}>結束錄影</button>
-					<button style={styles.button} disabled={!this.state.ready}>上傳錄影</button>
-					<button style={styles.button} disabled={!this.state.ready} onClick={this.download.bind(this)}>下載錄影</button>
-					<button style={styles.button} disabled={!this.state.ready} onClick={this.play.bind(this)}>下載錄影</button>
-				</div>
-				<div>
-					<video src={this.state.isRecording || this.state.isPlaying ? recorder.streamUrl : ""} controls={this.state.isPlaying}></video>
-				</div>
-			</div>
-		)
-	}
+    }
+    stopRecording() {
+        this.recorder.toggleRecording()
+        this.setState({
+            isRecording: this.recorder.isRecording
+        })
+    }
+    download() {
+        console.log(this)
+        this.recorder.download()
+    }
+    play() {
+        this.recorder.play()
+        this.setState({
+            isPlaying: this.recorder.isPlaying
+        })
+    }
+    render() {
+        let { recorder } = this
+        return (
+            <div>
+                Andy感謝祭
+                <div>
+                    <button style={styles.button} disabled={!this.state.ready} onClick={this.startRecording.bind(this)}>開始錄影</button>
+                    <button style={styles.button} disabled={!this.state.ready} onClick={this.stopRecording.bind(this)}>結束錄影</button>
+                    <button style={styles.button} disabled={!this.state.ready}>上傳錄影</button>
+                    <button style={styles.button} disabled={!this.state.ready} onClick={this.download.bind(this)}>下載錄影</button>
+                    <button style={styles.button} disabled={!this.state.ready} onClick={this.play.bind(this)}>下載錄影</button>
+                </div>
+                <div>
+                    <video src={this.state.isRecording || this.state.isPlaying ? recorder.streamUrl : ""} controls={this.state.isPlaying}></video>
+                </div>
+            </div>
+        )
+    }
 }*/

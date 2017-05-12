@@ -6,7 +6,8 @@ class MeetingActions {
       'changeAudioState',
       'changeVideoReadyState',
       'gotLocalVideo',
-      'newParticipant'
+      'newParticipant',
+      'updateResult'
     );
   }
 }
