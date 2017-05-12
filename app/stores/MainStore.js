@@ -2,7 +2,7 @@ import alt from '../alt';
 import MainActions from '../actions/MainActions';
 
 class MainStore {
-  constructor(){
+  constrcutor(){
     this.bindActions(MainActions);
     //還未完成
   }

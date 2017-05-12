@@ -7,18 +7,8 @@ import FriendListActions from '../actions/FriendListActions';
 class FriendListStore {
   constructor() {
     this.bindActions(FriendListActions);
-    //bindActions用于将action绑定到store中定义的相应处理函数
-    this.characters = [];
   }
 
-  onGetTopCharactersSuccess(data) {
-    this.characters = data.slice(0, 5);
-  }
-
-  onGetTopCharactersFail(jqXhr) {
-    // Handle multiple response formats, fallback to HTTP status code number.
-    toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
-  }
 }
 
 export default alt.createStore(FriendListStore);

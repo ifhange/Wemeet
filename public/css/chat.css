@@ -72,7 +72,7 @@
 }
 
 #chat_input{
-  width: 83.5%;
+  width: 83%;
   height: 100px;
   background-color: #fff;
   position: absolute;
@@ -81,19 +81,20 @@
 
 #chat_box {
   height: 75%;
-	width: 95%;
+	width: 100%;
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
-#input{
+#textinput{
   font-size: 20px;
-  width: 100%;
+  width: 89.5%;
   height: 95px;
   float: left;
 }
-.sent {
+
+#sent {
   float: right;
 	-moz-box-shadow: 0px 1px 0px 0px #a4e271;
 	-webkit-box-shadow: 0px 1px 0px 0px #a4e271;
@@ -115,7 +116,7 @@
 	text-decoration:none;
 	text-shadow:0px 1px 0px #528009;
 }
-.sent:hover {
+#sent:hover {
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #82bd22), color-stop(1, #91d524));
 	background:-moz-linear-gradient(top, #82bd22 5%, #91d524 100%);
 	background:-webkit-linear-gradient(top, #82bd22 5%, #91d524 100%);
@@ -125,7 +126,7 @@
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#82bd22', endColorstr='#91d524',GradientType=0);
 	background-color:#82bd22;
 }
-.sent:active {
+#sent:active {
 	position:relative;
 	top:1px;
 }

@@ -1,9 +1,42 @@
 
 #feature{
     width: 80%;
-    height: 60px;
+    height: 70px;
     background-color: #535353;
     letter-spacing: 1px;
+}
+
+
+#number:hover{
+    background-color: #424242;
+}
+
+#audio-on:hover {
+    background-color: #424242;
+}
+
+#video-on:hover {
+    background-color: #424242;
+}
+
+#invite:hover {
+    background-color: #424242;
+}
+
+#brainstorming:hover {
+    background-color: #424242;
+}
+
+#collaborative:hover {
+    background-color: #424242;
+}
+
+#end:hover {
+    background-color: ff7478;
+}
+
+#fullscreen:hover {
+    background-color: #424242;
 }
 
 #meet_chat{
@@ -50,7 +83,7 @@
   border: none;
 }
 
-#video{
+#video-on{
   background-image: url('../img/video.png');
   background-color: #535353;
   background-size: 50% 50%;
@@ -84,8 +117,8 @@
   border: none;
 }
 
-#screenshare{
-  background-image: url('../img/airplay.png');
+#number{
+  background-image: url('../img/people.png');
   background-color: #535353;
   background-size: 50% 50%;
   background-repeat:no-repeat;
@@ -136,7 +169,7 @@
 }
 
 #fullscreen{
-  background-image: url('../img/fullscreen.png');
+  background-image: url('../img/people.png');
   background-color: #535353;
   background-size: 50% 50%;
   background-repeat:no-repeat;
@@ -188,7 +221,7 @@
   float:left;
 }
 
-#chat_input{
+#meet_chat_input{
   width: 16.7%;
   height: 80px;
   background-color: #fff;
@@ -196,7 +229,7 @@
   bottom: 0%;
 }
 
-#input{
+#meet_input{
   width: 75%;
   height: 75px;
   float: left;
@@ -321,4 +354,31 @@
 	border-bottom-color: #91d524;
 	border-width: 5px;
 	margin-left: -50px;
+}
+
+#number_sent{
+  	margin-top: 3%;
+    margin-left: 1%;
+}
+
+#me_sent{
+  	margin-top: 2%;
+    margin-right: 1%;
+}
+
+#meet_text{
+  color: black;
+  text-align: center;
+  line-height:280% ;
+  font-size: 11px;
+}
+
+#meet_upload{
+  position:absolute;
+  bottom:13%;
+  width: 16.5%;
+  height: 30px;
+}
+
+#fileicon{
 }

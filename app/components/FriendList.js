@@ -11,8 +11,7 @@ class FriendList extends React.Component {
   }
 
   componentDidMount() {
-    FriendListStore.listen(this.onChange);
-    FriendListStore.getFriendName();  
+    FriendListStore.listen(this.onChange);  
   }
 
   componentWillUnmount() {
@@ -25,6 +24,7 @@ class FriendList extends React.Component {
 
   render() {
     //好友名單上限資料
+    /*
     let friendonline = this.state.characters.map((character) => {
       return (
       <div id="firiend_person">
@@ -48,7 +48,7 @@ class FriendList extends React.Component {
         </div>
       </div>
       )
-    });
+    });*/
 
     return (
       <div id="friendlist">
