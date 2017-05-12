@@ -44,7 +44,6 @@
   height: 540px; 
   background-color: #6e3667;
   float: right;
-
 }
 
 
@@ -127,7 +126,7 @@
   line-height: 750%;
   width: 58px;
   height: 58px;
-  margin-left: 18%;
+  margin-left: 17%;
   float: left;
   color: white;
   font-size: 11px;
@@ -204,7 +203,7 @@
 
 #end{
   width: 10%;
-  height: 60px;
+  height: 58px;
   background: red;
   line-height:55px;
   float: right;
@@ -243,7 +242,7 @@
   height: 80px;
   background-color: #fff;
   position: absolute;
-  bottom: 0%;
+  bottom: 2%;
 }
 
 #meet_input{
@@ -337,7 +336,7 @@
 #chatbox{
   margin-top: 55px;
   width: 100%;
-  height: 410px;
+  height: 480px;
   background-color: #6e3667;
 }
 
@@ -349,18 +348,18 @@
   background-color: #1a0315;
 }
 
-#invite_detail {
+#invite_detail_on {
   width: 35%;
-  height: 45px;
+  height: 40px;
   margin-left: 35%;
-  margin-top: 1%;
+  margin-top: -4.5%;
 	position: relative;
 	background: #91d524;
 }
 
-#invite_detail:after {
+#invite_detail_on:after {
 	bottom: 100%;
-	left: 30%;
+	left: 22%;
 	border: solid transparent;
 	content: " ";
 	height: 0;
@@ -392,7 +391,7 @@
 
 #meet_upload{
   position:absolute;
-  bottom:13%;
+  bottom:15%;
   width: 16.5%;
   height: 30px;
 }
@@ -406,7 +405,7 @@
 }
 
 #meetpage{
-  margin-top: 3%;
+  margin-top: 2%;
   margin-left: 5%;
   line-height: 250%;
   float: left;
@@ -420,6 +419,126 @@
   BACKGROUND-COLOR: #91d524;
   width: 80%;
   height: 15px;
-  margin-top: 4.5%;
+  margin-top: 4%;
   float: left;
+}
+
+#invite_detail_off {
+  width: 35%;
+  height: 40px;
+  margin-left: 35%;
+  margin-top: -4.5%;
+	position: relative;
+	background: #91d524;
+  visibility: hidden;
+}
+
+#invite_detail_off:after {
+	bottom: 100%;
+	left: 22%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(145, 213, 36, 0);
+	border-bottom-color: #91d524;
+	border-width: 5px;
+	margin-left: -50px;
+  visibility: hidden;
+}
+
+#recognition_detail_on {
+  width: 15%;
+  height: 40px;
+  margin-left: 2%;
+  margin-top: 1%;
+	position: relative;
+	background: #91d524;
+}
+
+#recognition_detail_on:after {
+	bottom: 100%;
+	left: 55%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(145, 213, 36, 0);
+	border-bottom-color: #91d524;
+	border-width: 5px;
+	margin-left: -50px;
+}
+
+
+#recognition_detail_off {
+  width: 15%;
+  height: 40px;
+  margin-left: 2%;
+  margin-top: 1%;
+	position: relative;
+	background: #91d524;
+  visibility: hidden;
+}
+
+#recognition_detail_off:after {
+	bottom: 100%;
+	left: 55%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(145, 213, 36, 0);
+	border-bottom-color: #91d524;
+	border-width: 5px;
+	margin-left: -50px;
+  visibility: hidden;
+}
+
+#dialect {
+  BORDER-TOP-STYLE: none;
+  BORDER-RIGHT-STYLE: none;
+  BORDER-LEFT-STYLE: none;
+  BORDER-BOTTOM-STYLE: none;
+  width: 40%;
+  height: 15px;
+  float: left;
+  margin-left: 5%;
+  margin-top: 8%;
+}
+
+#language {
+  BORDER-TOP-STYLE: none;
+  BORDER-RIGHT-STYLE: none;
+  BORDER-LEFT-STYLE: none;
+  BORDER-BOTTOM-STYLE: none;
+  width: 40%;
+  height: 15px;
+  float: left;
+  margin-left: 5%;
+  margin-top: 8%;
+}
+
+#meet_agenda{
+  float: right;
+  margin-top: -4%;
+  margin-right: 0.5%;
+  width: 20%;
+  height: 500%px;
+  background-color: white;
+}
+
+#agenda_text{
+  width: 100;
+  height: 50%;
+  background-color: white;
+}
+
+#now_agenda{
+
 }

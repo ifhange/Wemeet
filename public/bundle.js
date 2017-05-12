@@ -9137,7 +9137,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var MeetingActions = function MeetingActions() {
   _classCallCheck(this, MeetingActions);
 
-  this.generateActions('changeAudioState', 'changeVideoState', 'changeVideoReadyState', 'gotLocalVideo', 'newParticipant');
+  this.generateActions('changeAudioState', 'changeVideoState', 'changeInviteState', 'changeVideoReadyState', 'gotLocalVideo', 'newParticipant');
 };
 
 exports.default = _alt2.default.createActions(MeetingActions);
@@ -15489,7 +15489,7 @@ var Chatroom = function (_React$Component) {
           { id: 'in' },
           _react2.default.createElement(
             'div',
-            { id: 'chat_box' },
+            { id: 'chat_box_content' },
             _react2.default.createElement(
               'div',
               { id: 'friend_sent' },
@@ -15748,12 +15748,12 @@ var FriendList = function (_React$Component) {
         { id: 'friendlist' },
         _react2.default.createElement(
           'div',
+          { id: 'friend_text' },
+          '\u6B63\u5728\u7DDA\u4E0A\uFF1A'
+        ),
+        _react2.default.createElement(
+          'div',
           { id: 'online' },
-          _react2.default.createElement(
-            'div',
-            { id: 'text' },
-            '\u6B63\u5728\u7DDA\u4E0A\uFF1A'
-          ),
           _react2.default.createElement(
             'a',
             { href: 'chatroom' },
@@ -15865,12 +15865,12 @@ var FriendList = function (_React$Component) {
         ),
         _react2.default.createElement(
           'div',
+          { id: 'friend_text' },
+          '\u96E2\u7DDA\uFF1A'
+        ),
+        _react2.default.createElement(
+          'div',
           { id: 'off' },
-          _react2.default.createElement(
-            'div',
-            { id: 'text' },
-            '\u96E2\u7DDA\uFF1A'
-          ),
           _react2.default.createElement(
             'a',
             { href: 'chatroom' },
@@ -16803,6 +16803,11 @@ var Meeting = function (_React$Component) {
 			_MeetingActions2.default.changeVideoState();
 		}
 	}, {
+		key: 'onClick_invitepage',
+		value: function onClick_invitepage() {
+			_MeetingActions2.default.changeInviteState();
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			// for (let id in this.state.connections) {
@@ -16912,13 +16917,13 @@ var Meeting = function (_React$Component) {
 							{ className: 'center' },
 							_react2.default.createElement(
 								'button',
-								{ id: 'invite', onClick: this.state.invite },
+								{ id: 'invite', onClick: this.onClick_invitepage },
 								'\u9080\u8ACB'
 							),
 							_react2.default.createElement(
 								'button',
 								{ id: 'number', onClick: this.state.invite },
-								'\u76EE\u524D\u6210\u54E1'
+								'\u76EE\u524D\u8B70\u7A0B'
 							),
 							_react2.default.createElement(
 								'button',
@@ -16946,7 +16951,13 @@ var Meeting = function (_React$Component) {
 						{ id: 'meet_main', ref: 'meet_main' },
 						_react2.default.createElement(
 							'div',
-							{ id: 'invite_detail' },
+							{ id: this.state.recordState },
+							_react2.default.createElement('select', { name: 'language', id: 'language', ref: 'select_language' }),
+							_react2.default.createElement('select', { name: 'dialect', id: 'dialect', ref: 'select_dialect' })
+						),
+						_react2.default.createElement(
+							'div',
+							{ id: this.state.inviteState },
 							_react2.default.createElement(
 								'div',
 								{ id: 'meetpage' },
@@ -16954,11 +16965,25 @@ var Meeting = function (_React$Component) {
 							),
 							_react2.default.createElement(
 								'textarea',
-								{ id: 'pagetext', onfocus: 'this.select()', onmouseover: 'this.focus()' },
+								{ id: 'pagetext' },
 								this.meetpage
 							)
 						),
-						_react2.default.createElement('video', { id: 'uservideo', src: this.state.videoIsReady ? this.state.localVideoURL : "" })
+						_react2.default.createElement('video', { id: 'uservideo', src: this.state.videoIsReady ? this.state.localVideoURL : "" }),
+						_react2.default.createElement(
+							'div',
+							{ id: 'meet_agenda' },
+							_react2.default.createElement(
+								'div',
+								{ id: 'now_agenda' },
+								'\u76EE\u524D\u8B70\u7A0B\uFF1A'
+							),
+							_react2.default.createElement(
+								'textarea',
+								{ id: 'agenda_text' },
+								'1. \u311A\u311A\u311A\u311A 2. \u54C0\u54C0\u54C0\u54C0\u54C0 3. GOOOOO'
+							)
+						)
 					)
 				)
 			);
@@ -17981,21 +18006,25 @@ var MeetingStore = function () {
     this.videoIsReady = false;
     this.audioOn = false;
     this.localVideoURL = '';
-    this.audioState = '靜音';
+    this.audioState = '取消辨識';
     this.audioImg = 'audio-on';
     this.videoState = '取消視訊';
     this.videoImg = 'video-off';
+    this.inviteState = 'invite_detail_off';
+    this.recordState = 'recognition_detail_on';
   }
 
   _createClass(MeetingStore, [{
     key: 'changeAudioState',
     value: function changeAudioState() {
-      if (this.audioState == '靜音') {
-        this.audioState = '取消靜音';
+      if (this.audioState == '取消辨識' && this.recordState == 'recognition_detail_on') {
+        this.audioState = '開始辨識';
         this.audioImg = 'audio-off';
+        this.recordState = 'recognition_detail_off';
       } else {
-        this.audioState = '靜音';
+        this.audioState = '取消辨識';
         this.audioImg = 'audio-on';
+        this.recordState = 'recognition_detail_on';
       }
     }
   }, {
@@ -18007,6 +18036,15 @@ var MeetingStore = function () {
       } else {
         this.videoState = '取消視訊';
         this.videoImg = 'video-off';
+      }
+    }
+  }, {
+    key: 'changeInviteState',
+    value: function changeInviteState() {
+      if (this.inviteState == 'invite_detail_off') {
+        this.inviteState = 'invite_detail_on';
+      } else {
+        this.inviteState = 'invite_detail_off';
       }
     }
   }, {

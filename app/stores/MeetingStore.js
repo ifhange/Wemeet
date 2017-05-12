@@ -8,20 +8,25 @@ class MeetingStore {
     this.videoIsReady = false;
     this.audioOn = false;
     this.localVideoURL = '';
-    this.audioState = '靜音';
+    this.audioState = '取消辨識';
     this.audioImg = 'audio-on';
     this.videoState = '取消視訊';
     this.videoImg = 'video-off';
+    this.inviteState = 'invite_detail_off';
+    this.recordState = 'recognition_detail_on'; 
   }
 
   changeAudioState() {
-    if(this.audioState == '靜音') {
-      this.audioState = '取消靜音';
+    if(this.audioState == '取消辨識' && this.recordState == 'recognition_detail_on') {
+      this.audioState = '開始辨識';
       this.audioImg = 'audio-off';
+      this.recordState = 'recognition_detail_off';
     } else {
-      this.audioState = '靜音';
+      this.audioState = '取消辨識';
       this.audioImg = 'audio-on';
+      this.recordState = 'recognition_detail_on';
     }
+
   }
 
   changeVideoState() {
@@ -31,6 +36,14 @@ class MeetingStore {
     } else {
       this.videoState = '取消視訊';
       this.videoImg = 'video-off';
+    }
+  }
+
+  changeInviteState() {
+    if(this.inviteState == 'invite_detail_off') {
+      this.inviteState = 'invite_detail_on';
+    } else {
+      this.inviteState = 'invite_detail_off';
     }
   }
 

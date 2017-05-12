@@ -165,6 +165,10 @@ class Meeting extends React.Component {
 		MeetingActions.changeVideoState();
 	}
 
+	onClick_invitepage() {
+		MeetingActions.changeInviteState();
+	}
+
 
 	render() {
 		// for (let id in this.state.connections) {
@@ -191,12 +195,13 @@ class Meeting extends React.Component {
 
 							<div id="me_sent">
 								<div className="arrow_box1"><a ref='meet_filedowload'><div id="meet_text">測試測試</div></a></div>
+
 							</div>
 
 						</div>
 
 						<div id='meet_upload'>
-							<input id='fileicon' type='file' ref='meet_fileupload' />
+								<input id='fileicon' type='file' ref='meet_fileupload' />
 						</div>
 
 						<div id="meet_chat_input">
@@ -214,8 +219,8 @@ class Meeting extends React.Component {
 						</div>
 
 						<div className="center">
-							<button id="invite" onClick={this.state.invite}>邀請</button>
-							<button id="number" onClick={this.state.invite}>目前成員</button>
+							<button id="invite" onClick={this.onClick_invitepage}>邀請</button>
+							<button id="number" onClick={this.state.invite}>目前議程</button>
 							<button id="brainstorming" onClick={this.state.invite}>腦力激盪</button>
 							<button id="collaborative" onClick={this.state.invite}>共筆</button>
 						</div>
@@ -225,13 +230,31 @@ class Meeting extends React.Component {
 						</div>
 					</div>
 
-					<div id="meet_main" ref="meet_main">
-						<div id="invite_detail">
-							<div id='meetpage'>網址：</div>
-							<textarea id='pagetext' onfocus="this.select()" onmouseover="this.focus()">{this.meetpage}</textarea>
+					<div id="meet_main" ref="meet_main">						
+						<div id={this.state.recordState} >
+							<select name="language" id='language' ref='select_language'>
+							</select>
+							<select name="dialect" id='dialect' ref='select_dialect'>
+							</select>
 						</div>
+
+						<div id={this.state.inviteState} >
+							<div id='meetpage'>網址：</div>
+							<textarea id='pagetext' >{this.meetpage}</textarea>
+						</div>			
 						<video id='uservideo' src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
+						
+						<div id='meet_agenda'>
+							<div id='now_agenda'>目前議程：</div>
+							<textarea id='agenda_text'>
+								1. ㄚㄚㄚㄚ
+								2. 哀哀哀哀哀
+								3. GOOOOO
+							</textarea>
+						</div>
+
 					</div>
+
 				</div>
 			</div>
 		);

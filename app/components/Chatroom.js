@@ -28,7 +28,7 @@ class Chatroom extends React.Component {
 
         <div id="box-b">
           <div id='in'>
-            <div id="chat_box">
+            <div id="chat_box_content">
 
               <div id="friend_sent">
                 <div id="come_time">22:00</div>
