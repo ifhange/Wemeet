@@ -8,7 +8,8 @@ class MeetingActions {
       'changeInviteState',
       'changeVideoReadyState',
       'gotLocalVideo',
-      'newParticipant'
+      'newParticipant',
+      'updateResult'
     );
   }
 }
