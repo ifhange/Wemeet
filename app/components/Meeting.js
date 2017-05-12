@@ -8,159 +8,172 @@ import socketIO from 'socket.io-client';
 let io = socketIO();
 let socket = io.connect('https://140.123.175.95.8787');
 let configuration = {
-	'iceServers': [{
-		'url': 'stun:stun.l.google.com:19302'
-	}, {
-		'url': 'stun:stun.services.mozilla.com'
-	}]
+    'iceServers': [{
+        'url': 'stun:stun.l.google.com:19302'
+    }, {
+        'url': 'stun:stun.services.mozilla.com'
+    }]
 };
 let room = window.location.hash;
 
 class Meeting extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = MeetingStore.getState();
-		this.onChange = this.onChange.bind(this);
-		this.recorder = new Recorder();
-		this.Chat = chat.createNew();
-		//this.Recognizer = recognition.createNew();
-		this.localUserID = "";
-		// this.videoList = [];
-		// this.tagList = {};
+    constructor(props) {
+        super(props);
+        this.state = MeetingStore.getState();
+        this.onChange = this.onChange.bind(this);
+        this.recorder = new Recorder();
+        this.Chat = chat.createNew();
+        //this.Recognizer = recognition.createNew();
+        this.localUserID = "";
+        // this.videoList = [];
+        // this.tagList = {};
+        this.isRecording = true;
+        this.isPlaying = true;
+    }
+
+    componentDidMount() {
+        MeetingStore.listen(this.onChange);
+        this.Chat.getUserMedia(MeetingActions.changeVideoReadyState, MeetingActions.gotLocalVideo);
+        if (!room) {
+            room = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);;
+        };
+        socket.emit('join', room);
+
+        //加入房間訊息
+        socket.on('joined', (room, clientID) => {
+            console.log('This peer has joined room: ' + room + ' with client ID ' + clientID);
+            this.localUserID = clientID;
+            socket.emit('newParticipant', clientID, room);
+        });
+
+        socket.on('newParticipant', (participantID) => {
+            console.log('收到新人加入的訊息');
+            //接到新人加入的訊息時，檢查是否已有連線
+            if (this.state.connections[participantID]) {
+                console.log("Connections with" + participantID + "already exists");
+                return;
+            } else {
+                let remote = addUser();
+                //主動建立連線
+                let isInitiator = true;
+                let peerConn = this.Chat.createPeerConnection(isInitiator, configuration, participantID, socket, remote);
+                peerConn.createOffer()
+                    .then((offer) => {
+                        peerConn.setLocalDescription(offer);
+                        socket.emit('offerRemotePeer', offer, localUserID, participantID);
+                    })
+                    .catch((e) => {
+                        console.log('發生錯誤了看這裡: ' + e);
+                    });
+                MeetingActions.newParticipant({ a: participantID, b: peerConn });
+            }
+        });
+
+        socket.on('onIceCandidate', (candidate, sender) => {
+            console.log('收到遠端的candidate，要加入: ' + JSON.stringify(candidate));
+            this.state.connections[sender].addIceCandidate(new RTCIceCandidate(candidate))
+                .catch((e) => {
+                    console.log('發生錯誤了看這裡: ' + e);
+                });
+        });
+
+        socket.on('offer', (offer, sender) => {
+            if (this.state.connections[sender]) {
+                console.log("Connections with" + sender + "already exists");
+                return;
+            } else {
+                let remote = addUser();
+                console.log('收到遠端的 offer，要建立連線並處理');
+                let isInitiator = false;
+                let peerConn = createPeerConnection(isInitiator, configuration, sender, socket, remote);
+                peerConn.setRemoteDescription(new RTCSessionDescription(offer))
+                    .then(() => {
+                        return peerConn.createAnswer();
+                    })
+                    .then((answer) => {
+                        console.log('創建好本地端的 answer，要傳出去');
+                        peerConn.setLocalDescription(answer);
+                        socket.emit('answerRemotePeer', answer, localUserID, sender);
+                    })
+                    .catch((e) => {
+                        console.log('發生錯誤了看這裡:' + e);
+                    });
+                MeetingActions.newParticipant({ a: sender, b: peerConn });
+            }
+        });
+
+        socket.on('answer', (answer, sender) => {
+            console.log('answer' + JSON.stringify(answer));
+            connections[sender].setRemoteDescription(new RTCSessionDescription(answer));
+        });
+
+        socket.on('participantLeft', (participantID) => {
+            delete connections[participantID];
+            delete remoteStream[participantID];
+        });
+
+        socket.on('videoFromDB', (arrayBuffer) => {
+            console.log("Getting blob form DB and server!!");
+            let blob = new Blob([arrayBuffer], { type: 'video/webm' });
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style = "display: none";
+            a.href = url;
+            a.download = localUserID + '.webm';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+    }
+
+    componentWillUnmount() {
+        MeetingStore.unlisten(this.onChange);
+    }
+
+    onChange(state) {
+        this.setState(state);
+    }
+
+    sendText() {
+        let inputText = this.refs.meet_input.value;
+        this.Chat.sendText(inputText, this.localUserID);
+    }
+
+    addUser() {
+        let remote = document.createElement('video');
+        remote.classList.add('');
+        this.refs.meet_main.appendChild(remote);
+        alert(remote);
+    }
+
+    toUser() {
+        let file = this.refs.meet_fileupload.files[0];
+        this.Chat.sendFileToUser(file);
+    }
+
+   	toggleRecording(){
+   		if(isRecording){
+   			this.isRecording = false;
+   		}
+   	    this.isRecording = true;
+        this.isPlaying = false;
+    }
+
+    download() {
+		this.recorder.download()
 	}
 
-	componentDidMount() {
-		MeetingStore.listen(this.onChange);
-		this.Chat.getUserMedia(MeetingActions.changeVideoReadyState, MeetingActions.gotLocalVideo);
-		if (!room) {
-			room = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);;
-		};
-		socket.emit('join', room);
-
-		//加入房間訊息
-		socket.on('joined', (room, clientID) => {
-			console.log('This peer has joined room: ' + room + ' with client ID ' + clientID);
-			this.localUserID = clientID;
-			socket.emit('newParticipant', clientID, room);
-		});
-
-		socket.on('newParticipant', (participantID) => {
-			console.log('收到新人加入的訊息');
-			//接到新人加入的訊息時，檢查是否已有連線
-			if (this.state.connections[participantID]) {
-				console.log("Connections with" + participantID + "already exists");
-				return;
-			} else {
-				let remote = addUser();
-				//主動建立連線
-				let isInitiator = true;
-				let peerConn = this.Chat.createPeerConnection(isInitiator, configuration, participantID, socket, remote);
-				peerConn.createOffer()
-					.then((offer) => {
-						peerConn.setLocalDescription(offer);
-						socket.emit('offerRemotePeer', offer, localUserID, participantID);
-					})
-					.catch((e) => {
-						console.log('發生錯誤了看這裡: ' + e);
-					});
-				MeetingActions.newParticipant({ a: participantID, b: peerConn });
-			}
-		});
-
-		socket.on('onIceCandidate', (candidate, sender) => {
-			console.log('收到遠端的candidate，要加入: ' + JSON.stringify(candidate));
-			this.state.connections[sender].addIceCandidate(new RTCIceCandidate(candidate))
-				.catch((e) => {
-					console.log('發生錯誤了看這裡: ' + e);
-				});
-		});
-
-		socket.on('offer', (offer, sender) => {
-			if (this.state.connections[sender]) {
-				console.log("Connections with" + sender + "already exists");
-				return;
-			} else {
-				let remote = addUser();
-				console.log('收到遠端的 offer，要建立連線並處理');
-				let isInitiator = false;
-				let peerConn = createPeerConnection(isInitiator, configuration, sender, socket, remote);
-				peerConn.setRemoteDescription(new RTCSessionDescription(offer))
-					.then(() => {
-						return peerConn.createAnswer();
-					})
-					.then((answer) => {
-						console.log('創建好本地端的 answer，要傳出去');
-						peerConn.setLocalDescription(answer);
-						socket.emit('answerRemotePeer', answer, localUserID, sender);
-					})
-					.catch((e) => {
-						console.log('發生錯誤了看這裡:' + e);
-					});
-				MeetingActions.newParticipant({ a: sender, b: peerConn });
-			}
-		});
-
-		socket.on('answer', (answer, sender) => {
-			console.log('answer' + JSON.stringify(answer));
-			connections[sender].setRemoteDescription(new RTCSessionDescription(answer));
-		});
-
-		socket.on('participantLeft', (participantID) => {
-			delete connections[participantID];
-			delete remoteStream[participantID];
-		});
-
-		socket.on('videoFromDB', (arrayBuffer) => {
-			console.log("Getting blob form DB and server!!");
-			let blob = new Blob([arrayBuffer], { type: 'video/webm' });
-			let url = window.URL.createObjectURL(blob);
-			let a = document.createElement("a");
-			document.body.appendChild(a);
-			a.style = "display: none";
-			a.href = url;
-			a.download = localUserID + '.webm';
-			a.click();
-			window.URL.revokeObjectURL(url);
-		})
+	play() {
+		this.recorder.play()
+		this.isPlaying = true;
 	}
 
-	componentWillUnmount() {
-		MeetingStore.unlisten(this.onChange);
-	}
-
-	onChange(state) {
-		this.setState(state);
-	}
-
-	sendText() {
-		let inputText = this.refs.meet_input.value;
-		this.Chat.sendText(inputText);
-		inputText = '';
-	}
-
-	addUser() {
-		let remote = document.createElement('video');
-		remote.classList.add('');
-		this.refs.meet_main.appendChild(remote);
-		return remote;
-	}
-
-	toDB() {
-
-	}
-
-	toUser() {
-		let file = this.refs.meet_fileupload.files[0];
-		this.Chat.sendFileToUser(file);
-	}
-
-
-	render() {
-		// for (let id in this.state.connections) {
-		// 	this.tagList[id] = <video key={id} className={xxx} ></video>;
-		// }
-		return (
-			<div id='in'>
+render() {
+    // for (let id in this.state.connections) {
+    // 	this.tagList[id] = <video key={id} className={xxx} ></video>;
+    // }
+    return (
+        <div id='in'>
 				<div id="box-b">
 					<div id="meet_chat">
 						<div id="chat_menu">
@@ -199,7 +212,7 @@ class Meeting extends React.Component {
 
 						<div className="left">
 							<button id='audio-on' onClick={this.state.invite} >靜音</button>
-							<button id='video-on' onClick={this.state.invite} >視訊</button>
+							<button id='video-on' onClick={this.Chat.toggleUserMedia} >視訊</button>
 						</div>
 
 						<div className="center">
@@ -219,8 +232,8 @@ class Meeting extends React.Component {
 					</div>
 				</div>
 			</div>
-		);
-	}
+    );
+}
 }
 export default Meeting;
 
