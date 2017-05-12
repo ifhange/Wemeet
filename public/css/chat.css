@@ -79,7 +79,7 @@
   bottom: 2%;
 }
 
-#chat_box {
+#chat_box_content {
   height: 75%;
 	width: 100%;
   overflow: scroll;

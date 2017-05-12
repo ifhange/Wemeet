@@ -139,7 +139,7 @@ let Chat = {
             for (let id in msgChannels) {
                 msgChannels[id].send(localUserID + '[' + formattedTime + ']: ' + value);
             }
-            alert(localUserID + '[' + formattedTime + ']: ' + value);
+            return ('localUserID + '[' + formattedTime + ']: ' + value');
         };
 
         Chat.sendFileToUser = (files) => {

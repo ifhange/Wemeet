@@ -1,5 +1,5 @@
 import React from 'react';
-import MainStore from '../stores/MainStore' ;
+import MainStore from '../stores/MainStore';
 import MainActions from '../actions/MainActions';
 
 class Main extends React.Component {
@@ -21,16 +21,17 @@ class Main extends React.Component {
         this.setState(state);
     }
 
-    handleLogin(e) {
+    handleCreate(e) {
         e.preventDefault();
-        //login();
+        window.location = 'https://140.123.175.95:8787/meeting#' + this.refs.create_input.value;
     }
 
     handleJoin(e) {
         e.preventDefault();
+        window.location = 'https://140.123.175.95:8787/meeting#' + this.refs.create_input.value;
         //join();
         //開始通訊
-        
+
 
 
 
@@ -66,12 +67,12 @@ class Main extends React.Component {
                         <div id="add">建立會議？</div>
                         <div id="add_text">將朋友寫入在以下欄位，即可立即開始會議</div>
                         <span className="input input--minoru">
-                            <input className="input__field input__field--yoko" type="text" id="input-16" />
+                            <input className="input__field input__field--yoko" type="text" id="input-16" ref='create_input'/>
                             <label className="input__label input__label--yoko" htmlFor="input-16">
                                 <span className="input__label-content input__label-content--yoko">輸入朋友名稱</span>
                             </label>
                         </span>
-                        <input type="submit" className="myButton" name="login" id="login" value="GO!" onClick={this.handleLogin} ref='login'/>
+                        <input type="submit" className="myButton" name="login" id="login" value="GO!" onClick={this.handleCreate.bind(this)}/>
                     </div>
 
                     <div id="join_meet">
@@ -79,12 +80,12 @@ class Main extends React.Component {
                         <div id="add">加入會議？</div>
                         <div id="add_text">將朋友給您的代碼貼上再以下欄位</div>
                         <span className="input input--minoru">
-                            <input className="input__field input__field--yoko" type="text" id="input-16" />
+                            <input className="input__field input__field--yoko" type="text" id="input-16" ref='join_input'/>
                             <label className="input__label input__label--yoko" htmlFor="input-16">
                                 <span className="input__label-content input__label-content--yoko">會議代碼</span>
                             </label>
                         </span>
-                        <input type="submit" className="myButton" name="login" id="login" value="GO!" onClick={this.handleJoin} ref='join'/>
+                        <input type="submit" className="myButton" name="login" id="login" value="GO!" onClick={this.handleJoin.bind(this)}/>
                     </div>
                 </div>
           </div>

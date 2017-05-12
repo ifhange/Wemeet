@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
 import FriendListStore from '../stores/FriendListStore';
 import FriendListActions from '../actions/FriendListActions';
 
@@ -52,8 +51,8 @@ class FriendList extends React.Component {
 
     return (
       <div id="friendlist">
+        <div id='friend_text'>正在線上：</div>
         <div id="online">
-          <div id='text'>正在線上：</div>
           <a href="chatroom"><div id="friend_person">
           <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
           <div id="friend_name">安</div>
@@ -87,9 +86,9 @@ class FriendList extends React.Component {
           </div></a>
     
         </div>
-
+        
+        <div id='friend_text'>離線：</div>
         <div id="off">
-          <div id='text'>離線：</div>
           <a href="chatroom"><div id="friend_person">
           <div id="circle2"><img id="friend_image" src="../img/logo_user.png"></img></div>
           <div id="friend_name">煩</div>

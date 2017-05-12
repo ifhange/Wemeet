@@ -11,9 +11,9 @@ class UserStateActions {
             'getOnlineFail'
         );
     }
-
+/*
     getUserName() {
-        fetch('https://140.123.175.95:8787/userName')
+        fetch('https://140.123.175.95:8787/api/db/userName')
             .then((res) => {
                 if (res.ok) {
                     return res.json();
@@ -28,9 +28,9 @@ class UserStateActions {
                 //alert(error);
             })
     }
-
+*/
     getUserImg() {
-        fetch('https://140.123.175.95:8787/userImg')
+        fetch('https://140.123.175.95:8787/api/db/test')
             .then((res) => {
                 if (res.ok) {
                     return res.blob();
@@ -46,9 +46,9 @@ class UserStateActions {
                 //alert(error);
             })
     }
-
+/*
     getOnline() {
-        fetch('https://140.123.175.95:8787/userStatus')
+        fetch('https://140.123.175.95:8787/api/db/userStatus')
             .then((res) => {
                 if (res.ok) {
                     return res.json();
@@ -64,7 +64,7 @@ class UserStateActions {
                 //alert(error);
             })
     }
-
+*/
 }
 
 export default alt.createActions(UserStateActions);
