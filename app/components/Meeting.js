@@ -38,9 +38,9 @@ class Meeting extends React.Component {
 		this.refs.select_language.selectedIndex = 36;
 		this.updateCountry();
 		this.refs.select_dialect.selectedIndex = 2;
-
 		socket.emit('join', room);
 		MeetingStore.listen(this.onChange);
+
 		this.Chat.getUserMedia(MeetingActions.changeVideoReadyState, MeetingActions.gotLocalVideo);
 		if (!room) {
 			room = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);;
@@ -150,7 +150,6 @@ class Meeting extends React.Component {
 		let remote = document.createElement('video');
 		remote.classList.add('');
 		this.refs.meet_main.appendChild(remote);
-		alert(remote);
 	}
 
 	toUser() {
@@ -183,7 +182,6 @@ class Meeting extends React.Component {
 		for (let i = this.refs.select_dialect.options.length - 1; i >= 0; i--) {
 			this.refs.select_dialect.remove(i);
 		}
-		//方言
 		let list = this.state.langs[this.refs.select_language.selectedIndex];
 		for (let i = 1; i < list.length; i++) {
 			this.refs.select_dialect.options.add(new Option(list[i][1], list[i][0]));
@@ -196,6 +194,7 @@ class Meeting extends React.Component {
 
 	onClick_videoToggle() {
 		MeetingActions.changeVideoState();
+		
 	}
 
 	onClick_invitepage() {
@@ -240,7 +239,6 @@ class Meeting extends React.Component {
 						</div>
 
 					</div>
-
 					<div id="feature">
 
 						<div className="left">
@@ -260,13 +258,36 @@ class Meeting extends React.Component {
 							<button id="end" onClick={this.state.invite}>結束會議</button>
 						</div>
 					</div>
-					<div id="meet_main" ref="meet_main">
+					<div id="meet_main" ref="meet_main">						
 						<div id={this.state.recordState} >
 							<select name="language" id='language' ref='select_language'>
 							</select>
 							<select name="dialect" id='dialect' ref='select_dialect'>
 							</select>
 						</div>
-						)
+
+						<div id={this.state.inviteState} >
+							<div id='meetpage'>網址：</div>
+							<textarea id='pagetext' >{this.meetpage}</textarea>
+						</div>			
+						<video id='uservideo' src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
+						
+						<div id='meet_agenda'>
+							<div id='now_agenda'>目前議程：</div>
+							<textarea id='agenda_text'>
+								1. ㄚㄚㄚㄚ
+								2. 哀哀哀哀哀
+								3. GOOOOO
+							</textarea>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		)
 	}
 }
+
+export default Meeting;
+

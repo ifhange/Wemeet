@@ -137,9 +137,6 @@ class MeetingStore {
     connections[a] = b;
   }
 
-  changeAudioState() {
-
-  }
   changeVideoReadyState() {
     this.videoIsReady = !this.videoIsReady;
   }
