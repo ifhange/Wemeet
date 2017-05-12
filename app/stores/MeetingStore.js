@@ -2,16 +2,27 @@ import alt from '../alt';
 import MeetingActions from '../actions/MeetingActions';
 
 class MeetingStore {
-  constrcutor(){
-    this.bindActions(Meetingactions);
-    this.audio-state = 'audio-on'; //設定講話者靜音
-    this.video-state = 'video-on'; //設定視訊無畫面
-    //還未完成
+  constructor() {
+    this.bindActions(MeetingActions);
+    this.connections = {}; //存放連線中的人的socket.id
+    this.videoIsReady = false;
+    this.audioOn = false;
+    this.localVideoURL = '';
   }
 
+  changeAudioState() {
 
-  //還未完成
+  }
+  changeVideoReadyState() {
+    this.videoIsReady = !this.videoIsReady;
+  }
+  gotLocalVideo(videoURL) {
+    this.localVideoURL = videoURL;
+  }
 
+  newParticipant({a,b}) {
+    connections[a] = b;
+  }
 }
 
 export default alt.createStore(MeetingStore);

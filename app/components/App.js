@@ -4,8 +4,11 @@ import UserState from './UserState';
 import Header from './Header';
 import Menu from './Menu';
 import Main from './Main';
-import FriendList from './FriendList';
 import Meeting from './Meeting';
+import Chatroom from './Chatroom';
+import History from './History';
+import FriendList from './FriendList';
+
 
 class App extends React.Component {
     render() {
@@ -14,10 +17,12 @@ class App extends React.Component {
 	            <div>
 	                <UserState/>  
 	                <Header/>
-	                <Route exact={true} path="/" render = {()=>(
-	                	<h1>佳怡~~~登入頁面就靠你了阿!</h1>
-	                )}/>
-	                <Route exact={true} path="/main" component={Main}/>	
+                    <Menu/>
+                    <FriendList />
+	                <Route exact={true} path="/" component={Main}/>
+                    <Route exact={true} path='/chatroom' component={Chatroom} />
+                    <Route exact={true} path='/meeting' component={Meeting} />
+                    <Route exact={true} path='/history' component={History} />
 	            </div>
             </Router>
         );

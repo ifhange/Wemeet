@@ -1,8 +1,6 @@
 import React from 'react';
 import MainStore from '../stores/MainStore' ;
 import MainActions from '../actions/MainActions';
-import Recorder from '../lib/record.js';
-import Recognizer from '../lib/recognize.js';
 
 class Main extends React.Component {
     constructor(props) {
@@ -13,7 +11,6 @@ class Main extends React.Component {
 
     componentDidMount() {
         MainStore.listen(this.onChange);
-
     }
 
     componentWillUnmount() {

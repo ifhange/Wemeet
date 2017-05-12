@@ -24,9 +24,9 @@ class UserStateActions {
                 this.actions.getUserNameSuccess(json);
             })
             .catch(
-                function(error) {
-                    //alert(error);
-                })
+            function (error) {
+                //alert(error);
+            })
     }
 
     getUserImg() {
@@ -42,9 +42,9 @@ class UserStateActions {
                 this.actions.getUserImgSuccess(objectURL);
             })
             .catch(
-                function(error) {
-                    //alert(error);
-                })
+            function (error) {
+                //alert(error);
+            })
     }
 
     getOnline() {
@@ -60,9 +60,9 @@ class UserStateActions {
                 this.actions.getOnlineSuccess(json);
             })
             .catch(
-                function(error) {
-                    //alert(error);
-                })
+            function (error) {
+                //alert(error);
+            })
     }
 
 }
