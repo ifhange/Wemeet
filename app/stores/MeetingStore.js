@@ -8,6 +8,7 @@ class MeetingStore {
     this.videoIsReady = false;
     this.audioOn = false;
     this.localVideoURL = '';
+    this.isStreaming = false;
     this.langs = [
       ['Afrikaans', ['af-ZA']],
       ['Bahasa Indonesia', ['id-ID']],
@@ -127,17 +128,7 @@ class MeetingStore {
   }
 
   changeVideoReadyState() {
-    this.videoIsReady = !this.videoIsReady;
-  }
-  gotLocalVideo(videoURL) {
-    this.localVideoURL = videoURL;
-  }
-
-  newParticipant({ a, b }) {
-    connections[a] = b;
-  }
-
-  changeVideoReadyState() {
+    this.isStreaming = !this.isStreaming;
     this.videoIsReady = !this.videoIsReady;
   }
   gotLocalVideo(videoURL) {
@@ -152,6 +143,8 @@ class MeetingStore {
     this.interim_result = temp;
     this.final_result = final;
   }
+
+
 }
 
 export default alt.createStore(MeetingStore);

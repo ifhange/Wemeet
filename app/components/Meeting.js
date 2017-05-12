@@ -22,13 +22,14 @@ class Meeting extends React.Component {
 		this.state = MeetingStore.getState();
 		this.onChange = this.onChange.bind(this);
 		this.recorder = new Recorder();
-		this.Chat = chat.createNew();
+		this.Chat = chat.createNew(MeetingActions.changeVideoReadyState);
 		this.Recognizer = recognition.createNew(MeetingActions.updateReslt);
 		this.localUserID = "";
 		// this.videoList = [];
 		// this.tagList = {};
 		this.isRecording = true;
 		this.isPlaying = true;
+		this.meetpage = window.location.href;
 	}
 
 	componentDidMount() {
@@ -41,7 +42,7 @@ class Meeting extends React.Component {
 		socket.emit('join', room);
 		MeetingStore.listen(this.onChange);
 
-		this.Chat.getUserMedia(MeetingActions.changeVideoReadyState, MeetingActions.gotLocalVideo);
+		this.Chat.getUserMedia(MeetingActions.gotLocalVideo);
 		if (!room) {
 			room = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);;
 		};
@@ -143,7 +144,9 @@ class Meeting extends React.Component {
 
 	sendText() {
 		let inputText = this.refs.meet_input.value;
-		this.Chat.sendText(inputText, this.localUserID);
+		alert(inputText);
+		let myself_text = this.Chat.sendText(inputText, this.localUserID);
+		addmessenger(myself_text);
 	}
 
 	addUser() {
@@ -194,16 +197,31 @@ class Meeting extends React.Component {
 
 	onClick_videoToggle() {
 		MeetingActions.changeVideoState();
-		
+		if(this.state.isStreaming){
+			this.Chat.toggleUserMedia();
+		} else {
+			this.Chat.getUserMedia(MeetingActions.gotLocalVideo);
+		}
 	}
+
 
 	onClick_invitepage() {
 		MeetingActions.changeInviteState();
 	}
+
 	render() {
 		// for (let id in this.state.connections) {
 		// 	this.tagList[id] = <video key={id} className={xxx} ></video>;
 		// }
+
+		/*let mymessenger = addmessenger(mytext){
+			return (
+				<div id="number_sent">
+					<div className="arrow_box"><div id="meet_text">{mytext}</div></div>
+				</div>
+			)
+		};*/
+
 		return (
 			<div id='in'>
 				<div id="box-b">
@@ -215,16 +233,10 @@ class Meeting extends React.Component {
 
 						<div id="chatbox">
 
-							<div id="number_sent">
-								<div className="arrow_box"><div id="meet_text">測試測試</div></div>
-							</div>
+						{this.store}
 
 							<div id="me_sent">
 								<div className="arrow_box1"><div id="meet_text">測試測試</div></div>
-							</div>
-
-							<div id="me_sent">
-								<div className="arrow_box1"><a ref='meet_filedowload'><div id="meet_text">測試測試</div></a></div>
 							</div>
 
 						</div>
@@ -270,10 +282,10 @@ class Meeting extends React.Component {
 							<div id='meetpage'>網址：</div>
 							<textarea id='pagetext' >{this.meetpage}</textarea>
 						</div>			
-						<video id='uservideo' src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
-						
+						<video className='userVideo' id='user' src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
+
 						<div id='meet_agenda'>
-							<div id='now_agenda'>目前議程：</div>
+							<div id='now_agenda'>目前議程</div>
 							<textarea id='agenda_text'>
 								1. ㄚㄚㄚㄚ
 								2. 哀哀哀哀哀
