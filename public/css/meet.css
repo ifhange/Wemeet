@@ -1,7 +1,7 @@
 
 #feature{
     width: 80%;
-    height: 70px;
+    height: 60px;
     background-color: #535353;
     letter-spacing: 1px;
 }
@@ -56,7 +56,7 @@
   background-position: center 20%;
   text-align: center;
   line-height: 750%;
-  width: 58px;
+  width: 65px;
   height: 58px;
   margin-left: 2%;
   float: left;
@@ -74,7 +74,7 @@
   background-position: center 20%;
   text-align: center;
   line-height: 750%;
-  width: 58px;
+  width: 65px;
   height: 58px;
   margin-left: 2%;
   float: left;
@@ -91,7 +91,24 @@
   background-position: center 20%;
   text-align: center;
   line-height: 750%;
-  width: 58px;
+  width: 65px;
+  height: 58px;
+  margin-left: 1%;
+  float: left;
+  color: white;
+  font-size: 11px;
+  border: none;
+}
+
+#video-off{
+  background-image: url('../img/video-off.png');
+  background-color: #535353;
+  background-size: 50% 50%;
+  background-repeat:no-repeat;
+  background-position: center 20%;
+  text-align: center;
+  line-height: 750%;
+  width: 65px;
   height: 58px;
   margin-left: 1%;
   float: left;
@@ -187,7 +204,7 @@
 
 #end{
   width: 10%;
-  height: 55px;
+  height: 60px;
   background: red;
   line-height:55px;
   float: right;
@@ -332,18 +349,18 @@
   background-color: #1a0315;
 }
 
-#screen_detail {
-  width: 18%;
+#invite_detail {
+  width: 35%;
   height: 45px;
-  margin-left: 40%;
+  margin-left: 35%;
   margin-top: 1%;
 	position: relative;
 	background: #91d524;
 }
 
-#screen_detail:after {
+#invite_detail:after {
 	bottom: 100%;
-	left: 50%;
+	left: 30%;
 	border: solid transparent;
 	content: " ";
 	height: 0;
@@ -380,5 +397,29 @@
   height: 30px;
 }
 
-#fileicon{
+#uservideo{
+  width: 500px;
+  height: 150px;
+  margin-top: 10%;
+  margin-left: 5%;
+  float: left;
+}
+
+#meetpage{
+  margin-top: 3%;
+  margin-left: 5%;
+  line-height: 250%;
+  float: left;
+}
+
+#pagetext{
+  BORDER-TOP-STYLE: none;
+  BORDER-RIGHT-STYLE: none;
+  BORDER-LEFT-STYLE: none;
+  BORDER-BOTTOM-STYLE: none;
+  BACKGROUND-COLOR: #91d524;
+  width: 80%;
+  height: 15px;
+  margin-top: 4.5%;
+  float: left;
 }

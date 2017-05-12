@@ -12,8 +12,8 @@ class UserState extends React.Component {
   componentDidMount() {
     UserStateStore.listen(this.onChange);
     UserStateActions.getUserImg();
-    UserStateActions.getUserName();
-    UserStateActions.getOnline();
+    //UserStateActions.getUserName();
+    //UserStateActions.getOnline();
   }
 
   componentWillUnmount() {

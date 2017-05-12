@@ -27,6 +27,7 @@ class Meeting extends React.Component {
 		this.localUserID = "";
 		// this.videoList = [];
 		// this.tagList = {};
+		this.meetpage = window.location.href;
 	}
 
 	componentDidMount() {
@@ -122,6 +123,7 @@ class Meeting extends React.Component {
 			a.click();
 			window.URL.revokeObjectURL(url);
 		})
+
 	}
 
 	componentWillUnmount() {
@@ -136,6 +138,7 @@ class Meeting extends React.Component {
 		let inputText = this.refs.meet_input.value;
 		this.Chat.sendText(inputText);
 		inputText = '';
+		aler(inputText);
 	}
 
 	addUser() {
@@ -152,6 +155,14 @@ class Meeting extends React.Component {
 	toUser() {
 		let file = this.refs.meet_fileupload.files[0];
 		this.Chat.sendFileToUser(file);
+	}
+
+	onClick_audioToggle() {
+		MeetingActions.changeAudioState();
+	}
+
+	onClick_videoToggle() {
+		MeetingActions.changeVideoState();
 	}
 
 
@@ -198,8 +209,8 @@ class Meeting extends React.Component {
 					<div id="feature">
 
 						<div className="left">
-							<button id='audio-on' onClick={this.state.invite} >靜音</button>
-							<button id='video-on' onClick={this.state.invite} >視訊</button>
+							<button id={this.state.audioImg} onClick={this.onClick_audioToggle.bind(this)} >{this.state.audioState}</button>
+							<button id={this.state.videoImg} onClick={this.onClick_videoToggle.bind(this)} >{this.state.videoState}</button>
 						</div>
 
 						<div className="center">
@@ -215,7 +226,11 @@ class Meeting extends React.Component {
 					</div>
 
 					<div id="meet_main" ref="meet_main">
-						<video src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
+						<div id="invite_detail">
+							<div id='meetpage'>網址：</div>
+							<textarea id='pagetext' onfocus="this.select()" onmouseover="this.focus()">{this.meetpage}</textarea>
+						</div>
+						<video id='uservideo' src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
 					</div>
 				</div>
 			</div>

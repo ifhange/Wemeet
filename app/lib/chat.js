@@ -130,6 +130,7 @@ let Chat = {
             for (let id in msgChannels) {
                 msgChannels[id].send(localUserID + '[' + formattedTime + ']: ' + value);
             }
+            return
         };
 
         Chat.sendFileToUser = (files) => {
