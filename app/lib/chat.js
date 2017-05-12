@@ -4,14 +4,17 @@ let Chat = {
     createNew: () => {
         Chat.isReady = false;
         let localStream = '';
-
+        let fileChannels = {};
+        let msgChannels = {};
         //取得使用者端的影像
         Chat.getUserMedia = (changeVideoReadyState, gotLocalVideo) => {
             navigator.mediaDevices.getUserMedia({
-                audio: true,
-                video: true
-            })
+                    audio: true,
+                    video: true
+                })
                 .then((stream) => {
+                    var track = stream.getTracks()[0];
+                    alert(track);
                     let videoURL = window.URL.createObjectURL(stream);
                     changeVideoReadyState();
                     gotLocalVideo(videoURL);
@@ -20,6 +23,12 @@ let Chat = {
                 .catch((e) => {
                     console.log('發生錯誤了看這裡:' + e);
                 });
+        };
+
+        Chat.toggleUserMedia = () => {
+            if (localStream) {
+                localStream.getTracks().forEach((track) => { track.stop(); });
+            }
         };
 
         //建立點對點連線物件，以及為連線標的創建影像視窗
@@ -117,7 +126,7 @@ let Chat = {
             };
         };
 
-        Chat.sendText = (value) => {
+        Chat.sendText = (value, localUserID) => {
             if (!value) {
                 alert('你不打字我是要傳什麼，是不是沒被揍過');
                 return;
@@ -130,7 +139,7 @@ let Chat = {
             for (let id in msgChannels) {
                 msgChannels[id].send(localUserID + '[' + formattedTime + ']: ' + value);
             }
-            return
+            return (localUserID + '[' + formattedTime + ']: ' + value);
         };
 
         Chat.sendFileToUser = (files) => {

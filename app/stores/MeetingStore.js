@@ -8,6 +8,7 @@ class MeetingStore {
     this.videoIsReady = false;
     this.audioOn = false;
     this.localVideoURL = '';
+
     this.audioState = '取消辨識';
     this.audioImg = 'audio-on';
     this.videoState = '取消視訊';
@@ -58,7 +59,19 @@ class MeetingStore {
     connections[a] = b;
   }
 
+  changeAudioState() {
 
+  }
+  changeVideoReadyState() {
+    this.videoIsReady = !this.videoIsReady;
+  }
+  gotLocalVideo(videoURL) {
+    this.localVideoURL = videoURL;
+  }
+
+  newParticipant({a,b}) {
+    connections[a] = b;
+  }
 }
 
 export default alt.createStore(MeetingStore);

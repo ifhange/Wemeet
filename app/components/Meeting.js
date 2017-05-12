@@ -27,6 +27,8 @@ class Meeting extends React.Component {
 		this.localUserID = "";
 		// this.videoList = [];
 		// this.tagList = {};
+		this.isRecording = true;
+		this.isPlaying = true;
 		this.meetpage = window.location.href;
 	}
 
@@ -195,13 +197,12 @@ class Meeting extends React.Component {
 
 							<div id="me_sent">
 								<div className="arrow_box1"><a ref='meet_filedowload'><div id="meet_text">測試測試</div></a></div>
-
 							</div>
 
 						</div>
 
 						<div id='meet_upload'>
-								<input id='fileicon' type='file' ref='meet_fileupload' />
+							<input id='fileicon' type='file' ref='meet_fileupload' />
 						</div>
 
 						<div id="meet_chat_input">
@@ -221,6 +222,7 @@ class Meeting extends React.Component {
 						<div className="center">
 							<button id="invite" onClick={this.onClick_invitepage}>邀請</button>
 							<button id="number" onClick={this.state.invite}>目前議程</button>
+
 							<button id="brainstorming" onClick={this.state.invite}>腦力激盪</button>
 							<button id="collaborative" onClick={this.state.invite}>共筆</button>
 						</div>
@@ -229,8 +231,7 @@ class Meeting extends React.Component {
 							<button id="end" onClick={this.state.invite}>結束會議</button>
 						</div>
 					</div>
-
-					<div id="meet_main" ref="meet_main">						
+					<div id="meet_main" ref="meet_main">
 						<div id={this.state.recordState} >
 							<select name="language" id='language' ref='select_language'>
 							</select>
@@ -241,9 +242,9 @@ class Meeting extends React.Component {
 						<div id={this.state.inviteState} >
 							<div id='meetpage'>網址：</div>
 							<textarea id='pagetext' >{this.meetpage}</textarea>
-						</div>			
+						</div>
 						<video id='uservideo' src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
-						
+
 						<div id='meet_agenda'>
 							<div id='now_agenda'>目前議程：</div>
 							<textarea id='agenda_text'>
@@ -261,82 +262,3 @@ class Meeting extends React.Component {
 	}
 }
 export default Meeting;
-
-
-/*const styles = {
-	button: {
-		margin: "1em"
-	}
-}
-class MyTest extends React.Component {
-	constructor(props) {
-		super(props)
-		this.recorder = new Recorder();
-		this.state = {
-			ready: false,
-			isRecording: this.recorder.isRecording
-		}
-	}
-	// async componentDidMount() {
-	// 	let that=this
-	//     await navigator.mediaDevices.getUserMedia({
-	//             audio: false,
-	//             video: true
-	//         })
-	//         .then((stream) => {
-	//             return new Promise(
-	//                 (res, rej) => {
-	// 					that.recorder.setStream(stream)
-	//                     res()
-	//                 }
-	//             )
-	//         })
-	//         .catch((error) => {
-	//             console.log('navigator.getUserMedia error: ', error);
-	//         })
-	// 	this.setState({ready:true})
-	// }
-	startRecording() {
-		//alert(1)
-		this.recorder.toggleRecording()
-		this.setState({
-			isRecording: this.recorder.isRecording,
-			isPlaying: this.recorder.isPlaying
-		})
-
-	}
-	stopRecording() {
-		this.recorder.toggleRecording()
-		this.setState({
-			isRecording: this.recorder.isRecording
-		})
-	}
-	download() {
-		console.log(this)
-		this.recorder.download()
-	}
-	play() {
-		this.recorder.play()
-		this.setState({
-			isPlaying: this.recorder.isPlaying
-		})
-	}
-	render() {
-		let { recorder } = this
-		return (
-			<div>
-				Andy感謝祭
-				<div>
-					<button style={styles.button} disabled={!this.state.ready} onClick={this.startRecording.bind(this)}>開始錄影</button>
-					<button style={styles.button} disabled={!this.state.ready} onClick={this.stopRecording.bind(this)}>結束錄影</button>
-					<button style={styles.button} disabled={!this.state.ready}>上傳錄影</button>
-					<button style={styles.button} disabled={!this.state.ready} onClick={this.download.bind(this)}>下載錄影</button>
-					<button style={styles.button} disabled={!this.state.ready} onClick={this.play.bind(this)}>下載錄影</button>
-				</div>
-				<div>
-					<video src={this.state.isRecording || this.state.isPlaying ? recorder.streamUrl : ""} controls={this.state.isPlaying}></video>
-				</div>
-			</div>
-		)
-	}
-}*/

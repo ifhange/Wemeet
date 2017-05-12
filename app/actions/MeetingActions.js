@@ -11,7 +11,6 @@ class MeetingActions {
       'newParticipant'
     );
   }
-
 }
 
 export default alt.createActions(MeetingActions);

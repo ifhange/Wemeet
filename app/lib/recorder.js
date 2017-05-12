@@ -1,8 +1,7 @@
 export default class Recorder {
 	constructor() {
-		this.isRecording = false
-		this.isPlaying=false
-		this.recordedBlobs = []
+		this.isRecording = true;
+		this.recordedBlobs = [];
 		this.toggleRecording=this.toggleRecording.bind(this)
 		this.download=this.download.bind(this)
 		this.play=this.play.bind(this)
@@ -20,11 +19,9 @@ export default class Recorder {
 		}
 	}
 	download() {
-		console.log("traggle download")
 		let blob = new Blob(this.recordedBlobs, { type: 'video/webm' });
 		let url = window.URL.createObjectURL(blob);
 		let a = document.createElement('a');
-		
 		a.style.display = 'none';
 		a.href = url;
 		a.download = 'test.webm';
@@ -87,5 +84,4 @@ export default class Recorder {
 	_handleStop(event) {
 		console.log('Recorder stopped: ', event);
 	}
-
 }
