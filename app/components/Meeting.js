@@ -209,14 +209,14 @@ class Meeting extends React.Component {
         // 	this.tagList[id] = <video key={id} className={xxx} ></video>;
         // }
 
-        let meetChatTest =  Object.keys(this.state.userlist).map((keyName, keyIndex) => {
+        /*let meetChatTest =  Object.keys(this.state.userlist).map((keyName, keyIndex) => {
           return (
           <a href="chatroom"><div id="friend_person">
           <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
           <div id="friend_name">{keyName}</div>
           </div></a>
           )
-        });
+        });*/
 
         return (
             <div id='in'>
