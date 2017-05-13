@@ -23,7 +23,7 @@ class History extends React.Component {
  
   render() {
     return(
-    <div id="box-b">
+    <div className="box-b">
       <div id='in'>
         <div id="meet_list">
       		<table id="list">

@@ -60,7 +60,7 @@ class Main extends React.Component {
 
     render() {
         return (
-            <div id="box-b">
+            <div className="box-b">
                 <div id="in">
                     <div id="add_meet">
                         <img src='/img/addmeet1.png'></img>

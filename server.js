@@ -10,6 +10,9 @@ app.use(bodyParser.text({ type: 'text/plain' }));
 const fs = require('fs');
 const db = require('./app/lib/db.js');
 let connection = {};
+let onlineUser = {}; //在線用戶
+let onlineCount = 0; //在線用戶人數
+
 
 //HTTPS參數
 const option = {
@@ -86,6 +89,15 @@ io.on('connection', function(socket) {
     connection[socket.id] = socket;
     console.log("接收到使用者: " + socket.id + " 的連線");
 
+    //監聽使用者人數
+    if(!onlineUser.hasOwnProperty(socket.id)) {
+        onlineUser[socket.id] = socket.id;
+        onlineCount ++;
+        console.log("使用者目前人數: " + onlineCount + " 人");
+        socket.broadcast.emit('login', [onlineUser,onlineCount]);
+    };
+
+
     socket.on('join', function(room) {
         console.log('收到「加入」房間: ' + room + ' 的請求');
         socket.join(room);
@@ -112,6 +124,15 @@ io.on('connection', function(socket) {
     socket.on('disconnect', function() {
         console.log("使用者: " + socket.id + " 離開了");
         socket.broadcast.emit('participantLeft', socket.id);
+
+        //監聽用戶退出
+        if(onlineUser.hasOwnProperty(socket.id)) {
+            onlineUser[socket.id] = socket.id;
+            delete onlineUser[socket.id];
+            onlineCount --;
+            console.log("使用者目前人數: " + onlineCount + " 人");
+            socket.broadcast.emit('logout', [onlineUser,onlineCount] );
+        }
     });
 
     socket.on('requestVideoFromUser', function(sender) {

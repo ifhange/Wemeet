@@ -6,6 +6,7 @@ class MeetingActions {
       'changeAudioState',
       'changeVideoState',
       'changeInviteState',
+      'addMytext',
       'changeVideoReadyState',
       'gotLocalVideo',
       'newParticipant',

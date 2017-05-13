@@ -1,6 +1,17 @@
 import React from 'react';
 import FriendListStore from '../stores/FriendListStore';
 import FriendListActions from '../actions/FriendListActions';
+import socketIO from 'socket.io-client';
+import Meeting from './Meeting';
+let io = socketIO();
+let socket = io.connect('https://140.123.175.95.8787');
+let configuration = {
+  'iceServers': [{
+    'url': 'stun:stun.l.google.com:19302'
+  }, {
+    'url': 'stun:stun.services.mozilla.com'
+  }]
+};
 
 class FriendList extends React.Component {
   constructor(props){
@@ -10,7 +21,14 @@ class FriendList extends React.Component {
   }
 
   componentDidMount() {
-    FriendListStore.listen(this.onChange);  
+    FriendListStore.listen(this.onChange);
+    socket.on('login', function(userlist) {
+      FriendListActions.getUserlist(userlist);
+    });
+
+    socket.on('logout', function(userlist1) {
+      FriendListActions.getUserlist(userlist1);
+    });
   }
 
   componentWillUnmount() {
@@ -23,77 +41,22 @@ class FriendList extends React.Component {
 
   render() {
     //好友名單上限資料
-    /*
-    let friendonline = this.state.characters.map((character) => {
+    
+    let friendonline =  Object.keys(this.state.userlist).map((keyName, keyIndex) => {
       return (
-      <div id="firiend_person">
-        <div id="circle1">
-          <img id="friend_image" src={character.img}></img>
-        </div>
-        <div id="friend_name">安
-        </div>
-      </div>
+      <a href="chatroom"><div id="friend_person">
+      <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
+      <div id="friend_name">{keyName}</div>
+      </div></a>
       )
     });
 
-    //好友名單離線資料
-    let friendoff = this.state.characters.map((character) => {
-      return (
-      <div id="firiend_person">
-        <div id="circle1">
-          <img id="friend_image" src={character.img}></img>
-        </div>
-        <div id="friend_name">安
-        </div>
-      </div>
-      )
-    });*/
-
     return (
       <div id="friendlist">
-        <div id='friend_text'>正在線上：</div>
-        <div id="online">
-          <a href="chatroom"><div id="friend_person">
-          <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
-          <div id="friend_name">安</div>
-          </div></a>
-
-          <a href="chatroom"><div id="friend_person">
-          <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
-          <div id="friend_name">安</div>
-          </div></a>
-
-          <a href="chatroom"><div id="friend_person">
-          <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
-          <div id="friend_name">安</div>
-          </div></a>
-
-          <a href="chatroom"><div id="friend_person">
-          <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
-          <div id="friend_name">安</div>
-          </div></a>
-
-
-          <a href="chatroom"><div id="friend_person">
-          <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
-          <div id="friend_name">安</div>
-          </div></a>
-
-
-          <a href="chatroom"><div id="friend_person">
-          <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
-          <div id="friend_name">安</div>
-          </div></a>
-    
-        </div>
-        
-        <div id='friend_text'>離線：</div>
-        <div id="off">
-          <a href="chatroom"><div id="friend_person">
-          <div id="circle2"><img id="friend_image" src="../img/logo_user.png"></img></div>
-          <div id="friend_name">煩</div>
-          </div></a>
-        </div>
+          <div id='friend_text'>正在線上：</div>
+          <div id='online'>
+            {friendonline}
+          </div>
       </div>
     );
   }
