@@ -208,13 +208,15 @@ class Meeting extends React.Component {
         // for (let id in this.state.connections) {
         // 	this.tagList[id] = <video key={id} className={xxx} ></video>;
         // }
-        /*let meetChatTest = {
+
+        let meetChatTest =  Object.keys(this.state.userlist).map((keyName, keyIndex) => {
           return (
-            <div id="me_sent">
-                <div className="arrow_box1"><div id="meet_text">{this.mytext}</div></div>
-            </div>
+          <a href="chatroom"><div id="friend_person">
+          <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
+          <div id="friend_name">{keyName}</div>
+          </div></a>
           )
-        };*/
+        });
 
         return (
             <div id='in'>

@@ -9,6 +9,7 @@ class MeetingStore {
     this.audioOn = false;
     this.localVideoURL = '';
     this.isStreaming = false;
+    this.meet_mytext = '';
     this.langs = [
       ['Afrikaans', ['af-ZA']],
       ['Bahasa Indonesia', ['id-ID']],
@@ -144,6 +145,7 @@ class MeetingStore {
   }
 
   addMytext(data) {
+    this.meet_mytext
     console.log(data);
   }
 }
