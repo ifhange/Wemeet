@@ -8,20 +8,20 @@ app.use(bodyParser.urlencoded({ type: 'image/*', extended: false, limit: '50mb' 
 app.use(bodyParser.json({ type: 'application/*', limit: '50mb' }));
 app.use(bodyParser.text({ type: 'text/plain' }));
 const fs = require('fs');
-const db = require('./app/lib/db.js');
+//const db = require('./app/lib/db.js');
 let connection = {};
 let onlineUser = {}; //在線用戶
 let onlineCount = 0; //在線用戶人數
 
 
-//HTTPS參數
-const option = {
-    key: fs.readFileSync('./public/certificate/privatekey.pem'),
-    cert: fs.readFileSync('./public/certificate/certificate.pem')
-};
+// //HTTPS參數
+// const option = {
+//     key: fs.readFileSync('./public/certificate/privatekey.pem'),
+//     cert: fs.readFileSync('./public/certificate/certificate.pem')
+// };
 
 //對https Server內傳入express的處理物件
-const server = require('https').createServer(option, app);
+const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 server.listen(8787);
 console.log('已啟動伺服器!');

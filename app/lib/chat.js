@@ -1,7 +1,7 @@
 'use strict';
 
 let Chat = {
-    createNew: (changeVideoReadyState, ) => {
+    createNew: (callback) => {
         Chat.isReady = false;
         let localStream = '';
         let fileChannels = {};
@@ -15,7 +15,7 @@ let Chat = {
                 .then((stream) => {
                     var track = stream.getTracks()[0];
                     let videoURL = window.URL.createObjectURL(stream);
-                    changeVideoReadyState();
+                    callback();
                     gotLocalVideo(videoURL);
                     localStream = stream;
                 })
@@ -26,7 +26,7 @@ let Chat = {
 
         Chat.toggleUserMedia = () => {
             if (localStream) {
-                changeVideoReadyState();
+                callback();
                 localStream.getTracks().forEach((track) => { track.stop(); });
             }
         };

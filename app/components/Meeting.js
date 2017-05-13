@@ -4,16 +4,7 @@ import MeetingActions from '../actions/MeetingActions';
 import chat from '../lib/chat';
 import recognition from '../lib/recognition';
 import Recorder from '../lib/recorder';
-import socketIO from 'socket.io-client';
-let io = socketIO();
-let socket = io.connect('https://140.123.175.95.8787');
-let configuration = {
-  'iceServers': [{
-    'url': 'stun:stun.l.google.com:19302'
-  }, {
-    'url': 'stun:stun.services.mozilla.com'
-  }]
-};
+import socket from '../socket.js'
 let room = window.location.hash;
 
 class Meeting extends React.Component {
@@ -22,8 +13,8 @@ class Meeting extends React.Component {
         this.state = MeetingStore.getState();
         this.onChange = this.onChange.bind(this);
         this.recorder = new Recorder();
-        this.Chat = chat.createNew();
-        this.Recognizer = recognition.createNew(MeetingActions.updateReslt);
+        this.Chat = chat.createNew(MeetingActions.changeVideoReadyState);
+        this.Recognizer = recognition.createNew(MeetingActions.updateResult);
         this.localUserID = "";
         // this.videoList = [];
         // this.tagList = {};
@@ -40,7 +31,7 @@ class Meeting extends React.Component {
         this.updateCountry();
         this.refs.select_dialect.selectedIndex = 2;
         MeetingStore.listen(this.onChange);
-        this.Chat.getUserMedia(MeetingActions.changeVideoReadyState, MeetingActions.gotLocalVideo);
+        this.Chat.getUserMedia(MeetingActions.gotLocalVideo);
         if (!room) {
             window.location.hash = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);
         };
@@ -194,6 +185,11 @@ class Meeting extends React.Component {
 
     onClick_videoToggle() {
         MeetingActions.changeVideoState();
+        if(this.state.isStreaming){
+			this.Chat.toggleUserMedia();
+		} else {
+			this.Chat.getUserMedia(MeetingActions.gotLocalVideo);
+		}
     }
 
     onClick_invitepage() {
@@ -209,93 +205,91 @@ class Meeting extends React.Component {
         // 	this.tagList[id] = <video key={id} className={xxx} ></video>;
         // }
 
-        let meetChatTest =  Object.keys(this.state.userlist).map((keyName, keyIndex) => {
-          return (
-          <a href="chatroom"><div id="friend_person">
-          <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
-          <div id="friend_name">{keyName}</div>
-          </div></a>
-          )
-        });
+        /*let meetChatTest = Object.keys(this.state.userlist).map((keyName, keyIndex) => {
+            return (
+                <a href="chatroom"><div id="friend_person">
+                    <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
+                    <div id="friend_name">{keyName}</div>
+                </div></a>
+            )
+        });*/
 
         return (
             <div id='in'>
-				<div className="box-b">
-					<div id="meet_chat">
-						<div id="chat_menu">
-							<div id="button"></div>
-							<div id="meet_name">WeMeet開會群組</div>
-						</div>
+                <div className="box-b">
+                    <div id="meet_chat">
+                        <div id="chat_menu">
+                            <div id="button"></div>
+                            <div id="meet_name">WeMeet開會群組</div>
+                        </div>
 
-						<div id="chatbox">
-							<div id="number_sent">
-								<div className="arrow_box"><div id="meet_text">{this.myself_text}</div></div>
-							</div>
+                        <div id="chatbox">
+                            <div id="number_sent">
+                                <div className="arrow_box"><div id="meet_text">{this.myself_text}</div></div>
+                            </div>
 
-							<div id="me_sent">
-								<div className="arrow_box1"><div id="meet_text">測試測試</div></div>
-							</div>
+                            <div id="me_sent">
+                                <div className="arrow_box1"><div id="meet_text">測試測試</div></div>
+                            </div>
 
-						</div>
+                        </div>
 
-						<div id='meet_upload'>
-							<input id='fileicon' type='file' ref='meet_fileupload' />
-						</div>
+                        <div id='meet_upload'>
+                            <input id='fileicon' type='file' ref='meet_fileupload' />
+                        </div>
 
-						<div id="meet_chat_input">
-							<textarea id="meet_input" ref='meet_input' ></textarea>
-							<button className="sent" type="submit" ref='meet_submit' onClick={this.sendText.bind(this)}>送出</button>
-						</div>
+                        <div id="meet_chat_input">
+                            <textarea id="meet_input" ref='meet_input' ></textarea>
+                            <button className="sent" type="submit" ref='meet_submit' onClick={this.sendText.bind(this)}>送出</button>
+                        </div>
 
-					</div>
-					<div id="feature">
+                    </div>
+                    <div id="feature">
 
-						<div className="left">
-							<button id={this.state.audioImg} onClick={this.onClick_audioToggle.bind(this)} >{this.state.audioState}</button>
-							<button id={this.state.videoImg} onClick={this.onClick_videoToggle.bind(this)} >{this.state.videoState}</button>
-						</div>
+                        <div className="left">
+                            <button id={this.state.audioImg} onClick={this.onClick_audioToggle.bind(this)} >{this.state.audioState}</button>
+                            <button id={this.state.videoImg} onClick={this.onClick_videoToggle.bind(this)} >{this.state.videoState}</button>
+                        </div>
 
-						<div className="center">
-							<button id="invite" onClick={this.onClick_invitepage}>邀請</button>
-							<button id="number" onClick={this.state.invite}>目前議程</button>
+                        <div className="center">
+                            <button id="invite" onClick={this.onClick_invitepage}>邀請</button>
+                            <button id="number" onClick={this.state.invite}>目前議程</button>
 
-							<button id="brainstorming" onClick={this.state.invite}>腦力激盪</button>
-							<button id="collaborative" onClick={this.state.invite}>共筆</button>
-						</div>
+                            <button id="brainstorming" onClick={this.state.invite}>腦力激盪</button>
+                            <button id="collaborative" onClick={this.state.invite}>共筆</button>
+                        </div>
 
-						<div className="right">
-							<button id="end" onClick={this.onClick_backtoindex}>結束會議</button>
-						</div>
-					</div>
-					<div id="meet_main" ref="meet_main">						
-						<div id={this.state.recordState} >
-							<select name="language" id='language' ref='select_language'>
-							</select>
-							<select name="dialect" id='dialect' ref='select_dialect'>
-							</select>
-						</div>
+                        <div className="right">
+                            <button id="end" onClick={this.onClick_backtoindex}>結束會議</button>
+                        </div>
+                    </div>
+                    <div id="meet_main" ref="meet_main">
+                        <div id={this.state.recordState} >
+                            <select name="language" id='language' ref='select_language'>
+                            </select>
+                            <select name="dialect" id='dialect' ref='select_dialect'>
+                            </select>
+                        </div>
 
-						<div id={this.state.inviteState} >
-							<div id='meetpage'>網址：</div>
-							<textarea id='pagetext' >{this.meetpage}</textarea>
-						</div>			
-						<video className='userVideo' id='user' src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
+                        <div id={this.state.inviteState} >
+                            <div id='meetpage'>網址：</div>
+                            <textarea id='pagetext' >{this.meetpage}</textarea>
+                        </div>
+                        <video className='userVideo' id='user' src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
 
-						<div id='meet_agenda'>
-							<div id='now_agenda'>目前議程</div>
-							<textarea id='agenda_text'>
-								1. ㄚㄚㄚㄚ
+                        <div id='meet_agenda'>
+                            <div id='now_agenda'>目前議程</div>
+                            <textarea id='agenda_text'>
+                                1. ㄚㄚㄚㄚ
 								2. 哀哀哀哀哀
 								3. GOOOOO
 							</textarea>
-						</div>
-
-					</div>
-
-				</div>
-			</div>
-		)
-	}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 }
 export default Meeting;
 
