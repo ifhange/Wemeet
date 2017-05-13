@@ -5,16 +5,14 @@ import chat from '../lib/chat';
 import recognition from '../lib/recognition';
 import Recorder from '../lib/recorder';
 import socketIO from 'socket.io-client';
-
-
 let io = socketIO();
 let socket = io.connect('https://140.123.175.95.8787');
 let configuration = {
-	'iceServers': [{
-		'url': 'stun:stun.l.google.com:19302'
-	}, {
-		'url': 'stun:stun.services.mozilla.com'
-	}]
+  'iceServers': [{
+    'url': 'stun:stun.l.google.com:19302'
+  }, {
+    'url': 'stun:stun.services.mozilla.com'
+  }]
 };
 let room = window.location.hash;
 
@@ -41,8 +39,6 @@ class Meeting extends React.Component {
         this.refs.select_language.selectedIndex = 36;
         this.updateCountry();
         this.refs.select_dialect.selectedIndex = 2;
-
-        socket.emit('join', room);
         MeetingStore.listen(this.onChange);
         this.Chat.getUserMedia(MeetingActions.changeVideoReadyState, MeetingActions.gotLocalVideo);
         if (!room) {
@@ -145,7 +141,8 @@ class Meeting extends React.Component {
 
     sendText() {
         let inputText = this.refs.meet_input.value;
-        this.Chat.sendText(inputText, this.localUserID);
+        let mytext = this.Chat.sendText(inputText, this.localUserID);
+        MeetingActions.addMytext(mytext);
     }
 
     addUser() {
@@ -211,6 +208,14 @@ class Meeting extends React.Component {
         // for (let id in this.state.connections) {
         // 	this.tagList[id] = <video key={id} className={xxx} ></video>;
         // }
+        /*let meetChatTest = {
+          return (
+            <div id="me_sent">
+                <div className="arrow_box1"><div id="meet_text">{this.mytext}</div></div>
+            </div>
+          )
+        };*/
+
         return (
             <div id='in'>
 				<div className="box-b">
