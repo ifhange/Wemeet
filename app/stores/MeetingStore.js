@@ -142,6 +142,10 @@ class MeetingStore {
     this.interim_result = temp;
     this.final_result = final;
   }
+
+  addMytext(data) {
+    console.log(data);
+  }
 }
 
 export default alt.createStore(MeetingStore);
