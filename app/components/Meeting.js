@@ -5,16 +5,14 @@ import chat from '../lib/chat';
 import recognition from '../lib/recognition';
 import Recorder from '../lib/recorder';
 import socketIO from 'socket.io-client';
-
-
 let io = socketIO();
 let socket = io.connect('https://140.123.175.95.8787');
 let configuration = {
-	'iceServers': [{
-		'url': 'stun:stun.l.google.com:19302'
-	}, {
-		'url': 'stun:stun.services.mozilla.com'
-	}]
+  'iceServers': [{
+    'url': 'stun:stun.l.google.com:19302'
+  }, {
+    'url': 'stun:stun.services.mozilla.com'
+  }]
 };
 let room = window.location.hash;
 
@@ -31,6 +29,7 @@ class Meeting extends React.Component {
         // this.tagList = {};
         this.isRecording = true;
         this.isPlaying = true;
+        this.meetpage = window.location.href;
     }
 
     componentDidMount() {
@@ -40,8 +39,6 @@ class Meeting extends React.Component {
         this.refs.select_language.selectedIndex = 36;
         this.updateCountry();
         this.refs.select_dialect.selectedIndex = 2;
-
-        socket.emit('join', room);
         MeetingStore.listen(this.onChange);
         this.Chat.getUserMedia(MeetingActions.changeVideoReadyState, MeetingActions.gotLocalVideo);
         if (!room) {
@@ -144,7 +141,8 @@ class Meeting extends React.Component {
 
     sendText() {
         let inputText = this.refs.meet_input.value;
-        this.Chat.sendText(inputText, this.localUserID);
+        let mytext = this.Chat.sendText(inputText, this.localUserID);
+        MeetingActions.addMytext(mytext);
     }
 
     addUser() {
@@ -202,13 +200,27 @@ class Meeting extends React.Component {
         MeetingActions.changeInviteState();
     }
 
+    onClick_backtoindex() {
+        window.location = 'https://140.123.175.95:8787/';
+    }
+
     render() {
         // for (let id in this.state.connections) {
         // 	this.tagList[id] = <video key={id} className={xxx} ></video>;
         // }
+
+        let meetChatTest =  Object.keys(this.state.userlist).map((keyName, keyIndex) => {
+          return (
+          <a href="chatroom"><div id="friend_person">
+          <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
+          <div id="friend_name">{keyName}</div>
+          </div></a>
+          )
+        });
+
         return (
             <div id='in'>
-				<div id="box-b">
+				<div className="box-b">
 					<div id="meet_chat">
 						<div id="chat_menu">
 							<div id="button"></div>
@@ -252,7 +264,7 @@ class Meeting extends React.Component {
 						</div>
 
 						<div className="right">
-							<button id="end" onClick={this.state.invite}>結束會議</button>
+							<button id="end" onClick={this.onClick_backtoindex}>結束會議</button>
 						</div>
 					</div>
 					<div id="meet_main" ref="meet_main">						
