@@ -53,7 +53,7 @@ video {
 
 
 #audio-off{
-  background-image: url('../img/mute.png');
+  background-image: url('../img/audio.png');
   background-color: #535353;
   background-size: 50% 50%;
   background-repeat:no-repeat;
@@ -71,7 +71,7 @@ video {
 
 
 #audio-on{
-  background-image: url('../img/audio.png');
+  background-image: url('../img/mute.png');
   background-color: #535353;
   background-size: 50% 50%;
   background-repeat:no-repeat;

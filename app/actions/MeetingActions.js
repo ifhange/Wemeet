@@ -10,7 +10,11 @@ class MeetingActions {
       'changeVideoReadyState',
       'gotLocalVideo',
       'newParticipant',
-      'updateResult'
+      'updateResult',
+      'addRemoteTag',
+      'deleteRemoteTag',
+      'addRemoteStreamURL',
+      'queueCandidate'
     );
   }
 }

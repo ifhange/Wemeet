@@ -1,39 +1,46 @@
 'use strict';
 
 let Chat = {
-    createNew: (changeVideoReadyState, ) => {
+    createNew: (callback, MeetingStore) => {
         Chat.isReady = false;
         let localStream = '';
         let fileChannels = {};
         let msgChannels = {};
+        let localUserID = '';
         //取得使用者端的影像
-        Chat.getUserMedia = (gotLocalVideo) => {
+        Chat.getUserMedia = (gotLocalVideo, cb) => {
             navigator.mediaDevices.getUserMedia({
-                audio: true,
-                video: true
-            })
+                    audio: true,
+                    video: true
+                })
                 .then((stream) => {
                     var track = stream.getTracks()[0];
                     let videoURL = window.URL.createObjectURL(stream);
-                    changeVideoReadyState();
+                    callback();
                     gotLocalVideo(videoURL);
                     localStream = stream;
+                    cb();
                 })
                 .catch((e) => {
-                    console.log('發生錯誤了看這裡:' + e);
+                    if (e) {
+                        navigator.mediaDevices.getUserMedia({
+                            audio: true,
+                        })
+                    }
                 });
         };
 
         Chat.toggleUserMedia = () => {
             if (localStream) {
-                changeVideoReadyState();
+                callback();
                 localStream.getTracks().forEach((track) => { track.stop(); });
             }
         };
 
         //建立點對點連線物件，以及為連線標的創建影像視窗
-        Chat.createPeerConnection = (isInitiator, config, remotePeer, socket, videoTag) => {
+        Chat.createPeerConnection = (isInitiator, config, remotePeer, socket, videoTag, action,cb) => {
             let peerConn = new RTCPeerConnection(config);
+            action.newParticipant({ a: remotePeer, b: peerConn });
             if (localStream) {
                 peerConn.addStream(localStream);
             }
@@ -41,23 +48,28 @@ let Chat = {
             // send any ice candidates to the other peer
             peerConn.onicecandidate = (event) => {
                 if (event.candidate) {
-                    console.log('local端找到ice candidate>要傳出去: ' + JSON.stringify(event.candidate));
+                    //console.log('local端找到ice candidate>要傳出去: ' + JSON.stringify(event.candidate));
                     socket.emit('onIceCandidate', event.candidate, localUserID, remotePeer);
                 }
             };
 
             peerConn.onaddstream = (event) => {
-                console.log('Remote stream added.');
-                videoTag.srcObject = event.stream;
+                let url = URL.createObjectURL(event.stream);
+                action.addRemoteStreamURL({
+                    a: remotePeer,
+                    b: url,
+                    c: stream
+                });
             };
 
             peerConn.onremovestream = (event) => {
                 console.log('Remote stream removed. Event: ', event);
+                action.deleteRemoteTag(remotePeer);
             };
 
             //如果是開啟P2P的人
             if (isInitiator) {
-                console.log('Creating Data Channel');
+                console.log('Createing Data Channel');
                 //建立資料傳送頻道、訊息傳送頻道
                 let fileChannel = peerConn.createDataChannel('files');
                 let msgChannel = peerConn.createDataChannel('messages');
@@ -90,10 +102,10 @@ let Chat = {
                         //     URL.revokeObjectURL(downloadAnchor.href);
                         //     downloadAnchor.removeAttribute('href');
                         // }
-                        // let fileChannel = event.channel;
-                        // fileChannels[remotePeer] = fileChannel;
-                        // console.log('joined channel' + event.channel.label);
-                        // onDataChannelCreated(fileChannel);
+                        let fileChannel = event.channel;
+                        fileChannels[remotePeer] = fileChannel;
+                        console.log('joined channel' + event.channel.label);
+                        onDataChannelCreated(fileChannel);
                     } else if (event.channel.label == 'messages') {
                         let msgChannel = event.channel;
                         msgChannels[remotePeer] = msgChannel;
