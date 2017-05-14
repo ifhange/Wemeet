@@ -1,17 +1,8 @@
 import React from 'react';
 import FriendListStore from '../stores/FriendListStore';
 import FriendListActions from '../actions/FriendListActions';
-import socketIO from 'socket.io-client';
+import socket from '../socket';
 import Meeting from './Meeting';
-let io = socketIO();
-let socket = io.connect('https://140.123.175.95.8787');
-let configuration = {
-  'iceServers': [{
-    'url': 'stun:stun.l.google.com:19302'
-  }, {
-    'url': 'stun:stun.services.mozilla.com'
-  }]
-};
 
 class FriendList extends React.Component {
   constructor(props){
@@ -22,6 +13,7 @@ class FriendList extends React.Component {
 
   componentDidMount() {
     FriendListStore.listen(this.onChange);
+
     socket.on('login', function(userlist) {
       FriendListActions.getUserlist(userlist);
     });

@@ -52,6 +52,27 @@ video {
     background-color: #424242;
 }
 
+
+#audio-off:hover {
+    background-color: #424242;
+}
+
+#video-off:hover {
+    background-color: #424242;
+}
+
+#video-on:hover {
+    background-color: #424242;
+}
+
+#recognize-off:hover {
+    background-color: #424242;
+}
+
+#recognize-on:hover {
+    background-color: #424242;
+}
+
 #meet_chat{
   width: 20%;
   height: 540px; 
@@ -59,6 +80,39 @@ video {
   float: right;
 }
 
+#recognize-off{
+  background-image: url('../img/recognize.png');
+  background-color: #535353;
+  background-size: 50% 50%;
+  background-repeat:no-repeat;
+  background-position: center 20%;
+  text-align: center;
+  line-height: 750%;
+  width: 65px;
+  height: 58px;
+  margin-left: 2%;
+  float: left;
+  color: white;
+  font-size: 11px;
+  border: none;
+}
+
+#recognize-on{
+  background-image: url('../img/recognize-off.png');
+  background-color: #535353;
+  background-size: 50% 50%;
+  background-repeat:no-repeat;
+  background-position: center 20%;
+  text-align: center;
+  line-height: 750%;
+  width: 65px;
+  height: 58px;
+  margin-left: 2%;
+  float: left;
+  color: white;
+  font-size: 11px;
+  border: none;
+}
 
 #audio-off{
   background-image: url('../img/audio.png');
@@ -139,7 +193,7 @@ video {
   line-height: 750%;
   width: 58px;
   height: 58px;
-  margin-left: 17%;
+  margin-left: 10%;
   float: left;
   color: white;
   font-size: 11px;
@@ -274,7 +328,8 @@ video {
   BORDER-LEFT-STYLE: none;
   BORDER-BOTTOM-STYLE: none;
   width: 78.1%;
-  height: 72px;
+  height: 90px;
+  margin-top:-8%;
   float: left;
   outline: none;
 }
@@ -645,7 +700,7 @@ video {
   height: 150px;
   float: right;
   margin-right: 1%;
-  margin-top: -55.5%;
+  margin-top: -54.5%;
   background: #6e3667;
   visibility: hidden;
   opacity: 0;

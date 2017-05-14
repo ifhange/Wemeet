@@ -7,15 +7,6 @@ opacity: 0; /*初始状态 透明度为0*/
 opacity: 1; /*结尾状态 透明度为1*/
 }
 
-@-webkit-keyframes fadeOut {
-0% {
-opacity: 1; /*初始状态 透明度为0*/
-}
-
-100% {
-opacity: 0; /*结尾状态 透明度为1*/
-}
-
 }
 
 #in {      
