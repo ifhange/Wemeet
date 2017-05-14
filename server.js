@@ -87,26 +87,32 @@ app.post("/api/db/save/video", (req, res) => {
 
 io.on('connection', function(socket) {
     connection[socket.id] = socket;
-    console.log("接收到使用者: " + socket.id + " 的連線");
     //監聽使用者人數
     if (!onlineUser.hasOwnProperty(socket.id)) {
         onlineUser[socket.id] = socket.id;
         onlineCount++;
-        console.log("使用者目前人數: " + onlineCount + " 人");
+        //console.log("使用者目前人數: " + onlineCount + " 人");
         socket.emit('login', [onlineUser, onlineCount]);
         socket.broadcast.emit('login', [onlineUser, onlineCount]);
     };
 
-    socket.on('join', function(room) {
-        console.log('收到「加入」房間: ' + room + ' 的請求');
-        socket.join(room);
-        console.log('Client ID ' + socket.id + ' joined room ' + room);
-        socket.emit('joined', room, socket.id);
-     });
 
-    socket.on('newParticipant', function(msgSender, room) {
-        socket.to(room).emit('newParticipant', msgSender);
+    socket.on('id', (msg) => {
+        socket.emit('success', socket.id);
+    })
+
+
+    socket.on('join', function(room) {
+        socket.join(room);
+        console.log('加入成功!',socket.id,room);
+        socket.emit('joined', room, socket.id);
     });
+
+
+    socket.on('newParticipantA', function(msgSender, room) {
+        socket.to(room).emit('newParticipantB', msgSender);
+    });
+
 
     socket.on('offerRemotePeer', function(offer, sender, receiver) {
         socket.to(receiver).emit('offer', offer, sender);
@@ -116,8 +122,8 @@ io.on('connection', function(socket) {
         socket.to(receiver).emit('answer', answer, sender);
     });
 
-    socket.on('onIceCandidate', function(candidate, sender, receiver) {
-        socket.to(receiver).emit('onIceCandidate', candidate, sender);
+    socket.on('onIceCandidateA', function(candidate, sender, receiver) {
+        socket.to(receiver).emit('onIceCandidateB', candidate, sender);
     });
 
     socket.on('disconnect', function() {

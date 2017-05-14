@@ -1,14 +1,15 @@
 'use strict';
 
 let Chat = {
-    createNew: (callback, MeetingStore) => {
+    createNew: (MeetingActions,MeetingStore) => {
         Chat.isReady = false;
         let localStream = '';
         let fileChannels = {};
         let msgChannels = {};
         let localUserID = '';
         //取得使用者端的影像
-        Chat.getUserMedia = (gotLocalVideo, cb) => {
+        Chat.getUserMedia = (id,room,socket) => {
+            localUserID = id;
             navigator.mediaDevices.getUserMedia({
                     audio: true,
                     video: true
@@ -16,15 +17,18 @@ let Chat = {
                 .then((stream) => {
                     var track = stream.getTracks()[0];
                     let videoURL = window.URL.createObjectURL(stream);
-                    callback();
-                    gotLocalVideo(videoURL);
+                    MeetingActions.gotLocalVideo(videoURL);
+                    console.log(MeetingStore.state.localVideoURL);
                     localStream = stream;
-                    cb();
+                    MeetingActions.changeVideoReadyState();
+                    socket.emit('newParticipantA', id, room);
                 })
                 .catch((e) => {
                     if (e) {
                         navigator.mediaDevices.getUserMedia({
-                            audio: true,
+                            audio: true
+                        }).then(()=>{
+                            socket.emit('newParticipantA', id, room);
                         })
                     }
                 });
@@ -32,15 +36,14 @@ let Chat = {
 
         Chat.toggleUserMedia = () => {
             if (localStream) {
-                callback();
+                MeetingActions.changeVideoReadyState();
                 localStream.getTracks().forEach((track) => { track.stop(); });
             }
         };
 
         //建立點對點連線物件，以及為連線標的創建影像視窗
-        Chat.createPeerConnection = (isInitiator, config, remotePeer, socket, videoTag, action,cb) => {
+        Chat.createPeerConnection = (isInitiator, config, remotePeer, socket, videoTag, action) => {
             let peerConn = new RTCPeerConnection(config);
-            action.newParticipant({ a: remotePeer, b: peerConn });
             if (localStream) {
                 peerConn.addStream(localStream);
             }
@@ -48,23 +51,22 @@ let Chat = {
             // send any ice candidates to the other peer
             peerConn.onicecandidate = (event) => {
                 if (event.candidate) {
-                    //console.log('local端找到ice candidate>要傳出去: ' + JSON.stringify(event.candidate));
-                    socket.emit('onIceCandidate', event.candidate, localUserID, remotePeer);
+                        //console.log('local端找到ice candidate>要傳出去: ' + JSON.stringify(event.candidate));
+                    socket.emit('onIceCandidateA', event.candidate, localUserID, remotePeer);
                 }
             };
 
             peerConn.onaddstream = (event) => {
                 let url = URL.createObjectURL(event.stream);
-                action.addRemoteStreamURL({
+                MeetingActions.addRemoteStreamURL({
                     a: remotePeer,
-                    b: url,
-                    c: stream
+                    b: url
                 });
             };
 
             peerConn.onremovestream = (event) => {
                 console.log('Remote stream removed. Event: ', event);
-                action.deleteRemoteTag(remotePeer);
+                MeetingActions.deleteRemoteTag(remotePeer);
             };
 
             //如果是開啟P2P的人

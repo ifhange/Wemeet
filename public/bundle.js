@@ -16657,6 +16657,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+_socket2.default.emit('id', 'ayy');
+
 var configuration = {
     'iceServers': [{
         'url': 'stun:stun.l.google.com:19302'
@@ -16678,7 +16680,7 @@ var Meeting = function (_React$Component) {
         _this.state = _MeetingStore2.default.getState();
         _this.onChange = _this.onChange.bind(_this);
         _this.recorder = new _recorder2.default();
-        _this.Chat = _chat2.default.createNew(_MeetingActions2.default.changeVideoReadyState);
+        _this.Chat = _chat2.default.createNew(_MeetingActions2.default, _MeetingStore2.default);
         _this.Recognizer = _recognition2.default.createNew(_MeetingActions2.default.updateResult);
         _this.localUserID = "";
         // this.videoList = [];
@@ -16695,18 +16697,21 @@ var Meeting = function (_React$Component) {
             var _this2 = this;
 
             _MeetingStore2.default.listen(this.onChange);
-            if (!room) {
-                window.location.hash = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);
-            };
-            _socket2.default.emit('join', room);
+            _socket2.default.on('success', function (id) {
+                if (!room) {
+                    room = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);
+                    window.location.hash = room;
+                };
+                _this2.localUserID = id;
+                _this2.Chat.getUserMedia(id, room, _socket2.default);
+                _socket2.default.emit('join', room);
+            });
+
             //加入房間訊息
             _socket2.default.on('joined', function (room, clientID) {
                 console.log('This peer has joined room: ' + room + ' with client ID ' + clientID);
-                _this2.localUserID = clientID;
-                _this2.Chat.getUserMedia(_MeetingActions2.default.gotLocalVideo, function () {
-                    _socket2.default.emit('newParticipant', clientID, room);
-                });
             });
+
             for (var i = 0; i < this.state.langs.length; i++) {
                 this.refs.select_language.options[i] = new Option(this.state.langs[i][0], i);
             }
@@ -16714,7 +16719,7 @@ var Meeting = function (_React$Component) {
             this.updateCountry();
             this.refs.select_dialect.selectedIndex = 2;
 
-            _socket2.default.on('newParticipant', function (participantID) {
+            _socket2.default.on('newParticipantB', function (participantID) {
                 //接到新人加入的訊息時，檢查是否已有連線
                 if (_this2.state.connections[participantID]) {
                     console.log("Connections with" + participantID + "already exists");
@@ -16741,12 +16746,16 @@ var Meeting = function (_React$Component) {
                 _this2.state.connections[sender].setRemoteDescription(new RTCSessionDescription(answer));
             });
 
-            _socket2.default.on('onIceCandidate', function (candidate, sender) {
+            _socket2.default.on('onIceCandidateB', function (candidate, sender) {
                 //console.log('收到遠端的candidate，要加入: ' + JSON.stringify(candidate));
-                console.log(_this2.state.connections);
-                _this2.state.connections[sender].addIceCandidate(new RTCIceCandidate(candidate)).catch(function (e) {
-                    console.log('發生錯誤了看這裡: ' + e);
-                });
+                if (_this2.state.connections[sender]) {
+                    console.log('加到了!');
+                    _this2.state.connections[sender].addIceCandidate(new RTCIceCandidate(candidate)).catch(function (e) {
+                        console.log('發生錯誤了看這裡: ' + e);
+                    });
+                }
+                _MeetingActions2.default.queueCandidate({ a: candidate, b: sender });
+                console.log('不!來不及加');
             });
 
             _socket2.default.on('offer', function (offer, sender) {
@@ -16768,7 +16777,7 @@ var Meeting = function (_React$Component) {
                     }).catch(function (e) {
                         console.log('發生錯誤了看這裡:' + e);
                     });
-                    _MeetingActions2.default.newParticipant({ a: render, b: peerConn });
+                    _MeetingActions2.default.newParticipant({ a: sender, b: peerConn });
                 }
             });
 
@@ -17018,7 +17027,7 @@ var Meeting = function (_React$Component) {
                         _react2.default.createElement(
                             'div',
                             { id: this.state.recordState },
-                            _react2.default.createElement('select', { name: 'language', id: 'language', ref: 'select_language' }),
+                            _react2.default.createElement('select', { name: 'language', id: 'language', ref: 'select_language', onChange: this.updateCountry.bind(this) }),
                             _react2.default.createElement('select', { name: 'dialect', id: 'dialect', ref: 'select_dialect' })
                         ),
                         _react2.default.createElement(
@@ -17035,7 +17044,7 @@ var Meeting = function (_React$Component) {
                                 this.meetpage
                             )
                         ),
-                        _react2.default.createElement('video', { className: 'userVideo', id: 'user', src: this.state.videoIsReady ? this.state.localVideoURL : "" }),
+                        _react2.default.createElement('video', { className: 'userVideo', id: 'user', src: this.state.videoIsReady ? this.state.localVideoURL : "沒有加到啦幹" }),
                         _react2.default.createElement(
                             'div',
                             { id: 'meet_agenda' },
@@ -17227,28 +17236,32 @@ exports.default = UserState;
 
 
 var Chat = {
-    createNew: function createNew(callback, MeetingStore) {
+    createNew: function createNew(MeetingActions, MeetingStore) {
         Chat.isReady = false;
         var localStream = '';
         var fileChannels = {};
         var msgChannels = {};
         var localUserID = '';
         //取得使用者端的影像
-        Chat.getUserMedia = function (gotLocalVideo, cb) {
+        Chat.getUserMedia = function (id, room, socket) {
+            localUserID = id;
             navigator.mediaDevices.getUserMedia({
                 audio: true,
                 video: true
             }).then(function (stream) {
                 var track = stream.getTracks()[0];
                 var videoURL = window.URL.createObjectURL(stream);
-                callback();
-                gotLocalVideo(videoURL);
+                MeetingActions.gotLocalVideo(videoURL);
+                console.log(MeetingStore.state.localVideoURL);
                 localStream = stream;
-                cb();
+                MeetingActions.changeVideoReadyState();
+                socket.emit('newParticipantA', id, room);
             }).catch(function (e) {
                 if (e) {
                     navigator.mediaDevices.getUserMedia({
                         audio: true
+                    }).then(function () {
+                        socket.emit('newParticipantA', id, room);
                     });
                 }
             });
@@ -17256,7 +17269,7 @@ var Chat = {
 
         Chat.toggleUserMedia = function () {
             if (localStream) {
-                callback();
+                MeetingActions.changeVideoReadyState();
                 localStream.getTracks().forEach(function (track) {
                     track.stop();
                 });
@@ -17264,9 +17277,8 @@ var Chat = {
         };
 
         //建立點對點連線物件，以及為連線標的創建影像視窗
-        Chat.createPeerConnection = function (isInitiator, config, remotePeer, socket, videoTag, action, cb) {
+        Chat.createPeerConnection = function (isInitiator, config, remotePeer, socket, videoTag, action) {
             var peerConn = new RTCPeerConnection(config);
-            action.newParticipant({ a: remotePeer, b: peerConn });
             if (localStream) {
                 peerConn.addStream(localStream);
             }
@@ -17275,22 +17287,21 @@ var Chat = {
             peerConn.onicecandidate = function (event) {
                 if (event.candidate) {
                     //console.log('local端找到ice candidate>要傳出去: ' + JSON.stringify(event.candidate));
-                    socket.emit('onIceCandidate', event.candidate, localUserID, remotePeer);
+                    socket.emit('onIceCandidateA', event.candidate, localUserID, remotePeer);
                 }
             };
 
             peerConn.onaddstream = function (event) {
                 var url = URL.createObjectURL(event.stream);
-                action.addRemoteStreamURL({
+                MeetingActions.addRemoteStreamURL({
                     a: remotePeer,
-                    b: url,
-                    c: stream
+                    b: url
                 });
             };
 
             peerConn.onremovestream = function (event) {
                 console.log('Remote stream removed. Event: ', event);
-                action.deleteRemoteTag(remotePeer);
+                MeetingActions.deleteRemoteTag(remotePeer);
             };
 
             //如果是開啟P2P的人
@@ -18064,6 +18075,11 @@ var MeetingStore = function () {
             this.remoteVideoTag[obj.a].srcObject = obj.c;
             this.remoteVideoTag[obj.a].setAttribute('src', obj.b);
             this.remoteStreamURL[obj.a] = obj.b;
+        }
+    }, {
+        key: 'queueCandidate',
+        value: function queueCandidate(obj) {
+            this.candidateQueue[obj.b] = obj.a;
         }
     }]);
 

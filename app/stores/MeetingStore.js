@@ -99,6 +99,7 @@ class MeetingStore {
         this.inviteState = 'invite_detail_off';
         this.recordState = 'recognition_detail_on';
         this.candidateQueue = {};
+
     }
 
     changeAudioState() {
@@ -165,6 +166,9 @@ class MeetingStore {
         this.remoteVideoTag[obj.a].srcObject = obj.c;
         this.remoteVideoTag[obj.a].setAttribute('src', obj.b);
         this.remoteStreamURL[obj.a] = obj.b;
+    }
+    queueCandidate(obj){
+        this.candidateQueue[obj.b] = obj.a;
     }
 }
 

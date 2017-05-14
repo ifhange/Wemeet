@@ -6,6 +6,8 @@ import recognition from '../lib/recognition';
 import Recorder from '../lib/recorder';
 import socket from '../socket';
 
+socket.emit('id', 'ayy');
+
 let configuration = {
     'iceServers': [{
         'url': 'stun:stun.l.google.com:19302'
@@ -22,7 +24,7 @@ class Meeting extends React.Component {
         this.state = MeetingStore.getState();
         this.onChange = this.onChange.bind(this);
         this.recorder = new Recorder();
-        this.Chat = chat.createNew(MeetingActions.changeVideoReadyState);
+        this.Chat = chat.createNew(MeetingActions, MeetingStore);
         this.Recognizer = recognition.createNew(MeetingActions.updateResult);
         this.localUserID = "";
         // this.videoList = [];
@@ -34,19 +36,23 @@ class Meeting extends React.Component {
 
     componentDidMount() {
         MeetingStore.listen(this.onChange);
-        if (!room) {
-            window.location.hash = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);
-        };
-        socket.emit('join', room);
+        socket.on('success', (id) => {
+            if (!room) {
+                room = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);
+                window.location.hash = room;
+            };
+            this.localUserID = id;
+            this.Chat.getUserMedia(id, room, socket);
+            socket.emit('join', room);
+        })
+
+
         //加入房間訊息
         socket.on('joined', (room, clientID) => {
             console.log('This peer has joined room: ' + room + ' with client ID ' + clientID);
-            this.localUserID = clientID;
-            this.Chat.getUserMedia(MeetingActions.gotLocalVideo, () => {
-                socket.emit('newParticipant', clientID, room);
-            });
         });
-        for (var i = 0; i < this.state.langs.length; i++) {
+
+        for (let i = 0; i < this.state.langs.length; i++) {
             this.refs.select_language.options[i] = new Option(this.state.langs[i][0], i);
         }
         this.refs.select_language.selectedIndex = 36;
@@ -54,9 +60,7 @@ class Meeting extends React.Component {
         this.refs.select_dialect.selectedIndex = 2;
 
 
-
-
-        socket.on('newParticipant', (participantID) => {
+        socket.on('newParticipantB', (participantID) => {
             //接到新人加入的訊息時，檢查是否已有連線
             if (this.state.connections[participantID]) {
                 console.log("Connections with" + participantID + "already exists");
@@ -85,13 +89,17 @@ class Meeting extends React.Component {
             this.state.connections[sender].setRemoteDescription(new RTCSessionDescription(answer));
         });
 
-        socket.on('onIceCandidate', (candidate, sender) => {
+        socket.on('onIceCandidateB', (candidate, sender) => {
             //console.log('收到遠端的candidate，要加入: ' + JSON.stringify(candidate));
-            console.log(this.state.connections);
-            this.state.connections[sender].addIceCandidate(new RTCIceCandidate(candidate))
-                .catch((e) => {
-                    console.log('發生錯誤了看這裡: ' + e);
-                });
+            if (this.state.connections[sender]) {
+                console.log('加到了!');
+                this.state.connections[sender].addIceCandidate(new RTCIceCandidate(candidate))
+                    .catch((e) => {
+                        console.log('發生錯誤了看這裡: ' + e);
+                    });
+            }
+            MeetingActions.queueCandidate({a:candidate,b:sender});
+            console.log('不!來不及加');
         });
 
         socket.on('offer', (offer, sender) => {
@@ -116,7 +124,7 @@ class Meeting extends React.Component {
                     .catch((e) => {
                         console.log('發生錯誤了看這裡:' + e);
                     });
-                MeetingActions.newParticipant({ a: render, b: peerConn });
+                MeetingActions.newParticipant({ a: sender, b: peerConn });
             }
         });
 
@@ -279,7 +287,7 @@ class Meeting extends React.Component {
                     </div>
                     <div id="meet_main" ref="meet_main">
                         <div id={this.state.recordState} >
-                            <select name="language" id='language' ref='select_language'>
+                            <select name="language" id='language' ref='select_language' onChange={this.updateCountry.bind(this)}>
                             </select>
                             <select name="dialect" id='dialect' ref='select_dialect'>
                             </select>
@@ -289,7 +297,7 @@ class Meeting extends React.Component {
                             <div id='meetpage'>網址：</div>
                             <textarea id='pagetext' >{this.meetpage}</textarea>
                         </div>
-                        <video className='userVideo' id='user' src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>   
+                        <video className='userVideo' id='user' src={this.state.videoIsReady ? this.state.localVideoURL : "沒有加到啦幹"}></video>   
                         <div id='meet_agenda'>
                             <div id='now_agenda'>目前議程</div>
                             <textarea id='agenda_text'>
