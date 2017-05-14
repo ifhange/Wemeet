@@ -89,7 +89,7 @@ class MeetingStore {
       ['हिन्दी', ['hi-IN']],
       ['ภาษาไทย', ['th-TH']]
     ];
-    this.interim_result = '';
+    this.interim_result = '這是緩衝辨識的初始值';
     this.final_result = '';
 
     this.isRecognizing = false;
@@ -231,7 +231,6 @@ class MeetingStore {
   listenAgenda(data) {
     this.agendaList= data;
   }
-
   //0514 07:41 +1Update
   Updatetext(obj){
     this.mychattext = obj;

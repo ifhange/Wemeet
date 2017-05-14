@@ -15,6 +15,7 @@ let Recognition = {
         recognition.interimResults = true;
 
         recognizer.setLanguage = (dialect) => {
+            console.log(dialect.value);
             recognition.lang = dialect.value;
         }
 
@@ -91,7 +92,7 @@ let Recognition = {
                     interim_transcript += event.results[i][0].transcript;
                 }
             }
-            final_transcript = capitalize(final_transcript);
+            
             MeetingActions.updateResult({
                 temp: interim_transcript,
                 final: final_transcript

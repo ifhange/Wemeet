@@ -197,8 +197,6 @@ class Meeting extends React.Component {
             //選項      //值
             this.refs.select_dialect.options.add(new Option(list[i][1], list[i][0]));
         }
-        //this.refs.select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
-        this.Recognizer.setLanguage(this.refs.select_dialect);
     }
 
     onClick_recognizeToggle() {
@@ -319,6 +317,8 @@ class Meeting extends React.Component {
 
                         <div id='yourvoice'>
                             <img id='voice_img' src={this.state.voiceimg}></img>
+                            緩衝值:{this.state.interim_result}<br></br>
+                            最終值:{this.state.final_result}
                         </div>
 
                         <div id="meet_chat_input">
@@ -332,7 +332,6 @@ class Meeting extends React.Component {
 
                     </div>
                     <div id="feature">
-
                         <div className="left">
                             <button id={this.state.recognizeImg} onClick={this.onClick_recognizeToggle.bind(this)} >{this.state.recognizeState}</button>
                             <button id={this.state.videoImg} onClick={this.onClick_videoToggle.bind(this)} >{this.state.videoState}</button>
@@ -343,7 +342,7 @@ class Meeting extends React.Component {
                             <button id="invite" onClick={this.onClick_invitepage}>邀請</button>
                             <button id={this.state.agendaImg} onClick={this.onClick_agenda.bind(this)}>議程清單</button>
                             <button id="brainstorming" onClick={this.state.invite}>腦力激盪</button>
-                            <button id="collaborative" onClick={this.state.invite}>共筆</button>
+                            <button id="collaborative" >共筆</button>
                         </div>
 
                         <div className="right">
@@ -354,9 +353,9 @@ class Meeting extends React.Component {
                     <div id="meet_main" ref="meet_main">
 
                         <div id={this.state.recordState} >
-                            <select name="language" id='language' ref='select_language'>
+                            <select name="language" id='language' ref='select_language' onClick={this.updateCountry.bind(this)}>
                             </select>
-                            <select name="dialect" id='dialect' ref='select_dialect'>
+                            <select name="dialect" id='dialect' ref='select_dialect' onClick={this.setLanguage.bind(this)}>
                             </select>
                         </div>
 
@@ -366,7 +365,6 @@ class Meeting extends React.Component {
                         </div>
                         <div id='VideoUser'><video id='videoSrc' width="220" src={this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹"} autoPlay={true}></video></div>
                         {remoteVideo}
-
                         <div id={this.state.agendaState}>
                             <div id='now_agenda'>議程清單</div>
                             <div id='agenda_content'>
@@ -377,8 +375,6 @@ class Meeting extends React.Component {
                             <input type='text' id='user_input' maxLength="25" ref='agenda_input' />
                             <button id='agenda_button' type="submit" onClick={this.onClick_addAgenda.bind(this)}>新增</button>
                         </div>
-
-
                     </div>
                 </div>
             </div>
