@@ -2,6 +2,7 @@ import React from 'react';
 import FriendListStore from '../stores/FriendListStore';
 import FriendListActions from '../actions/FriendListActions';
 import socket from '../socket';
+import Meeting from './Meeting';
 
 class FriendList extends React.Component {
   constructor(props){
@@ -12,6 +13,7 @@ class FriendList extends React.Component {
 
   componentDidMount() {
     FriendListStore.listen(this.onChange);
+
     socket.on('login', function(userlist) {
       FriendListActions.getUserlist(userlist);
     });
@@ -30,15 +32,14 @@ class FriendList extends React.Component {
   }
 
   render() {
-
     //好友名單上限資料
     
     let friendonline =  Object.keys(this.state.userlist).map((keyName, keyIndex) => {
       return (
-        <a href="chatroom"><div id="friend_person">
-        <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
-        <div id="friend_name">{keyName}</div>
-        </div></a>
+      <a href="chatroom"><div id="friend_person">
+      <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
+      <div id="friend_name">{keyName}</div>
+      </div></a>
       )
     });
 

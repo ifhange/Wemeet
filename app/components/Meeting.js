@@ -1,5 +1,4 @@
 'use strict';
-
 import React from 'react';
 import MeetingStore from '../stores/MeetingStore';
 import MeetingActions from '../actions/MeetingActions';
@@ -7,6 +6,7 @@ import chat from '../lib/chat';
 import recognition from '../lib/recognition';
 import Recorder from '../lib/recorder';
 import socket from '../socket';
+import FirepadFrame from './FirepadFrame';
 
 socket.emit('id', 'ayy');
 
@@ -17,7 +17,6 @@ let configuration = {
         'url': 'stun:stun.services.mozilla.com'
     }]
 };
-
 let room = window.location.hash;
 
 class Meeting extends React.Component {
@@ -143,6 +142,10 @@ class Meeting extends React.Component {
         });
     }
 
+    firepadInit(){
+
+    }
+
     componentWillUnmount() {
         MeetingStore.unlisten(this.onChange);
     }
@@ -154,7 +157,6 @@ class Meeting extends React.Component {
     sendText() {
         let inputText = this.refs.meet_input.value;
         let mytext = this.Chat.sendText(inputText, this.localUserID);
-        MeetingActions.addMytext(mytext);
     }
 
     toUser() {
@@ -170,21 +172,17 @@ class Meeting extends React.Component {
         this.isPlaying = false;
     }
 
-    toggleAudio() {
-        this.Chat.toggleAudio();
-        MeetingActions.changeAudioState();
-    }
 
     download() {
-        this.recorder.download();
+        this.recorder.download()
     }
 
-    play() {
-        this.recorder.play();
+    play() {o
+        this.recorder.play()
         this.isPlaying = true;
     }
 
-    setLanguage(e){
+    setLanguage(e) {
         this.Recognizer.setLanguage(e.target);
     }
 
@@ -197,11 +195,9 @@ class Meeting extends React.Component {
         let list = this.state.langs[this.refs.select_language.selectedIndex];
         //把那個國家的方言new出來
         for (let i = 1; i < list.length; i++) {
-                                                            //選項      //值
+            //選項      //值
             this.refs.select_dialect.options.add(new Option(list[i][1], list[i][0]));
         }
-        //this.refs.select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
-        this.Recognizer.setLanguage(this.refs.select_dialect);
     }
 
     onClick_recognizeToggle() {
@@ -217,23 +213,58 @@ class Meeting extends React.Component {
         MeetingActions.changeInviteState();
     }
 
+    onClick_AudioToggle() {
+        this.Chat.toggleAudio();
+        MeetingActions.changeAudioState();
+    }
+
     onClick_backtoindex() {
         window.location = 'https://140.123.175.95:8787/';
     }
 
-    render() {
-        let v = [];
-        for (let id in this.state.remoteStreamURL) {
-            v.push(<video autoPlay={true} className={["userVideo"]} key={id}><source src={this.state.remoteStreamURL[id]} /></video>);
+    onClick_agenda() {
+        MeetingActions.changeAgendaState();
+    }
+
+    onClick_deleteAgenda(text) {
+        let deleteText = text;
+        MeetingActions.deleteAgenda(deleteText);
+    }
+
+    onClick_addAgenda() {
+        if (this.refs.agenda_input.value != '') {
+            let newText = this.refs.agenda_input.value;
+            this.refs.agenda_input.value = '';
+            MeetingActions.addAgenda(newText);
+        };
+    }
+
+    submitenter(myfield, e) {
+        var keycode;
+        if (window.event) keycode = window.event.keyCode;
+        else if (e) keycode = e.which;
+        else return true;
+        if (keycode == 13) {
+            myfield.form.submit();
+            return false;
         }
-        /*let meetChatTest = Object.keys(this.state.userlist).map((keyName, keyIndex) => {
+        else
+            return true;
+    }
+
+
+    render() {
+        let agendalist = Object.keys(this.state.agendaList).map((keyName, keyIndex) => {
+            this.agendatext = keyName;
             return (
-                <a href="chatroom"><div id="friend_person">
-                    <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
-                    <div id="friend_name">{keyName}</div>
-                </div></a>
+                <li id='agenda-li'>{this.agendatext}<button onClick={this.onClick_deleteAgenda.bind(this, this.agendatext)} id='cancel'>刪除</button></li>
             )
-        });*/
+        });
+
+        let remoteVideo = [];
+        for (let id in this.state.remoteStreamURL) {
+            remoteVideo.push(<video autoPlay={true} className={["userVideo"]} key={id}><source src={this.state.remoteStreamURL[id]} /></video>);
+        }
         return (
             <div id='in'>
                 <div className="box-b">
@@ -242,7 +273,6 @@ class Meeting extends React.Component {
                             <div id="button"></div>
                             <div id="meet_name">WeMeet開會群組</div>
                         </div>
-
                         <div id="chatbox">
                             <div id="number_sent">
                                 <div className="arrow_box"><div id="meet_text">{this.myself_text}</div></div>
@@ -254,41 +284,46 @@ class Meeting extends React.Component {
 
                         </div>
 
-                        <div id='meet_upload'>
-                            <input id='fileicon' type='file' ref='meet_fileupload' />
+                        <div id='yourvoice'>
+                            <img id='voice_img' src={this.state.voiceimg}></img>
+                            緩衝值:{this.state.interim_result}<br></br>
+                            最終值:{this.state.final_result}
                         </div>
 
                         <div id="meet_chat_input">
-                            <textarea id="meet_input" ref='meet_input' ></textarea>
-                            <button className="sent" type="submit" ref='meet_submit' onClick={this.sendText.bind(this)}>送出</button>
+                            <div id='meet_upload'>
+                                <img id='fileicon' src='../img/upload.png' />
+                                <input id='filefake' type='file' ref='meet_fileupload' />
+                            </div>
+                            <input type='text' id="meet_input" ref='meet_input' />
+                            <button className="sent" type="submit" ref='meet_submit' onClick={this.sendText.bind(this)} >送出</button>
                         </div>
 
                     </div>
                     <div id="feature">
-
                         <div className="left">
                             <button id={this.state.recognizeImg} onClick={this.onClick_recognizeToggle.bind(this)} >{this.state.recognizeState}</button>
                             <button id={this.state.videoImg} onClick={this.onClick_videoToggle.bind(this)} >{this.state.videoState}</button>
-                            <button id={this.state.audioImg} onClick={this.toggleAudio.bind(this)} >{this.state.audioState}</button>
+                            <button id={this.state.audioImg} onClick={this.onClick_AudioToggle.bind(this)} >{this.state.audioState}</button>
                         </div>
 
                         <div className="center">
                             <button id="invite" onClick={this.onClick_invitepage}>邀請</button>
-                            <button id="number" onClick={this.state.invite}>目前議程</button>
-
+                            <button id={this.state.agendaImg} onClick={this.onClick_agenda.bind(this)}>議程清單</button>
                             <button id="brainstorming" onClick={this.state.invite}>腦力激盪</button>
-                            <button id="collaborative" onClick={this.state.invite}>共筆</button>
+                            <button id="collaborative" >共筆</button>
                         </div>
 
                         <div className="right">
                             <button id="end" onClick={this.onClick_backtoindex}>結束會議</button>
                         </div>
                     </div>
+
                     <div id="meet_main" ref="meet_main">
                         <div id={this.state.recordState} >
-                            <select name="language" id='language' ref='select_language' onChange={this.updateCountry.bind(this)}>
+                            <select name="language" id='language' ref='select_language' onClick={this.updateCountry.bind(this)}>
                             </select>
-                            <select name="dialect" id='dialect' ref='select_dialect' onChange={this.setLanguage.bind(this)}>
+                            <select name="dialect" id='dialect' ref='select_dialect' onClick={this.setLanguage.bind(this)}>
                             </select>
                         </div>
 
@@ -296,16 +331,24 @@ class Meeting extends React.Component {
                             <div id='meetpage'>網址：</div>
                             <textarea id='pagetext' >{this.meetpage}</textarea>
                         </div>
-                        <video className='userVideo' id='user' src={this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹"} autoPlay={true}></video>
-                        {v}   
-                        <div id='meet_agenda'>
-                            <div id='now_agenda'>目前議程</div>
-                            <textarea id='agenda_text'>
-                                1. ㄚㄚㄚㄚ
-                                2. 哀哀哀哀哀
-                                3. GOOOOO
-                            </textarea>
+
+                        <div id='video_box'>
+                             <video className='userVideo' id='user' src={this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹"} autoPlay={true}></video>
+                            {remoteVideo}
                         </div>
+
+                        <div id={this.state.agendaState}>
+                            <div id='now_agenda'>議程清單</div>
+                            <div id='agenda_content'>
+                                <ol>
+                                    {agendalist}
+                                </ol>
+                            </div>
+                            <FirepadFrame></FirepadFrame>
+                            <input type='text' id='user_input' maxLength="25" ref='agenda_input' />
+                            <button id='agenda_button' type="submit" onClick={this.onClick_addAgenda.bind(this)}>新增</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -313,3 +356,4 @@ class Meeting extends React.Component {
     }
 }
 export default Meeting;
+

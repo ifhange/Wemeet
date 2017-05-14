@@ -44,6 +44,35 @@ video {
     background-color: #424242;
 }
 
+#agenda-on:hover {
+    background-color: #424242;
+}
+
+#agenda-off:hover {
+    background-color: #424242;
+}
+
+
+#audio-off:hover {
+    background-color: #424242;
+}
+
+#video-off:hover {
+    background-color: #424242;
+}
+
+#video-on:hover {
+    background-color: #424242;
+}
+
+#recognize-off:hover {
+    background-color: #424242;
+}
+
+#recognize-on:hover {
+    background-color: #424242;
+}
+
 #meet_chat{
   width: 20%;
   height: 540px; 
@@ -51,6 +80,39 @@ video {
   float: right;
 }
 
+#recognize-off{
+  background-image: url('../img/recognize.png');
+  background-color: #535353;
+  background-size: 50% 50%;
+  background-repeat:no-repeat;
+  background-position: center 20%;
+  text-align: center;
+  line-height: 750%;
+  width: 65px;
+  height: 58px;
+  margin-left: 2%;
+  float: left;
+  color: white;
+  font-size: 11px;
+  border: none;
+}
+
+#recognize-on{
+  background-image: url('../img/recognize-off.png');
+  background-color: #535353;
+  background-size: 50% 50%;
+  background-repeat:no-repeat;
+  background-position: center 20%;
+  text-align: center;
+  line-height: 750%;
+  width: 65px;
+  height: 58px;
+  margin-left: 2%;
+  float: left;
+  color: white;
+  font-size: 11px;
+  border: none;
+}
 
 #audio-off{
   background-image: url('../img/audio.png');
@@ -131,15 +193,32 @@ video {
   line-height: 750%;
   width: 58px;
   height: 58px;
-  margin-left: 17%;
+  margin-left: 10%;
   float: left;
   color: white;
   font-size: 11px;
   border: none;
 }
 
-#number{
+#agenda-on{
   background-image: url('../img/people.png');
+  background-color: #535353;
+  background-size: 50% 50%;
+  background-repeat:no-repeat;
+  background-position: center 20%;
+  text-align: center;
+  line-height: 750%;
+  width: 65px;
+  height: 58px;
+  margin-left: 1%;
+  color: white;
+  font-size: 11px;
+  border: none;
+  float: left;
+}
+
+#agenda-off{
+  background-image: url('../img/people-off.png');
   background-color: #535353;
   background-size: 50% 50%;
   background-repeat:no-repeat;
@@ -217,10 +296,9 @@ video {
 
 #chat_menu{
   width: 100%;
-  height: 55px;
+  height: 60px;
   background-color: #535353;
   letter-spacing: 1px;
-  float:right;
 }
 
 #button{
@@ -236,16 +314,12 @@ video {
 
 #meet_name{
   font-size: 15px;
-  line-height:1%;
-  margin-left: 9%;
-  margin-top: 12%;
-  float:left;
+  line-height:350%;
 }
 
 #meet_chat_input{
   width: 100%;
-  height: 80px;
-  background-color: #fff;
+  height: 120px;
 }
 
 #meet_input{
@@ -253,10 +327,11 @@ video {
   BORDER-RIGHT-STYLE: none;
   BORDER-LEFT-STYLE: none;
   BORDER-BOTTOM-STYLE: none;
-  width: 70%;
-  height: 75px;
+  width: 78.1%;
+  height: 90px;
+  margin-top:-8%;
   float: left;
-
+  outline: none;
 }
 
 #pause{
@@ -335,22 +410,30 @@ video {
   color:#ffffff;
   font-size:20px;
   font-weight:bold;
-  padding:27px 3.2px;
+  padding:34px 3.2px;
   text-decoration:none;
   text-shadow:0px 1px 0px #528009;
+  margin-top: -9%; 
 }
 
 #chatbox{
-  margin-top: 56px;
   width: 100%;
-  height: 400px;
+  height: 370px;
   background-color: #6e3667;
 }
 
+#yourvoice{
+  width: 100%;
+  height: 30px;
+  background-color: white;
+  color : black;
+}
+
 #meet_main{
+  float:left;
   width: 80%;
-  height: 510px;
-  margin-top: -1%;
+  height: 500px;
+  margin-top: -0.2%;
   font-size: 12px;
   background-color: #1a0315;
 }
@@ -362,6 +445,9 @@ video {
   margin-top: -4.5%;
   position: relative;
   background: #91d524;
+  animation: fadeIn;/*动画名称*/    
+  animation-duration: 0.5s;/*动画持续时间*/    
+  -webkit-animation:fadeIn 0.5s;/*针对webkit内核*/  
 }
 
 #invite_detail_on:after {
@@ -377,6 +463,9 @@ video {
   border-bottom-color: #91d524;
   border-width: 5px;
   margin-left: -50px;
+  animation: fadeIn;/*动画名称*/    
+  animation-duration: 0.5s;/*动画持续时间*/    
+  -webkit-animation:fadeIn 0.5s;/*针对webkit内核*/  
 }
 
 #number_sent{
@@ -397,13 +486,15 @@ video {
 }
 
 #meet_upload{
-  width: 16.5%;
-  height: 30px;
+  width: 100%;
+  height: 20px;
+  background-color: white;
 }
 
 .userVideo{
   width: 300px;
   height: 150px;
+  background-color: white;
 }
 
 #user{
@@ -439,6 +530,8 @@ video {
   position: relative;
   background: #91d524;
   visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
 #invite_detail_off:after {
@@ -455,6 +548,8 @@ video {
   border-width: 5px;
   margin-left: -50px;
   visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
 #recognition_detail_on {
@@ -464,6 +559,9 @@ video {
   margin-top: 1%;
   position: relative;
   background: #91d524;
+  animation: fadeIn;/*动画名称*/    
+  animation-duration: 0.5s;/*动画持续时间*/    
+  -webkit-animation:fadeIn 0.5s;/*针对webkit内核*/  
 }
 
 #recognition_detail_on:after {
@@ -479,6 +577,9 @@ video {
   border-bottom-color: #91d524;
   border-width: 5px;
   margin-left: -50px;
+  animation: fadeIn;/*动画名称*/    
+  animation-duration: 0.5s;/*动画持续时间*/    
+  -webkit-animation:fadeIn 0.5s;/*针对webkit内核*/  
 }
 
 
@@ -490,6 +591,8 @@ video {
   position: relative;
   background: #91d524;
   visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
 #recognition_detail_off:after {
@@ -506,6 +609,8 @@ video {
   border-width: 5px;
   margin-left: -50px;
   visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
 #dialect {
@@ -536,37 +641,148 @@ video {
   float: right;
   margin-top: -4%;
   margin-right: 0.5%;
-  width: 30%;
+  width: 25%;
   height: 140px;
 }
 
-#agenda_text{
-  BORDER-TOP-STYLE: none;
-  BORDER-RIGHT-STYLE: none;
-  BORDER-LEFT-STYLE: none;
-  BORDER-BOTTOM-STYLE: none;
-  margin-top: 2%;
-  margin-right: 0.5%;
-  width: 95%;
-  height: 100px;
-
+#fileicon{
+  width: 8%;
+  height: 90%;
+  position:relative;
+  top: 3px;
+  left:-110px;
 }
 
-#agenda_text{
-  BORDER-TOP-STYLE: none;
-  BORDER-RIGHT-STYLE: none;
-  BORDER-LEFT-STYLE: none;
-  BORDER-BOTTOM-STYLE: none;
+#filefake{
+  width: 10%;
+  height: 65%;
+  margin-left: 3%;
   margin-top: 2%;
-  margin-right: 0.5%;
-  width: 95%;
-  height: 100px;
-  background-color: #1a0315;
-  color: white;
+  float: left;
+  opacity: 0;
+}
+
+#video_box{
+  width: 100%;
+  height: 500px;
+  margin-top: -5.5%;
+  float: left;
 }
 
 #now_agenda{
+  width: 100%;
+  height: 25px;
+  font-size: 16px;
+  margin-bottom: -2%;
+}
+
+#nowagenda-on{
+  BORDER-TOP-STYLE: none;
+  BORDER-RIGHT-STYLE: none;
+  BORDER-LEFT-STYLE: none;
+  BORDER-BOTTOM-STYLE: none;
+  width: 33%;
+  height: 150px;
+  float: right;
+  margin-right: 1%;
+  margin-top: -54.5%;
+  background: #6e3667;
+  animation: fadeIn;/*动画名称*/    
+  animation-duration: 0.5s;/*动画持续时间*/    
+  -webkit-animation:fadeIn 0.5s;/*针对webkit内核*/  
+}
+
+#nowagenda-off{
+  BORDER-TOP-STYLE: none;
+  BORDER-RIGHT-STYLE: none;
+  BORDER-LEFT-STYLE: none;
+  BORDER-BOTTOM-STYLE: none;
+  width: 33%;
+  height: 150px;
+  float: right;
+  margin-right: 1%;
+  margin-top: -54.5%;
+  background: #6e3667;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
+}
+
+#user_input{
+  width: 80.5%;
+  height: 15px;
+  float: left;
+  outline: none;
+}
+
+#agenda_content{
+  width: 100%;
+  height: 110px;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#agenda_button{
+  float: right;
+  -moz-box-shadow: 0px 1px 0px 0px #a4e271;
+  -webkit-box-shadow: 0px 1px 0px 0px #a4e271;
+  box-shadow: 0px 1px 0px 0px #a4e271;
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, yellow), color-stop(1, yellow));
+  background:-moz-linear-gradient(top,yellow 5%, yellow 100%);
+  background:-webkit-linear-gradient(top, yellow 5%, yellow 100%);
+  background:-o-linear-gradient(top, yellow 5%, yellow 100%);
+  background:-ms-linear-gradient(top, yellow 5%, yellow 100%);
+  background:linear-gradient(to bottom, yellow 5%, yellow 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#91d524', endColorstr='#82bd22',GradientType=0);
+  background-color:yellow;
+  border:1px solid yellow;
+  cursor:pointer;
+  color:black;
+  font-size:10px;
+  font-weight:bold;
+  padding:0.8% 13px;
+  text-decoration:none;
+}
+
+#agenda-li{
+  text-align: left;
   font-size: 15px;
-  margin-top: 3%;
-  margin-right: 0.5%;
+  width: 97%;
+  height: 20px;
+  margin-left: -5%;
+  float: left;
+  margin-bottom: 1px;
+}
+
+#agenda-li:hover{
+  background-color: #a4e271;
+}
+
+#cancel {
+  BORDER-TOP-STYLE: none;
+  BORDER-RIGHT-STYLE: none;
+  BORDER-LEFT-STYLE: none;
+  BORDER-BOTTOM-STYLE: none;
+  background-color: red;
+  font-size: 6px;
+  width: 15%;
+  height: 20px;
+  float: right;
+  border: none;
+  outline: none;
+}
+
+#cancel:hover {
+  background-color: #ff7478;
+}
+
+#li-text {
+  width: 90%;
+}
+
+#voice_img{
+  width: 15%;
+  height: 100%;
+  float: left;
 }
