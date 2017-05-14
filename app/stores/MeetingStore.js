@@ -1,5 +1,6 @@
 import alt from '../alt';
 import MeetingActions from '../actions/MeetingActions';
+import socket from '../socket';
 
 class MeetingStore {
   constructor() {
@@ -95,6 +96,9 @@ class MeetingStore {
     this.videoImg = 'video-off';
     this.inviteState = 'invite_detail_off';
     this.recordState = 'recognition_detail_on';
+    this.agendaState = 'nowagenda-on';
+    this.agendaImg = 'agenda-off';
+    this.agendaList = {};
   }
 
   changeAudioState() {
@@ -127,6 +131,18 @@ class MeetingStore {
       this.inviteState = 'invite_detail_off';
     }
   }
+
+  changeAgendaState() {
+    if (this.agendaState == 'nowagenda-on') {
+      this.agendaState = 'nowagenda-off';
+      this.agendaImg = 'agenda-on';
+    } else {
+      this.agendaState = 'nowagenda-on';
+      this.agendaImg = 'agenda-off';
+    }
+  }
+
+
   changeVideoReadyState() {
     this.isStreaming = !this.isStreaming;
     this.videoIsReady = !this.videoIsReady;
@@ -145,9 +161,23 @@ class MeetingStore {
   }
 
   addMytext(data) {
-    this.meet_mytext
     console.log(data);
   }
+
+  addAgenda(data) {
+    this.agendaList[data] = data;
+    socket.emit('addAgenda',this.agendaList);
+  }
+
+  deleteAgenda(data) {
+    delete this.agendaList[data];
+    socket.emit('deleteAgenda',this.agendaList);
+  }
+
+  listenAgenda(data) {
+    this.agendaList= data;
+  }
+
 }
 
 export default alt.createStore(MeetingStore);

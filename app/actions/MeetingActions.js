@@ -6,11 +6,15 @@ class MeetingActions {
       'changeAudioState',
       'changeVideoState',
       'changeInviteState',
+      'changeAgendaState',
       'addMytext',
       'changeVideoReadyState',
       'gotLocalVideo',
       'newParticipant',
-      'updateResult'
+      'updateResult',
+      'addAgenda',
+      'deleteAgenda',
+      'listenAgenda'
     );
   }
 }

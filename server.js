@@ -97,6 +97,13 @@ io.on('connection', function(socket) {
         socket.broadcast.emit('login', [onlineUser,onlineCount]);
     };
 
+    socket.on('addAgenda', function(list) {
+        socket.broadcast.emit('addAgendaForAll',list);
+    });
+
+    socket.on('deleteAgenda', function(list) {
+        socket.broadcast.emit('deleteAgendaForAll',list);
+    });
 
     socket.on('join', function(room) {
         console.log('收到「加入」房間: ' + room + ' 的請求');

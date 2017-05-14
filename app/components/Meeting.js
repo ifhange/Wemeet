@@ -4,7 +4,7 @@ import MeetingActions from '../actions/MeetingActions';
 import chat from '../lib/chat';
 import recognition from '../lib/recognition';
 import Recorder from '../lib/recorder';
-import socket from '../socket.js'
+import socket from '../socket';
 let room = window.location.hash;
 
 class Meeting extends React.Component {
@@ -24,6 +24,7 @@ class Meeting extends React.Component {
     }
 
     componentDidMount() {
+
         for (var i = 0; i < this.state.langs.length; i++) {
             this.refs.select_language.options[i] = new Option(this.state.langs[i][0], i);
         }
@@ -120,6 +121,16 @@ class Meeting extends React.Component {
             a.click();
             window.URL.revokeObjectURL(url);
         })
+
+        socket.on('addAgendaForAll', function(agenda){
+            console.log(agenda);
+            MeetingActions.listenAgenda(agenda);
+        });
+
+        socket.on('deleteAgendaForAll', function(agenda){
+            console.log(agenda);
+            MeetingActions.listenAgenda(agenda);
+        });
     }
 
     componentWillUnmount() {
@@ -140,6 +151,7 @@ class Meeting extends React.Component {
         let remote = document.createElement('video');
         remote.classList.add('userVideo');
         this.refs.meet_main.appendChild(remote);
+        socket.broadcast.emit('addAgenda',this.agendaList);
     }
 
     toUser() {
@@ -200,7 +212,33 @@ class Meeting extends React.Component {
         window.location = 'https://140.123.175.95:8787/';
     }
 
+    onClick_agenda() {
+        MeetingActions.changeAgendaState();
+    }
+
+    onClick_deleteAgenda(text) {
+        let deleteText = text;
+        MeetingActions.deleteAgenda(deleteText);
+    }
+
+    onClick_addAgenda(){
+        if(this.refs.agenda_input.value != '') {
+            let newText = this.refs.agenda_input.value;
+            this.refs.agenda_input.value = '';
+            MeetingActions.addAgenda(newText);
+        };
+    }
+
     render() {
+
+        let agendalist =  Object.keys(this.state.agendaList).map((keyName, keyIndex) => {
+            this.agendatext = keyName;
+            return (
+                <li id='agenda-li'>{this.agendatext}<button onClick={this.onClick_deleteAgenda.bind(this,this.agendatext)} id='cancel'>刪除</button></li>
+            )
+        });
+    
+
         // for (let id in this.state.connections) {
         // 	this.tagList[id] = <video key={id} className={xxx} ></video>;
         // }
@@ -219,7 +257,6 @@ class Meeting extends React.Component {
                 <div className="box-b">
                     <div id="meet_chat">
                         <div id="chat_menu">
-                            <div id="button"></div>
                             <div id="meet_name">WeMeet開會群組</div>
                         </div>
 
@@ -234,11 +271,15 @@ class Meeting extends React.Component {
 
                         </div>
 
-                        <div id='meet_upload'>
-                            <input id='fileicon' type='file' ref='meet_fileupload' />
+                        <div id='yourvoice'>
+
                         </div>
 
                         <div id="meet_chat_input">
+                            <div id='meet_upload'>
+                                <img id='fileicon' src='../img/upload.png' />
+                                <input id='filefake' type='file' ref='meet_fileupload' />
+                            </div>
                             <textarea id="meet_input" ref='meet_input' ></textarea>
                             <button className="sent" type="submit" ref='meet_submit' onClick={this.sendText.bind(this)}>送出</button>
                         </div>
@@ -253,7 +294,7 @@ class Meeting extends React.Component {
 
                         <div className="center">
                             <button id="invite" onClick={this.onClick_invitepage}>邀請</button>
-                            <button id="number" onClick={this.state.invite}>目前議程</button>
+                            <button id={this.state.agendaImg} onClick={this.onClick_agenda.bind(this)}>議程清單</button>
 
                             <button id="brainstorming" onClick={this.state.invite}>腦力激盪</button>
                             <button id="collaborative" onClick={this.state.invite}>共筆</button>
@@ -271,20 +312,26 @@ class Meeting extends React.Component {
                             </select>
                         </div>
 
-                        <div id={this.state.inviteState} >
-                            <div id='meetpage'>網址：</div>
-                            <textarea id='pagetext' >{this.meetpage}</textarea>
-                        </div>
-                        <video className='userVideo' id='user' src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
+                            <div id={this.state.inviteState} >
+                                <div id='meetpage'>網址：</div>
+                                <textarea id='pagetext' >{this.meetpage}</textarea>
+                            </div>
 
-                        <div id='meet_agenda'>
-                            <div id='now_agenda'>目前議程</div>
-                            <textarea id='agenda_text'>
-                                1. ㄚㄚㄚㄚ
-								2. 哀哀哀哀哀
-								3. GOOOOO
-							</textarea>
+                        <div id='video_box'>
+                            <video className='userVideo' id='user' src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
                         </div>
+
+                        <div id={this.state.agendaState}>
+                            <div id='now_agenda'>議程清單</div>
+                            <div id='agenda_content'>
+                                <ol>
+                                    {agendalist}
+                                </ol>
+                            </div>
+                            <input type='text' id='user_input' maxLength="25" ref='agenda_input' />
+                            <button id='agenda_button' type="submit" onClick={this.onClick_addAgenda.bind(this)}>新增</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
