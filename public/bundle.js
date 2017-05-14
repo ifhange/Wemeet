@@ -370,7 +370,7 @@ module.exports = __webpack_require__(23);
 var _prodInvariant = __webpack_require__(2);
 
 var DOMProperty = __webpack_require__(21);
-var ReactDOMComponentFlags = __webpack_require__(97);
+var ReactDOMComponentFlags = __webpack_require__(95);
 
 var invariant = __webpack_require__(0);
 
@@ -588,7 +588,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _alt = __webpack_require__(129);
+var _alt = __webpack_require__(128);
 
 var _alt2 = _interopRequireDefault(_alt);
 
@@ -649,7 +649,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return __WEBPACK_IMPORTED_MODULE_1__Prompt__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Redirect__ = __webpack_require__(269);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_2__Redirect__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(113);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_3__Route__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(67);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_4__Router__["a"]; });
@@ -809,9 +809,9 @@ module.exports = { debugTool: debugTool };
 var _prodInvariant = __webpack_require__(2),
     _assign = __webpack_require__(3);
 
-var CallbackQueue = __webpack_require__(95);
+var CallbackQueue = __webpack_require__(93);
 var PooledClass = __webpack_require__(17);
-var ReactFeatureFlags = __webpack_require__(100);
+var ReactFeatureFlags = __webpack_require__(98);
 var ReactReconciler = __webpack_require__(22);
 var Transaction = __webpack_require__(39);
 
@@ -1596,9 +1596,9 @@ module.exports = warning;
  */
 
 var keys = __webpack_require__(163);
-var hasBinary = __webpack_require__(88);
-var sliceBuffer = __webpack_require__(134);
-var after = __webpack_require__(127);
+var hasBinary = __webpack_require__(86);
+var sliceBuffer = __webpack_require__(133);
+var after = __webpack_require__(126);
 var utf8 = __webpack_require__(298);
 
 var base64encoder;
@@ -2224,7 +2224,7 @@ var DOMNamespaces = __webpack_require__(52);
 var setInnerHTML = __webpack_require__(41);
 
 var createMicrosoftUnsafeLocalFunction = __webpack_require__(60);
-var setTextContent = __webpack_require__(112);
+var setTextContent = __webpack_require__(110);
 
 var ELEMENT_NODE_TYPE = 1;
 var DOCUMENT_FRAGMENT_NODE_TYPE = 11;
@@ -2845,10 +2845,10 @@ var _assign = __webpack_require__(3);
 var ReactCurrentOwner = __webpack_require__(15);
 
 var warning = __webpack_require__(1);
-var canDefineProperty = __webpack_require__(118);
+var canDefineProperty = __webpack_require__(116);
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
-var REACT_ELEMENT_TYPE = __webpack_require__(117);
+var REACT_ELEMENT_TYPE = __webpack_require__(115);
 
 var RESERVED_PROPS = {
   key: true,
@@ -3495,8 +3495,8 @@ var EventPluginRegistry = __webpack_require__(53);
 var EventPluginUtils = __webpack_require__(54);
 var ReactErrorUtils = __webpack_require__(58);
 
-var accumulateInto = __webpack_require__(106);
-var forEachAccumulated = __webpack_require__(107);
+var accumulateInto = __webpack_require__(104);
+var forEachAccumulated = __webpack_require__(105);
 var invariant = __webpack_require__(0);
 
 /**
@@ -3775,8 +3775,8 @@ module.exports = EventPluginHub;
 var EventPluginHub = __webpack_require__(29);
 var EventPluginUtils = __webpack_require__(54);
 
-var accumulateInto = __webpack_require__(106);
-var forEachAccumulated = __webpack_require__(107);
+var accumulateInto = __webpack_require__(104);
+var forEachAccumulated = __webpack_require__(105);
 var warning = __webpack_require__(1);
 
 var getListener = EventPluginHub.getListener;
@@ -4476,7 +4476,7 @@ var _assign = __webpack_require__(3);
 
 var EventPluginRegistry = __webpack_require__(53);
 var ReactEventEmitterMixin = __webpack_require__(219);
-var ViewportMetrics = __webpack_require__(105);
+var ViewportMetrics = __webpack_require__(103);
 
 var getVendorPrefixedEventName = __webpack_require__(251);
 var isEventSupported = __webpack_require__(64);
@@ -4806,7 +4806,7 @@ module.exports = ReactBrowserEventEmitter;
 
 
 var SyntheticUIEvent = __webpack_require__(32);
-var ViewportMetrics = __webpack_require__(105);
+var ViewportMetrics = __webpack_require__(103);
 
 var getEventModifierState = __webpack_require__(62);
 
@@ -6140,7 +6140,7 @@ var ReactInstrumentation = __webpack_require__(12);
 
 var createMicrosoftUnsafeLocalFunction = __webpack_require__(60);
 var setInnerHTML = __webpack_require__(41);
-var setTextContent = __webpack_require__(112);
+var setTextContent = __webpack_require__(110);
 
 function getNodeAfter(parentNode, node) {
   // Special case for text components, which return [open, close] comments
@@ -6946,7 +6946,7 @@ module.exports = KeyEscapeUtils;
 var _prodInvariant = __webpack_require__(2);
 
 var ReactPropTypesSecret = __webpack_require__(225);
-var propTypesFactory = __webpack_require__(93);
+var propTypesFactory = __webpack_require__(91);
 
 var React = __webpack_require__(23);
 var PropTypes = propTypesFactory(React.isValidElement);
@@ -8331,7 +8331,7 @@ var _prodInvariant = __webpack_require__(25);
 
 var ReactNoopUpdateQueue = __webpack_require__(70);
 
-var canDefineProperty = __webpack_require__(118);
+var canDefineProperty = __webpack_require__(116);
 var emptyObject = __webpack_require__(27);
 var invariant = __webpack_require__(0);
 var warning = __webpack_require__(1);
@@ -8543,126 +8543,11 @@ module.exports = ReactNoopUpdateQueue;
  * Module dependencies.
  */
 
-var url = __webpack_require__(288);
-var parser = __webpack_require__(72);
-var Manager = __webpack_require__(119);
-var debug = __webpack_require__(42)('socket.io-client');
-
-/**
- * Module exports.
- */
-
-module.exports = exports = lookup;
-
-/**
- * Managers cache.
- */
-
-var cache = exports.managers = {};
-
-/**
- * Looks up an existing `Manager` for multiplexing.
- * If the user summons:
- *
- *   `io('http://localhost/a');`
- *   `io('http://localhost/b');`
- *
- * We reuse the existing instance based on same scheme/port/host,
- * and we initialize sockets for each namespace.
- *
- * @api public
- */
-
-function lookup (uri, opts) {
-  if (typeof uri === 'object') {
-    opts = uri;
-    uri = undefined;
-  }
-
-  opts = opts || {};
-
-  var parsed = url(uri);
-  var source = parsed.source;
-  var id = parsed.id;
-  var path = parsed.path;
-  var sameNamespace = cache[id] && path in cache[id].nsps;
-  var newConnection = opts.forceNew || opts['force new connection'] ||
-                      false === opts.multiplex || sameNamespace;
-
-  var io;
-
-  if (newConnection) {
-    debug('ignoring socket cache for %s', source);
-    io = Manager(source, opts);
-  } else {
-    if (!cache[id]) {
-      debug('new io instance for %s', source);
-      cache[id] = Manager(source, opts);
-    }
-    io = cache[id];
-  }
-  if (parsed.query && !opts.query) {
-    opts.query = parsed.query;
-  } else if (opts && 'object' === typeof opts.query) {
-    opts.query = encodeQueryString(opts.query);
-  }
-  return io.socket(parsed.path, opts);
-}
-/**
- *  Helper method to parse query objects to string.
- * @param {object} query
- * @returns {string}
- */
-function encodeQueryString (obj) {
-  var str = [];
-  for (var p in obj) {
-    if (obj.hasOwnProperty(p)) {
-      str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
-    }
-  }
-  return str.join('&');
-}
-/**
- * Protocol version.
- *
- * @api public
- */
-
-exports.protocol = parser.protocol;
-
-/**
- * `connect`.
- *
- * @param {String} uri
- * @api public
- */
-
-exports.connect = lookup;
-
-/**
- * Expose constructors for standalone build.
- *
- * @api public
- */
-
-exports.Manager = __webpack_require__(119);
-exports.Socket = __webpack_require__(121);
-
-
-/***/ }),
-/* 72 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * Module dependencies.
- */
-
 var debug = __webpack_require__(292)('socket.io-parser');
 var json = __webpack_require__(184);
 var Emitter = __webpack_require__(291);
 var binary = __webpack_require__(290);
-var isBuf = __webpack_require__(122);
+var isBuf = __webpack_require__(121);
 
 /**
  * Protocol version.
@@ -9060,7 +8945,7 @@ function error(data){
 
 
 /***/ }),
-/* 73 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9091,7 +8976,7 @@ var ChatroomActions = function ChatroomActions() {
 exports.default = _alt2.default.createActions(ChatroomActions);
 
 /***/ }),
-/* 74 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9118,7 +9003,7 @@ var FriendListActions = function FriendListActions() {
 exports.default = _alt2.default.createActions(FriendListActions);
 
 /***/ }),
-/* 75 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9173,7 +9058,7 @@ var HeaderActions = function () {
 exports.default = _alt2.default.createActions(HeaderActions);
 
 /***/ }),
-/* 76 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9204,7 +9089,7 @@ var HistoryActions = function HistoryActions() {
 exports.default = _alt2.default.createActions(HistoryActions);
 
 /***/ }),
-/* 77 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9231,7 +9116,7 @@ var MainActions = function MainActions() {
 exports.default = _alt2.default.createActions(MainActions);
 
 /***/ }),
-/* 78 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9252,13 +9137,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var MeetingActions = function MeetingActions() {
   _classCallCheck(this, MeetingActions);
 
-  this.generateActions('changeAudioState', 'changeVideoState', 'changeInviteState', 'changeAgendaState', 'addMytext', 'changeVideoReadyState', 'gotLocalVideo', 'newParticipant', 'updateResult', 'addAgenda', 'deleteAgenda', 'listenAgenda');
+  this.generateActions('changeAudioState', 'changeRecognizeState', 'changeVideoState', 'changeInviteState', 'addMytext', 'changeVideoReadyState', 'gotLocalVideo', 'newParticipant', 'updateResult', 'addRemoteTag', 'deleteRemoteTag', 'addRemoteStreamURL', 'queueCandidate');
 };
 
 exports.default = _alt2.default.createActions(MeetingActions);
 
 /***/ }),
-/* 79 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9349,515 +9234,7 @@ var UserStateActions = function () {
 exports.default = _alt2.default.createActions(UserStateActions);
 
 /***/ }),
-/* 80 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _MeetingStore = __webpack_require__(151);
-
-var _MeetingStore2 = _interopRequireDefault(_MeetingStore);
-
-var _MeetingActions = __webpack_require__(78);
-
-var _MeetingActions2 = _interopRequireDefault(_MeetingActions);
-
-var _chat = __webpack_require__(143);
-
-var _chat2 = _interopRequireDefault(_chat);
-
-var _recognition = __webpack_require__(144);
-
-var _recognition2 = _interopRequireDefault(_recognition);
-
-var _recorder = __webpack_require__(145);
-
-var _recorder2 = _interopRequireDefault(_recorder);
-
-var _socket = __webpack_require__(81);
-
-var _socket2 = _interopRequireDefault(_socket);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var room = window.location.hash;
-
-var Meeting = function (_React$Component) {
-    _inherits(Meeting, _React$Component);
-
-    function Meeting(props) {
-        _classCallCheck(this, Meeting);
-
-        var _this = _possibleConstructorReturn(this, (Meeting.__proto__ || Object.getPrototypeOf(Meeting)).call(this, props));
-
-        _this.state = _MeetingStore2.default.getState();
-        _this.onChange = _this.onChange.bind(_this);
-        _this.recorder = new _recorder2.default();
-        _this.Chat = _chat2.default.createNew(_MeetingActions2.default.changeVideoReadyState);
-        _this.Recognizer = _recognition2.default.createNew(_MeetingActions2.default.updateResult);
-        _this.localUserID = "";
-        // this.videoList = [];
-        // this.tagList = {};
-        _this.isRecording = true;
-        _this.isPlaying = true;
-        _this.meetpage = window.location.href;
-        return _this;
-    }
-
-    _createClass(Meeting, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            var _this2 = this;
-
-            for (var i = 0; i < this.state.langs.length; i++) {
-                this.refs.select_language.options[i] = new Option(this.state.langs[i][0], i);
-            }
-            this.refs.select_language.selectedIndex = 36;
-            this.updateCountry();
-            this.refs.select_dialect.selectedIndex = 2;
-            _MeetingStore2.default.listen(this.onChange);
-            this.Chat.getUserMedia(_MeetingActions2.default.gotLocalVideo);
-            if (!room) {
-                window.location.hash = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);
-            };
-
-            //加入房間訊息
-            _socket2.default.on('joined', function (room, clientID) {
-                console.log('This peer has joined room: ' + room + ' with client ID ' + clientID);
-                _this2.localUserID = clientID;
-                _socket2.default.emit('newParticipant', clientID, room);
-            });
-
-            _socket2.default.on('newParticipant', function (participantID) {
-                console.log('收到新人加入的訊息');
-                //接到新人加入的訊息時，檢查是否已有連線
-                if (_this2.state.connections[participantID]) {
-                    console.log("Connections with" + participantID + "already exists");
-                    return;
-                } else {
-                    var remote = _this2.addUser();
-                    //主動建立連線
-                    var isInitiator = true;
-                    var peerConn = _this2.Chat.createPeerConnection(isInitiator, configuration, participantID, _socket2.default, remote);
-                    peerConn.createOffer().then(function (offer) {
-                        peerConn.setLocalDescription(offer);
-                        _socket2.default.emit('offerRemotePeer', offer, _this2.localUserID, participantID);
-                    }).catch(function (e) {
-                        console.log('發生錯誤了看這裡: ' + e);
-                    });
-                    _MeetingActions2.default.newParticipant({ a: participantID, b: peerConn });
-                }
-            });
-
-            _socket2.default.on('onIceCandidate', function (candidate, sender) {
-                console.log('收到遠端的candidate，要加入: ' + JSON.stringify(candidate));
-                _this2.state.connections[sender].addIceCandidate(new RTCIceCandidate(candidate)).catch(function (e) {
-                    console.log('發生錯誤了看這裡: ' + e);
-                });
-            });
-
-            _socket2.default.on('offer', function (offer, sender) {
-                if (_this2.state.connections[sender]) {
-                    console.log("Connections with" + sender + "already exists");
-                    return;
-                } else {
-                    var remote = _this2.addUser();
-                    console.log('收到遠端的 offer，要建立連線並處理');
-                    var isInitiator = false;
-                    var peerConn = _this2.Chat.createPeerConnection(isInitiator, configuration, sender, _socket2.default, remote);
-                    peerConn.setRemoteDescription(new RTCSessionDescription(offer)).then(function () {
-                        return peerConn.createAnswer();
-                    }).then(function (answer) {
-                        console.log('創建好本地端的 answer，要傳出去');
-                        peerConn.setLocalDescription(answer);
-                        _socket2.default.emit('answerRemotePeer', answer, _this2.localUserID, sender);
-                    }).catch(function (e) {
-                        console.log('發生錯誤了看這裡:' + e);
-                    });
-                    _MeetingActions2.default.newParticipant({ a: sender, b: peerConn });
-                }
-            });
-
-            _socket2.default.on('answer', function (answer, sender) {
-                console.log('answer' + JSON.stringify(answer));
-                connections[sender].setRemoteDescription(new RTCSessionDescription(answer));
-            });
-
-            _socket2.default.on('participantLeft', function (participantID) {
-                delete _this2.state.connections[participantID];
-            });
-
-            _socket2.default.on('videoFromDB', function (arrayBuffer) {
-                console.log("Getting blob form DB and server!!");
-                var blob = new Blob([arrayBuffer], { type: 'video/webm' });
-                var url = window.URL.createObjectURL(blob);
-                var a = document.createElement("a");
-                document.body.appendChild(a);
-                a.style = "display: none";
-                a.href = url;
-                a.download = localUserID + '.webm';
-                a.click();
-                window.URL.revokeObjectURL(url);
-            });
-
-            _socket2.default.on('addAgendaForAll', function (agenda) {
-                console.log(agenda);
-                _MeetingActions2.default.listenAgenda(agenda);
-            });
-
-            _socket2.default.on('deleteAgendaForAll', function (agenda) {
-                console.log(agenda);
-                _MeetingActions2.default.listenAgenda(agenda);
-            });
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            _MeetingStore2.default.unlisten(this.onChange);
-        }
-    }, {
-        key: 'onChange',
-        value: function onChange(state) {
-            this.setState(state);
-        }
-    }, {
-        key: 'sendText',
-        value: function sendText() {
-            var inputText = this.refs.meet_input.value;
-            var mytext = this.Chat.sendText(inputText, this.localUserID);
-            _MeetingActions2.default.addMytext(mytext);
-        }
-    }, {
-        key: 'addUser',
-        value: function addUser() {
-            var remote = document.createElement('video');
-            remote.classList.add('userVideo');
-            this.refs.meet_main.appendChild(remote);
-            _socket2.default.broadcast.emit('addAgenda', this.agendaList);
-        }
-    }, {
-        key: 'toUser',
-        value: function toUser() {
-            var file = this.refs.meet_fileupload.files[0];
-            this.Chat.sendFileToUser(file);
-        }
-    }, {
-        key: 'toggleRecording',
-        value: function toggleRecording() {
-            if (isRecording) {
-                this.isRecording = false;
-            }
-            this.isRecording = true;
-            this.isPlaying = false;
-        }
-    }, {
-        key: 'toggleRecognizing',
-        value: function toggleRecognizing() {
-            this.Recognizer.toggleButtonOnclick();
-        }
-    }, {
-        key: 'download',
-        value: function download() {
-            this.recorder.download();
-        }
-    }, {
-        key: 'play',
-        value: function play() {
-            this.recorder.play();
-            this.isPlaying = true;
-        }
-    }, {
-        key: 'updateCountry',
-        value: function updateCountry() {
-            for (var i = this.refs.select_dialect.options.length - 1; i >= 0; i--) {
-                this.refs.select_dialect.remove(i);
-            }
-            //方言
-            var list = this.state.langs[this.refs.select_language.selectedIndex];
-            for (var _i = 1; _i < list.length; _i++) {
-                this.refs.select_dialect.options.add(new Option(list[_i][1], list[_i][0]));
-            }
-        }
-    }, {
-        key: 'onClick_audioToggle',
-        value: function onClick_audioToggle() {
-            _MeetingActions2.default.changeAudioState();
-        }
-    }, {
-        key: 'onClick_videoToggle',
-        value: function onClick_videoToggle() {
-            _MeetingActions2.default.changeVideoState();
-            if (this.state.isStreaming) {
-                this.Chat.toggleUserMedia();
-            } else {
-                this.Chat.getUserMedia(_MeetingActions2.default.gotLocalVideo);
-            }
-        }
-    }, {
-        key: 'onClick_invitepage',
-        value: function onClick_invitepage() {
-            _MeetingActions2.default.changeInviteState();
-        }
-    }, {
-        key: 'onClick_backtoindex',
-        value: function onClick_backtoindex() {
-            window.location = 'https://140.123.175.95:8787/';
-        }
-    }, {
-        key: 'onClick_agenda',
-        value: function onClick_agenda() {
-            _MeetingActions2.default.changeAgendaState();
-        }
-    }, {
-        key: 'onClick_deleteAgenda',
-        value: function onClick_deleteAgenda(text) {
-            var deleteText = text;
-            _MeetingActions2.default.deleteAgenda(deleteText);
-        }
-    }, {
-        key: 'onClick_addAgenda',
-        value: function onClick_addAgenda() {
-            if (this.refs.agenda_input.value != '') {
-                var newText = this.refs.agenda_input.value;
-                this.refs.agenda_input.value = '';
-                _MeetingActions2.default.addAgenda(newText);
-            };
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this3 = this;
-
-            var agendalist = Object.keys(this.state.agendaList).map(function (keyName, keyIndex) {
-                _this3.agendatext = keyName;
-                return _react2.default.createElement(
-                    'li',
-                    { id: 'agenda-li' },
-                    _this3.agendatext,
-                    _react2.default.createElement(
-                        'button',
-                        { onClick: _this3.onClick_deleteAgenda.bind(_this3, _this3.agendatext), id: 'cancel' },
-                        '\u522A\u9664'
-                    )
-                );
-            });
-
-            // for (let id in this.state.connections) {
-            // 	this.tagList[id] = <video key={id} className={xxx} ></video>;
-            // }
-
-            /*let meetChatTest = Object.keys(this.state.userlist).map((keyName, keyIndex) => {
-                return (
-                    <a href="chatroom"><div id="friend_person">
-                        <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
-                        <div id="friend_name">{keyName}</div>
-                    </div></a>
-                )
-            });*/
-
-            return _react2.default.createElement(
-                'div',
-                { id: 'in' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'box-b' },
-                    _react2.default.createElement(
-                        'div',
-                        { id: 'meet_chat' },
-                        _react2.default.createElement(
-                            'div',
-                            { id: 'chat_menu' },
-                            _react2.default.createElement(
-                                'div',
-                                { id: 'meet_name' },
-                                'WeMeet\u958B\u6703\u7FA4\u7D44'
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { id: 'chatbox' },
-                            _react2.default.createElement(
-                                'div',
-                                { id: 'number_sent' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'arrow_box' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { id: 'meet_text' },
-                                        this.myself_text
-                                    )
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { id: 'me_sent' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'arrow_box1' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { id: 'meet_text' },
-                                        '\u6E2C\u8A66\u6E2C\u8A66'
-                                    )
-                                )
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { id: 'yourvoice' },
-                            _react2.default.createElement('img', { id: 'voice_img', src: '../img/mic.gif' })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { id: 'meet_chat_input' },
-                            _react2.default.createElement(
-                                'div',
-                                { id: 'meet_upload' },
-                                _react2.default.createElement('img', { id: 'fileicon', src: '../img/upload.png' }),
-                                _react2.default.createElement('input', { id: 'filefake', type: 'file', ref: 'meet_fileupload' })
-                            ),
-                            _react2.default.createElement('input', { type: 'text', id: 'meet_input', ref: 'meet_input' }),
-                            _react2.default.createElement(
-                                'button',
-                                { className: 'sent', type: 'submit', ref: 'meet_submit', onClick: this.sendText.bind(this) },
-                                '\u9001\u51FA'
-                            )
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { id: 'feature' },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'left' },
-                            _react2.default.createElement(
-                                'button',
-                                { id: this.state.audioImg, onClick: this.onClick_audioToggle.bind(this) },
-                                this.state.audioState
-                            ),
-                            _react2.default.createElement(
-                                'button',
-                                { id: this.state.videoImg, onClick: this.onClick_videoToggle.bind(this) },
-                                this.state.videoState
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'center' },
-                            _react2.default.createElement(
-                                'button',
-                                { id: 'invite', onClick: this.onClick_invitepage },
-                                '\u9080\u8ACB'
-                            ),
-                            _react2.default.createElement(
-                                'button',
-                                { id: this.state.agendaImg, onClick: this.onClick_agenda.bind(this) },
-                                '\u8B70\u7A0B\u6E05\u55AE'
-                            ),
-                            _react2.default.createElement(
-                                'button',
-                                { id: 'brainstorming', onClick: this.state.invite },
-                                '\u8166\u529B\u6FC0\u76EA'
-                            ),
-                            _react2.default.createElement(
-                                'button',
-                                { id: 'collaborative', onClick: this.state.invite },
-                                '\u5171\u7B46'
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'right' },
-                            _react2.default.createElement(
-                                'button',
-                                { id: 'end', onClick: this.onClick_backtoindex },
-                                '\u7D50\u675F\u6703\u8B70'
-                            )
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { id: 'meet_main', ref: 'meet_main' },
-                        _react2.default.createElement(
-                            'div',
-                            { id: this.state.recordState },
-                            _react2.default.createElement('select', { name: 'language', id: 'language', ref: 'select_language' }),
-                            _react2.default.createElement('select', { name: 'dialect', id: 'dialect', ref: 'select_dialect' })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { id: this.state.inviteState },
-                            _react2.default.createElement(
-                                'div',
-                                { id: 'meetpage' },
-                                '\u7DB2\u5740\uFF1A'
-                            ),
-                            _react2.default.createElement(
-                                'textarea',
-                                { id: 'pagetext' },
-                                this.meetpage
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { id: 'video_box' },
-                            _react2.default.createElement('video', { className: 'userVideo', id: 'user', src: this.state.videoIsReady ? this.state.localVideoURL : "" })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { id: this.state.agendaState },
-                            _react2.default.createElement(
-                                'div',
-                                { id: 'now_agenda' },
-                                '\u8B70\u7A0B\u6E05\u55AE'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { id: 'agenda_content' },
-                                _react2.default.createElement(
-                                    'ol',
-                                    null,
-                                    agendalist
-                                )
-                            ),
-                            _react2.default.createElement('input', { type: 'text', id: 'user_input', maxLength: '25', ref: 'agenda_input' }),
-                            _react2.default.createElement(
-                                'button',
-                                { id: 'agenda_button', type: 'submit', onClick: this.onClick_addAgenda.bind(this) },
-                                '\u65B0\u589E'
-                            )
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Meeting;
-}(_react2.default.Component);
-
-exports.default = Meeting;
-
-/***/ }),
-/* 81 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9867,7 +9244,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _socket = __webpack_require__(71);
+var _socket = __webpack_require__(117);
 
 var _socket2 = _interopRequireDefault(_socket);
 
@@ -9879,7 +9256,7 @@ var socket = io.connect('https://140.123.175.95.8787');
 exports.default = socket;
 
 /***/ }),
-/* 82 */
+/* 80 */
 /***/ (function(module, exports) {
 
 /**
@@ -9908,7 +9285,7 @@ module.exports = function(obj, fn){
 
 
 /***/ }),
-/* 83 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -9968,7 +9345,7 @@ function polling (opts) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
-/* 84 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -9979,7 +9356,7 @@ var Transport = __webpack_require__(44);
 var parseqs = __webpack_require__(50);
 var parser = __webpack_require__(19);
 var inherit = __webpack_require__(33);
-var yeast = __webpack_require__(125);
+var yeast = __webpack_require__(124);
 var debug = __webpack_require__(34)('engine.io-client:polling');
 
 /**
@@ -10219,7 +9596,7 @@ Polling.prototype.uri = function () {
 
 
 /***/ }),
-/* 85 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10308,7 +9685,7 @@ var EventListener = {
 module.exports = EventListener;
 
 /***/ }),
-/* 86 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10340,7 +9717,7 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 87 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10384,7 +9761,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 88 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -10450,7 +9827,7 @@ function hasBinary(data) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
-/* 89 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10511,7 +9888,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 };
 
 /***/ }),
-/* 90 */
+/* 88 */
 /***/ (function(module, exports) {
 
 
@@ -10526,7 +9903,7 @@ module.exports = function(arr, obj){
 };
 
 /***/ }),
-/* 91 */
+/* 89 */
 /***/ (function(module, exports) {
 
 /**
@@ -10681,7 +10058,7 @@ function plural(ms, n, name) {
 
 
 /***/ }),
-/* 92 */
+/* 90 */
 /***/ (function(module, exports) {
 
 /**
@@ -10726,7 +10103,7 @@ module.exports = function parseuri(str) {
 
 
 /***/ }),
-/* 93 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10754,7 +10131,7 @@ module.exports = function(isValidElement) {
 
 
 /***/ }),
-/* 94 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10907,7 +10284,7 @@ var CSSProperty = {
 module.exports = CSSProperty;
 
 /***/ }),
-/* 95 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11031,7 +10408,7 @@ var CallbackQueue = function () {
 module.exports = PooledClass.addPoolingTo(CallbackQueue);
 
 /***/ }),
-/* 96 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11273,7 +10650,7 @@ var DOMPropertyOperations = {
 module.exports = DOMPropertyOperations;
 
 /***/ }),
-/* 97 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11296,7 +10673,7 @@ var ReactDOMComponentFlags = {
 module.exports = ReactDOMComponentFlags;
 
 /***/ }),
-/* 98 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11501,7 +10878,7 @@ function _handleChange(event) {
 module.exports = ReactDOMSelect;
 
 /***/ }),
-/* 99 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11536,7 +10913,7 @@ ReactEmptyComponent.injection = ReactEmptyComponentInjection;
 module.exports = ReactEmptyComponent;
 
 /***/ }),
-/* 100 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11563,7 +10940,7 @@ var ReactFeatureFlags = {
 module.exports = ReactFeatureFlags;
 
 /***/ }),
-/* 101 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11636,7 +11013,7 @@ var ReactHostComponent = {
 module.exports = ReactHostComponent;
 
 /***/ }),
-/* 102 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11655,8 +11032,8 @@ module.exports = ReactHostComponent;
 var ReactDOMSelection = __webpack_require__(212);
 
 var containsNode = __webpack_require__(166);
-var focusNode = __webpack_require__(86);
-var getActiveElement = __webpack_require__(87);
+var focusNode = __webpack_require__(84);
+var getActiveElement = __webpack_require__(85);
 
 function isInDocument(node) {
   return containsNode(document.documentElement, node);
@@ -11765,7 +11142,7 @@ var ReactInputSelection = {
 module.exports = ReactInputSelection;
 
 /***/ }),
-/* 103 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11791,7 +11168,7 @@ var ReactCurrentOwner = __webpack_require__(15);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactDOMContainerInfo = __webpack_require__(206);
 var ReactDOMFeatureFlags = __webpack_require__(208);
-var ReactFeatureFlags = __webpack_require__(100);
+var ReactFeatureFlags = __webpack_require__(98);
 var ReactInstanceMap = __webpack_require__(31);
 var ReactInstrumentation = __webpack_require__(12);
 var ReactMarkupChecksum = __webpack_require__(222);
@@ -11800,7 +11177,7 @@ var ReactUpdateQueue = __webpack_require__(59);
 var ReactUpdates = __webpack_require__(13);
 
 var emptyObject = __webpack_require__(27);
-var instantiateReactComponent = __webpack_require__(110);
+var instantiateReactComponent = __webpack_require__(108);
 var invariant = __webpack_require__(0);
 var setInnerHTML = __webpack_require__(41);
 var shouldUpdateReactComponent = __webpack_require__(65);
@@ -12308,7 +11685,7 @@ var ReactMount = {
 module.exports = ReactMount;
 
 /***/ }),
-/* 104 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12353,7 +11730,7 @@ var ReactNodeTypes = {
 module.exports = ReactNodeTypes;
 
 /***/ }),
-/* 105 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12385,7 +11762,7 @@ var ViewportMetrics = {
 module.exports = ViewportMetrics;
 
 /***/ }),
-/* 106 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12448,7 +11825,7 @@ function accumulateInto(current, next) {
 module.exports = accumulateInto;
 
 /***/ }),
-/* 107 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12484,7 +11861,7 @@ function forEachAccumulated(arr, cb, scope) {
 module.exports = forEachAccumulated;
 
 /***/ }),
-/* 108 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12500,7 +11877,7 @@ module.exports = forEachAccumulated;
 
 
 
-var ReactNodeTypes = __webpack_require__(104);
+var ReactNodeTypes = __webpack_require__(102);
 
 function getHostComponentFromComposite(inst) {
   var type;
@@ -12519,7 +11896,7 @@ function getHostComponentFromComposite(inst) {
 module.exports = getHostComponentFromComposite;
 
 /***/ }),
-/* 109 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12557,7 +11934,7 @@ function getTextContentAccessor() {
 module.exports = getTextContentAccessor;
 
 /***/ }),
-/* 110 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12577,8 +11954,8 @@ var _prodInvariant = __webpack_require__(2),
     _assign = __webpack_require__(3);
 
 var ReactCompositeComponent = __webpack_require__(203);
-var ReactEmptyComponent = __webpack_require__(99);
-var ReactHostComponent = __webpack_require__(101);
+var ReactEmptyComponent = __webpack_require__(97);
+var ReactHostComponent = __webpack_require__(99);
 
 var getNextDebugID = __webpack_require__(284);
 var invariant = __webpack_require__(0);
@@ -12691,7 +12068,7 @@ _assign(ReactCompositeComponentWrapper.prototype, ReactCompositeComponent, {
 module.exports = instantiateReactComponent;
 
 /***/ }),
-/* 111 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12747,7 +12124,7 @@ function isTextInputElement(elem) {
 module.exports = isTextInputElement;
 
 /***/ }),
-/* 112 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12804,7 +12181,7 @@ if (ExecutionEnvironment.canUseDOM) {
 module.exports = setTextContent;
 
 /***/ }),
-/* 113 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12985,7 +12362,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 module.exports = traverseAllChildren;
 
 /***/ }),
-/* 114 */
+/* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13088,7 +12465,7 @@ Link.contextTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (Link);
 
 /***/ }),
-/* 115 */
+/* 113 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13232,7 +12609,7 @@ Route.childContextTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (Route);
 
 /***/ }),
-/* 116 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13571,7 +12948,7 @@ var ReactComponentTreeHook = {
 module.exports = ReactComponentTreeHook;
 
 /***/ }),
-/* 117 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13596,7 +12973,7 @@ var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol['for'] && Symbol
 module.exports = REACT_ELEMENT_TYPE;
 
 /***/ }),
-/* 118 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13627,7 +13004,122 @@ if (false) {
 module.exports = canDefineProperty;
 
 /***/ }),
-/* 119 */
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * Module dependencies.
+ */
+
+var url = __webpack_require__(288);
+var parser = __webpack_require__(71);
+var Manager = __webpack_require__(118);
+var debug = __webpack_require__(42)('socket.io-client');
+
+/**
+ * Module exports.
+ */
+
+module.exports = exports = lookup;
+
+/**
+ * Managers cache.
+ */
+
+var cache = exports.managers = {};
+
+/**
+ * Looks up an existing `Manager` for multiplexing.
+ * If the user summons:
+ *
+ *   `io('http://localhost/a');`
+ *   `io('http://localhost/b');`
+ *
+ * We reuse the existing instance based on same scheme/port/host,
+ * and we initialize sockets for each namespace.
+ *
+ * @api public
+ */
+
+function lookup (uri, opts) {
+  if (typeof uri === 'object') {
+    opts = uri;
+    uri = undefined;
+  }
+
+  opts = opts || {};
+
+  var parsed = url(uri);
+  var source = parsed.source;
+  var id = parsed.id;
+  var path = parsed.path;
+  var sameNamespace = cache[id] && path in cache[id].nsps;
+  var newConnection = opts.forceNew || opts['force new connection'] ||
+                      false === opts.multiplex || sameNamespace;
+
+  var io;
+
+  if (newConnection) {
+    debug('ignoring socket cache for %s', source);
+    io = Manager(source, opts);
+  } else {
+    if (!cache[id]) {
+      debug('new io instance for %s', source);
+      cache[id] = Manager(source, opts);
+    }
+    io = cache[id];
+  }
+  if (parsed.query && !opts.query) {
+    opts.query = parsed.query;
+  } else if (opts && 'object' === typeof opts.query) {
+    opts.query = encodeQueryString(opts.query);
+  }
+  return io.socket(parsed.path, opts);
+}
+/**
+ *  Helper method to parse query objects to string.
+ * @param {object} query
+ * @returns {string}
+ */
+function encodeQueryString (obj) {
+  var str = [];
+  for (var p in obj) {
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+    }
+  }
+  return str.join('&');
+}
+/**
+ * Protocol version.
+ *
+ * @api public
+ */
+
+exports.protocol = parser.protocol;
+
+/**
+ * `connect`.
+ *
+ * @param {String} uri
+ * @api public
+ */
+
+exports.connect = lookup;
+
+/**
+ * Expose constructors for standalone build.
+ *
+ * @api public
+ */
+
+exports.Manager = __webpack_require__(118);
+exports.Socket = __webpack_require__(120);
+
+
+/***/ }),
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -13636,13 +13128,13 @@ module.exports = canDefineProperty;
  */
 
 var eio = __webpack_require__(156);
-var Socket = __webpack_require__(121);
+var Socket = __webpack_require__(120);
 var Emitter = __webpack_require__(26);
-var parser = __webpack_require__(72);
-var on = __webpack_require__(120);
-var bind = __webpack_require__(82);
+var parser = __webpack_require__(71);
+var on = __webpack_require__(119);
+var bind = __webpack_require__(80);
 var debug = __webpack_require__(42)('socket.io-client:manager');
-var indexOf = __webpack_require__(90);
+var indexOf = __webpack_require__(88);
 var Backoff = __webpack_require__(153);
 
 /**
@@ -14193,7 +13685,7 @@ Manager.prototype.onreconnect = function () {
 
 
 /***/ }),
-/* 120 */
+/* 119 */
 /***/ (function(module, exports) {
 
 
@@ -14223,7 +13715,7 @@ function on (obj, ev, fn) {
 
 
 /***/ }),
-/* 121 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -14231,13 +13723,13 @@ function on (obj, ev, fn) {
  * Module dependencies.
  */
 
-var parser = __webpack_require__(72);
+var parser = __webpack_require__(71);
 var Emitter = __webpack_require__(26);
 var toArray = __webpack_require__(295);
-var on = __webpack_require__(120);
-var bind = __webpack_require__(82);
+var on = __webpack_require__(119);
+var bind = __webpack_require__(80);
 var debug = __webpack_require__(42)('socket.io-client:socket');
-var hasBin = __webpack_require__(88);
+var hasBin = __webpack_require__(86);
 
 /**
  * Module exports.
@@ -14648,7 +14140,7 @@ Socket.prototype.compress = function (compress) {
 
 
 /***/ }),
-/* 122 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -14668,7 +14160,7 @@ function isBuf(obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
-/* 123 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14702,7 +14194,7 @@ function transmitter() {
 module.exports = transmitter;
 
 /***/ }),
-/* 124 */
+/* 123 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -14730,7 +14222,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 125 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14805,7 +14297,7 @@ module.exports = yeast;
 
 
 /***/ }),
-/* 126 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14819,7 +14311,7 @@ var _reactDom = __webpack_require__(190);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _App = __webpack_require__(135);
+var _App = __webpack_require__(134);
 
 var _App2 = _interopRequireDefault(_App);
 
@@ -14828,7 +14320,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('app'));
 
 /***/ }),
-/* 127 */
+/* 126 */
 /***/ (function(module, exports) {
 
 module.exports = after
@@ -14862,7 +14354,7 @@ function noop() {}
 
 
 /***/ }),
-/* 128 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14961,7 +14453,7 @@ function makeAction(alt, namespace, name, implementation, obj) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 129 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14989,7 +14481,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var _flux = __webpack_require__(176);
 
-var _utilsStateFunctions = __webpack_require__(133);
+var _utilsStateFunctions = __webpack_require__(132);
 
 var StateFunctions = _interopRequireWildcard(_utilsStateFunctions);
 
@@ -14997,7 +14489,7 @@ var _utilsFunctions = __webpack_require__(16);
 
 var fn = _interopRequireWildcard(_utilsFunctions);
 
-var _store = __webpack_require__(132);
+var _store = __webpack_require__(131);
 
 var store = _interopRequireWildcard(_store);
 
@@ -15005,7 +14497,7 @@ var _utilsAltUtils = __webpack_require__(43);
 
 var utils = _interopRequireWildcard(_utilsAltUtils);
 
-var _actions = __webpack_require__(128);
+var _actions = __webpack_require__(127);
 
 var _actions2 = _interopRequireDefault(_actions);
 
@@ -15299,7 +14791,7 @@ exports['default'] = Alt;
 module.exports = exports['default'];
 
 /***/ }),
-/* 130 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15321,7 +14813,7 @@ var _utilsFunctions = __webpack_require__(16);
 
 var fn = _interopRequireWildcard(_utilsFunctions);
 
-var _transmitter = __webpack_require__(123);
+var _transmitter = __webpack_require__(122);
 
 var _transmitter2 = _interopRequireDefault(_transmitter);
 
@@ -15451,7 +14943,7 @@ exports['default'] = AltStore;
 module.exports = exports['default'];
 
 /***/ }),
-/* 131 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15465,7 +14957,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _transmitter = __webpack_require__(123);
+var _transmitter = __webpack_require__(122);
 
 var _transmitter2 = _interopRequireDefault(_transmitter);
 
@@ -15663,7 +15155,7 @@ exports['default'] = StoreMixin;
 module.exports = exports['default'];
 
 /***/ }),
-/* 132 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15697,11 +15189,11 @@ var _utilsFunctions = __webpack_require__(16);
 
 var fn = _interopRequireWildcard(_utilsFunctions);
 
-var _AltStore = __webpack_require__(130);
+var _AltStore = __webpack_require__(129);
 
 var _AltStore2 = _interopRequireDefault(_AltStore);
 
-var _StoreMixin = __webpack_require__(131);
+var _StoreMixin = __webpack_require__(130);
 
 var _StoreMixin2 = _interopRequireDefault(_StoreMixin);
 
@@ -15852,7 +15344,7 @@ function createStoreFromClass(alt, StoreModel, key) {
 }
 
 /***/ }),
-/* 133 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15930,7 +15422,7 @@ function filterSnapshots(instance, state, stores) {
 }
 
 /***/ }),
-/* 134 */
+/* 133 */
 /***/ (function(module, exports) {
 
 /**
@@ -15965,7 +15457,7 @@ module.exports = function(arraybuffer, start, end) {
 
 
 /***/ }),
-/* 135 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15987,7 +15479,7 @@ var _UserState = __webpack_require__(142);
 
 var _UserState2 = _interopRequireDefault(_UserState);
 
-var _Header = __webpack_require__(138);
+var _Header = __webpack_require__(137);
 
 var _Header2 = _interopRequireDefault(_Header);
 
@@ -15995,27 +15487,27 @@ var _Menu = __webpack_require__(141);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
-var _Main = __webpack_require__(140);
+var _Main = __webpack_require__(139);
 
 var _Main2 = _interopRequireDefault(_Main);
 
-var _Meeting = __webpack_require__(80);
+var _Meeting = __webpack_require__(140);
 
 var _Meeting2 = _interopRequireDefault(_Meeting);
 
-var _Chatroom = __webpack_require__(136);
+var _Chatroom = __webpack_require__(135);
 
 var _Chatroom2 = _interopRequireDefault(_Chatroom);
 
-var _History = __webpack_require__(139);
+var _History = __webpack_require__(138);
 
 var _History2 = _interopRequireDefault(_History);
 
-var _FriendList = __webpack_require__(137);
+var _FriendList = __webpack_require__(136);
 
 var _FriendList2 = _interopRequireDefault(_FriendList);
 
-var _socket = __webpack_require__(71);
+var _socket = __webpack_require__(117);
 
 var _socket2 = _interopRequireDefault(_socket);
 
@@ -16072,7 +15564,7 @@ var App = function (_React$Component) {
 exports.default = App;
 
 /***/ }),
-/* 136 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16094,7 +15586,7 @@ var _ChatroomStore = __webpack_require__(146);
 
 var _ChatroomStore2 = _interopRequireDefault(_ChatroomStore);
 
-var _ChatroomActions = __webpack_require__(73);
+var _ChatroomActions = __webpack_require__(72);
 
 var _ChatroomActions2 = _interopRequireDefault(_ChatroomActions);
 
@@ -16309,7 +15801,7 @@ var Chatroom = function (_React$Component) {
 exports.default = Chatroom;
 
 /***/ }),
-/* 137 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16329,17 +15821,13 @@ var _FriendListStore = __webpack_require__(147);
 
 var _FriendListStore2 = _interopRequireDefault(_FriendListStore);
 
-var _FriendListActions = __webpack_require__(74);
+var _FriendListActions = __webpack_require__(73);
 
 var _FriendListActions2 = _interopRequireDefault(_FriendListActions);
 
-var _socket = __webpack_require__(71);
+var _socket = __webpack_require__(79);
 
 var _socket2 = _interopRequireDefault(_socket);
-
-var _Meeting = __webpack_require__(80);
-
-var _Meeting2 = _interopRequireDefault(_Meeting);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16348,16 +15836,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var io = (0, _socket2.default)();
-var socket = io.connect('https://140.123.175.95.8787');
-var configuration = {
-  'iceServers': [{
-    'url': 'stun:stun.l.google.com:19302'
-  }, {
-    'url': 'stun:stun.services.mozilla.com'
-  }]
-};
 
 var FriendList = function (_React$Component) {
   _inherits(FriendList, _React$Component);
@@ -16376,11 +15854,11 @@ var FriendList = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _FriendListStore2.default.listen(this.onChange);
-      socket.on('login', function (userlist) {
+      _socket2.default.on('login', function (userlist) {
         _FriendListActions2.default.getUserlist(userlist);
       });
 
-      socket.on('logout', function (userlist1) {
+      _socket2.default.on('logout', function (userlist1) {
         _FriendListActions2.default.getUserlist(userlist1);
       });
     }
@@ -16397,6 +15875,7 @@ var FriendList = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+
       //好友名單上限資料
 
       var friendonline = Object.keys(this.state.userlist).map(function (keyName, keyIndex) {
@@ -16453,7 +15932,7 @@ Link组件：当指定合适的href属性时会渲染一个链接标签，
 */
 
 /***/ }),
-/* 138 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16473,7 +15952,7 @@ var _HeaderStore = __webpack_require__(148);
 
 var _HeaderStore2 = _interopRequireDefault(_HeaderStore);
 
-var _HeaderActions = __webpack_require__(75);
+var _HeaderActions = __webpack_require__(74);
 
 var _HeaderActions2 = _interopRequireDefault(_HeaderActions);
 
@@ -16549,7 +16028,7 @@ var Header = function (_React$Component) {
 exports.default = Header;
 
 /***/ }),
-/* 139 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16569,7 +16048,7 @@ var _HistoryStore = __webpack_require__(149);
 
 var _HistoryStore2 = _interopRequireDefault(_HistoryStore);
 
-var _HistoryActions = __webpack_require__(76);
+var _HistoryActions = __webpack_require__(75);
 
 var _HistoryActions2 = _interopRequireDefault(_HistoryActions);
 
@@ -16953,7 +16432,7 @@ var History = function (_React$Component) {
 exports.default = History;
 
 /***/ }),
-/* 140 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16973,7 +16452,7 @@ var _MainStore = __webpack_require__(150);
 
 var _MainStore2 = _interopRequireDefault(_MainStore);
 
-var _MainActions = __webpack_require__(77);
+var _MainActions = __webpack_require__(76);
 
 var _MainActions2 = _interopRequireDefault(_MainActions);
 
@@ -17130,6 +16609,475 @@ var Main = function (_React$Component) {
 exports.default = Main;
 
 /***/ }),
+/* 140 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _MeetingStore = __webpack_require__(151);
+
+var _MeetingStore2 = _interopRequireDefault(_MeetingStore);
+
+var _MeetingActions = __webpack_require__(77);
+
+var _MeetingActions2 = _interopRequireDefault(_MeetingActions);
+
+var _chat = __webpack_require__(143);
+
+var _chat2 = _interopRequireDefault(_chat);
+
+var _recognition = __webpack_require__(144);
+
+var _recognition2 = _interopRequireDefault(_recognition);
+
+var _recorder = __webpack_require__(145);
+
+var _recorder2 = _interopRequireDefault(_recorder);
+
+var _socket = __webpack_require__(79);
+
+var _socket2 = _interopRequireDefault(_socket);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+_socket2.default.emit('id', 'ayy');
+
+var configuration = {
+    'iceServers': [{
+        'url': 'stun:stun.l.google.com:19302'
+    }, {
+        'url': 'stun:stun.services.mozilla.com'
+    }]
+};
+
+var room = window.location.hash;
+
+var Meeting = function (_React$Component) {
+    _inherits(Meeting, _React$Component);
+
+    function Meeting(props) {
+        _classCallCheck(this, Meeting);
+
+        var _this = _possibleConstructorReturn(this, (Meeting.__proto__ || Object.getPrototypeOf(Meeting)).call(this, props));
+
+        _this.state = _MeetingStore2.default.getState();
+        _this.onChange = _this.onChange.bind(_this);
+        _this.recorder = new _recorder2.default();
+        _this.Chat = _chat2.default.createNew(_MeetingActions2.default, _MeetingStore2.default);
+        _this.Recognizer = _recognition2.default.createNew(_MeetingActions2.default, _MeetingStore2.default);
+        _this.localUserID = "";
+        // this.videoList = [];
+        // this.tagList = {};
+        _this.isRecording = true;
+        _this.isPlaying = true;
+        _this.meetpage = window.location.href;
+        return _this;
+    }
+
+    _createClass(Meeting, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            _MeetingStore2.default.listen(this.onChange);
+            _socket2.default.on('success', function (id) {
+                if (!room) {
+                    room = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);
+                    window.location.hash = room;
+                }
+                _this2.localUserID = id;
+                _this2.Chat.getUserMedia(id, room, _socket2.default);
+                _socket2.default.emit('join', room);
+            });
+            for (var i = 0; i < this.state.langs.length; i++) {
+                this.refs.select_language.options[i] = new Option(this.state.langs[i][0], i);
+            }
+            this.refs.select_language.selectedIndex = 36;
+            this.updateCountry();
+            this.refs.select_dialect.selectedIndex = 2;
+
+            //加入房間訊息
+            _socket2.default.on('joined', function (room, clientID) {
+                console.log('This peer has joined room: ' + room + ' with client ID ' + clientID);
+            });
+
+            _socket2.default.on('newParticipantB', function (participantID) {
+                //接到新人加入的訊息時，檢查是否已有連線
+                if (_this2.state.connections[participantID]) {
+                    console.log("Connections with" + participantID + "already exists");
+                    return;
+                } else {
+                    //主動建立連線
+                    var isInitiator = true;
+                    var peerConn = _this2.Chat.createPeerConnection(isInitiator, configuration, participantID, _socket2.default, _MeetingActions2.default);
+                    peerConn.createOffer().then(function (offer) {
+                        peerConn.setLocalDescription(offer);
+                        _socket2.default.emit('offerRemotePeer', offer, _this2.localUserID, participantID);
+                    }).catch(function (e) {
+                        console.log('發生錯誤了看這裡: ' + e);
+                    });
+                    _MeetingActions2.default.newParticipant({ a: participantID, b: peerConn });
+                }
+            });
+
+            _socket2.default.on('answer', function (answer, sender) {
+                //console.log('answer' + JSON.stringify(answer));
+                //console.log('有收到answer喔!');
+                _this2.state.connections[sender].setRemoteDescription(new RTCSessionDescription(answer));
+            });
+
+            _socket2.default.on('onIceCandidateB', function (candidate, sender) {
+                //console.log('收到遠端的candidate，要加入: ' + JSON.stringify(candidate));
+                if (_this2.state.connections[sender]) {
+                    console.log('加到了!');
+                    _this2.state.connections[sender].addIceCandidate(new RTCIceCandidate(candidate)).catch(function (e) {
+                        console.log('發生錯誤了看這裡: ' + e);
+                    });
+                }
+                _MeetingActions2.default.queueCandidate({ a: candidate, b: sender });
+                console.log('不!來不及加');
+            });
+
+            _socket2.default.on('offer', function (offer, sender) {
+                if (_this2.state.connections[sender]) {
+                    console.log("Connections with" + sender + "already exists");
+                    return;
+                } else {
+                    //console.log('收到遠端的 offer，要建立連線並處理');
+                    var isInitiator = false;
+                    var peerConn = _this2.Chat.createPeerConnection(isInitiator, configuration, sender, _socket2.default, _MeetingActions2.default);
+                    peerConn.setRemoteDescription(new RTCSessionDescription(offer)).then(function () {
+                        return peerConn.createAnswer();
+                    }).then(function (answer) {
+                        console.log('創建好本地端的 answer，要傳出去');
+                        peerConn.setLocalDescription(answer);
+                        _socket2.default.emit('answerRemotePeer', answer, _this2.localUserID, sender);
+                    }).catch(function (e) {
+                        console.log('發生錯誤了看這裡:' + e);
+                    });
+                    _MeetingActions2.default.newParticipant({ a: sender, b: peerConn });
+                }
+            });
+
+            _socket2.default.on('participantLeft', function (participantID) {
+                if (_this2.state.remoteStreamURL[participantID]) {
+                    delete _this2.state.remoteStreamURL[participantID];
+                }
+            });
+
+            _socket2.default.on('videoFromDB', function (arrayBuffer) {
+                console.log("Getting blob form DB and server!!");
+                var blob = new Blob([arrayBuffer], { type: 'video/webm' });
+                var url = window.URL.createObjectURL(blob);
+                var a = document.createElement("a");
+                document.body.appendChild(a);
+                a.style = "display: none";
+                a.href = url;
+                a.download = _this2.localUserID + '.webm';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            });
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            _MeetingStore2.default.unlisten(this.onChange);
+        }
+    }, {
+        key: 'onChange',
+        value: function onChange(state) {
+            this.setState(state);
+        }
+    }, {
+        key: 'sendText',
+        value: function sendText() {
+            var inputText = this.refs.meet_input.value;
+            var mytext = this.Chat.sendText(inputText, this.localUserID);
+            _MeetingActions2.default.addMytext(mytext);
+        }
+    }, {
+        key: 'toUser',
+        value: function toUser() {
+            var file = this.refs.meet_fileupload.files[0];
+            this.Chat.sendFileToUser(file);
+        }
+    }, {
+        key: 'toggleRecording',
+        value: function toggleRecording() {
+            if (isRecording) {
+                this.isRecording = false;
+            }
+            this.isRecording = true;
+            this.isPlaying = false;
+        }
+    }, {
+        key: 'toggleAudio',
+        value: function toggleAudio() {
+            this.Chat.toggleAudio();
+            _MeetingActions2.default.changeAudioState();
+        }
+    }, {
+        key: 'download',
+        value: function download() {
+            this.recorder.download();
+        }
+    }, {
+        key: 'play',
+        value: function play() {
+            this.recorder.play();
+            this.isPlaying = true;
+        }
+    }, {
+        key: 'setLanguage',
+        value: function setLanguage(e) {
+            this.Recognizer.setLanguage(e.target);
+        }
+    }, {
+        key: 'updateCountry',
+        value: function updateCountry() {
+            //有換國家，就清空方言列
+            for (var i = this.refs.select_dialect.options.length - 1; i >= 0; i--) {
+                this.refs.select_dialect.remove(i);
+            }
+            //接著把那個國家的方言陣列取出來
+            var list = this.state.langs[this.refs.select_language.selectedIndex];
+            //把那個國家的方言new出來
+            for (var _i = 1; _i < list.length; _i++) {
+                //選項      //值
+                this.refs.select_dialect.options.add(new Option(list[_i][1], list[_i][0]));
+            }
+            //this.refs.select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
+            this.Recognizer.setLanguage(this.refs.select_dialect);
+        }
+    }, {
+        key: 'onClick_recognizeToggle',
+        value: function onClick_recognizeToggle() {
+            this.Recognizer.toggleButtonOnclick();
+        }
+    }, {
+        key: 'onClick_videoToggle',
+        value: function onClick_videoToggle() {
+            this.Chat.toggleUserMedia();
+            _MeetingActions2.default.changeVideoState();
+        }
+    }, {
+        key: 'onClick_invitepage',
+        value: function onClick_invitepage() {
+            _MeetingActions2.default.changeInviteState();
+        }
+    }, {
+        key: 'onClick_backtoindex',
+        value: function onClick_backtoindex() {
+            window.location = 'https://140.123.175.95:8787/';
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var v = [];
+            for (var id in this.state.remoteStreamURL) {
+                v.push(_react2.default.createElement(
+                    'video',
+                    { autoPlay: true, className: ["userVideo"], key: id },
+                    _react2.default.createElement('source', { src: this.state.remoteStreamURL[id] })
+                ));
+            }
+            /*let meetChatTest = Object.keys(this.state.userlist).map((keyName, keyIndex) => {
+                return (
+                    <a href="chatroom"><div id="friend_person">
+                        <div id="circle1"><img id="friend_image" src="../img/logo_user.png"></img></div>
+                        <div id="friend_name">{keyName}</div>
+                    </div></a>
+                )
+            });*/
+            return _react2.default.createElement(
+                'div',
+                { id: 'in' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'box-b' },
+                    _react2.default.createElement(
+                        'div',
+                        { id: 'meet_chat' },
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'chat_menu' },
+                            _react2.default.createElement('div', { id: 'button' }),
+                            _react2.default.createElement(
+                                'div',
+                                { id: 'meet_name' },
+                                'WeMeet\u958B\u6703\u7FA4\u7D44'
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'chatbox' },
+                            _react2.default.createElement(
+                                'div',
+                                { id: 'number_sent' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'arrow_box' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { id: 'meet_text' },
+                                        this.myself_text
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { id: 'me_sent' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'arrow_box1' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { id: 'meet_text' },
+                                        '\u6E2C\u8A66\u6E2C\u8A66'
+                                    )
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'meet_upload' },
+                            _react2.default.createElement('input', { id: 'fileicon', type: 'file', ref: 'meet_fileupload' })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'meet_chat_input' },
+                            _react2.default.createElement('textarea', { id: 'meet_input', ref: 'meet_input' }),
+                            _react2.default.createElement(
+                                'button',
+                                { className: 'sent', type: 'submit', ref: 'meet_submit', onClick: this.sendText.bind(this) },
+                                '\u9001\u51FA'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { id: 'feature' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'left' },
+                            _react2.default.createElement(
+                                'button',
+                                { id: this.state.recognizeImg, onClick: this.onClick_recognizeToggle.bind(this) },
+                                this.state.recognizeState
+                            ),
+                            _react2.default.createElement(
+                                'button',
+                                { id: this.state.videoImg, onClick: this.onClick_videoToggle.bind(this) },
+                                this.state.videoState
+                            ),
+                            _react2.default.createElement(
+                                'button',
+                                { id: this.state.audioImg, onClick: this.toggleAudio.bind(this) },
+                                this.state.audioState
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'center' },
+                            _react2.default.createElement(
+                                'button',
+                                { id: 'invite', onClick: this.onClick_invitepage },
+                                '\u9080\u8ACB'
+                            ),
+                            _react2.default.createElement(
+                                'button',
+                                { id: 'number', onClick: this.state.invite },
+                                '\u76EE\u524D\u8B70\u7A0B'
+                            ),
+                            _react2.default.createElement(
+                                'button',
+                                { id: 'brainstorming', onClick: this.state.invite },
+                                '\u8166\u529B\u6FC0\u76EA'
+                            ),
+                            _react2.default.createElement(
+                                'button',
+                                { id: 'collaborative', onClick: this.state.invite },
+                                '\u5171\u7B46'
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'right' },
+                            _react2.default.createElement(
+                                'button',
+                                { id: 'end', onClick: this.onClick_backtoindex },
+                                '\u7D50\u675F\u6703\u8B70'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { id: 'meet_main', ref: 'meet_main' },
+                        _react2.default.createElement(
+                            'div',
+                            { id: this.state.recordState },
+                            _react2.default.createElement('select', { name: 'language', id: 'language', ref: 'select_language', onChange: this.updateCountry.bind(this) }),
+                            _react2.default.createElement('select', { name: 'dialect', id: 'dialect', ref: 'select_dialect', onChange: this.setLanguage.bind(this) })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { id: this.state.inviteState },
+                            _react2.default.createElement(
+                                'div',
+                                { id: 'meetpage' },
+                                '\u7DB2\u5740\uFF1A'
+                            ),
+                            _react2.default.createElement(
+                                'textarea',
+                                { id: 'pagetext' },
+                                this.meetpage
+                            )
+                        ),
+                        _react2.default.createElement('video', { className: 'userVideo', id: 'user', src: this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹", autoPlay: true }),
+                        v,
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'meet_agenda' },
+                            _react2.default.createElement(
+                                'div',
+                                { id: 'now_agenda' },
+                                '\u76EE\u524D\u8B70\u7A0B'
+                            ),
+                            _react2.default.createElement(
+                                'textarea',
+                                { id: 'agenda_text' },
+                                '1. \u311A\u311A\u311A\u311A 2. \u54C0\u54C0\u54C0\u54C0\u54C0 3. GOOOOO'
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Meeting;
+}(_react2.default.Component);
+
+exports.default = Meeting;
+
+/***/ }),
 /* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17214,7 +17162,7 @@ var _UserStateStore = __webpack_require__(152);
 
 var _UserStateStore2 = _interopRequireDefault(_UserStateStore);
 
-var _UserStateActions = __webpack_require__(79);
+var _UserStateActions = __webpack_require__(78);
 
 var _UserStateActions2 = _interopRequireDefault(_UserStateActions);
 
@@ -17295,38 +17243,46 @@ exports.default = UserState;
 
 
 var Chat = {
-    createNew: function createNew(callback) {
-        Chat.isReady = false;
+    createNew: function createNew(MeetingActions, MeetingStore) {
         var localStream = '';
         var fileChannels = {};
         var msgChannels = {};
+        var localUserID = '';
         //取得使用者端的影像
-        Chat.getUserMedia = function (gotLocalVideo) {
+        Chat.getUserMedia = function (id, room, socket) {
+            localUserID = id;
             navigator.mediaDevices.getUserMedia({
                 audio: true,
                 video: true
             }).then(function (stream) {
-                var track = stream.getTracks()[0];
+                console.log('有聲音!!!');
                 var videoURL = window.URL.createObjectURL(stream);
-                callback();
-                gotLocalVideo(videoURL);
+                MeetingActions.gotLocalVideo(videoURL);
                 localStream = stream;
+                MeetingActions.changeVideoReadyState();
+                socket.emit('newParticipantA', id, room);
             }).catch(function (e) {
-                console.log('發生錯誤了看這裡:' + e);
+                if (e && !localStream) {
+                    navigator.mediaDevices.getUserMedia({
+                        audio: true
+                    }).then(function () {
+                        console.log('有聲音!!!');
+                        socket.emit('newParticipantA', id, room);
+                    });
+                }
             });
         };
 
         Chat.toggleUserMedia = function () {
-            if (localStream) {
-                callback();
-                localStream.getTracks().forEach(function (track) {
-                    track.stop();
-                });
-            }
+            localStream.getVideoTracks()[0].enabled = !localStream.getVideoTracks()[0].enabled;
+        };
+
+        Chat.toggleAudio = function () {
+            localStream.getAudioTracks()[0].enabled = !localStream.getAudioTracks()[0].enabled;
         };
 
         //建立點對點連線物件，以及為連線標的創建影像視窗
-        Chat.createPeerConnection = function (isInitiator, config, remotePeer, socket, videoTag) {
+        Chat.createPeerConnection = function (isInitiator, config, remotePeer, socket, action) {
             var peerConn = new RTCPeerConnection(config);
             if (localStream) {
                 peerConn.addStream(localStream);
@@ -17335,23 +17291,29 @@ var Chat = {
             // send any ice candidates to the other peer
             peerConn.onicecandidate = function (event) {
                 if (event.candidate) {
-                    console.log('local端找到ice candidate>要傳出去: ' + JSON.stringify(event.candidate));
-                    socket.emit('onIceCandidate', event.candidate, localUserID, remotePeer);
+                    //console.log('local端找到ice candidate>要傳出去: ' + JSON.stringify(event.candidate));
+                    socket.emit('onIceCandidateA', event.candidate, localUserID, remotePeer);
                 }
             };
 
             peerConn.onaddstream = function (event) {
-                console.log('Remote stream added.');
-                videoTag.srcObject = event.stream;
+                console.log('有人進來ㄌ');
+                var url = URL.createObjectURL(event.stream);
+                MeetingActions.addRemoteStreamURL({
+                    a: remotePeer,
+                    b: url
+                });
             };
 
             peerConn.onremovestream = function (event) {
+                console.log('有人走ㄌ');
                 console.log('Remote stream removed. Event: ', event);
+                // MeetingActions.stopRemoteStream(remotePeer);
             };
 
             //如果是開啟P2P的人
             if (isInitiator) {
-                console.log('Creating Data Channel');
+                console.log('Createing Data Channel');
                 //建立資料傳送頻道、訊息傳送頻道
                 var fileChannel = peerConn.createDataChannel('files');
                 var msgChannel = peerConn.createDataChannel('messages');
@@ -17384,10 +17346,10 @@ var Chat = {
                         //     URL.revokeObjectURL(downloadAnchor.href);
                         //     downloadAnchor.removeAttribute('href');
                         // }
-                        // let fileChannel = event.channel;
-                        // fileChannels[remotePeer] = fileChannel;
-                        // console.log('joined channel' + event.channel.label);
-                        // onDataChannelCreated(fileChannel);
+                        var _fileChannel = event.channel;
+                        fileChannels[remotePeer] = _fileChannel;
+                        console.log('joined channel' + event.channel.label);
+                        onDataChannelCreated(_fileChannel);
                     } else if (event.channel.label == 'messages') {
                         var _msgChannel = event.channel;
                         msgChannels[remotePeer] = _msgChannel;
@@ -17513,13 +17475,12 @@ module.exports = Chat;
 
 
 var Recognition = {
-    createNew: function createNew(action) {
+    createNew: function createNew(MeetingActions, MeetingStore) {
         //模組物件
         var recognizer = {};
 
         //模組接口的需求:Select選單物件、中途判定之文字輸出口、最終結果文字輸出口
         var final_transcript = '';
-        recognizer.isRecognizing = false;
         var ignore_onend = void 0;
         var start_timestamp = void 0;
 
@@ -17527,8 +17488,8 @@ var Recognition = {
         recognition.continuous = true;
         recognition.interimResults = true;
 
-        recognizer.setLanguage = function () {
-            recognition.lang = select_dialect.value;
+        recognizer.setLanguage = function (dialect) {
+            recognition.lang = dialect.value;
         };
 
         var two_line = /\n\n/g;
@@ -17543,29 +17504,31 @@ var Recognition = {
         };
 
         recognizer.toggleButtonOnclick = function () {
-            if (isRecognizing) {
+            if (MeetingStore.state.isRecognizing) {
                 recognition.stop();
-                return;
+                alert('結束!');
+                MeetingActions.changeRecognizeState();
+            } else {
+                final_transcript = '';
+                ignore_onend = false;
+                start_timestamp = event.timeStamp;
+                alert('開始!');
+                recognition.start();
+                MeetingActions.changeRecognizeState();
             }
-            final_transcript = '';
-            recognition.start();
-            ignore_onend = false;
-            start_timestamp = event.timeStamp;
         };
 
-        recognition.onstart = function () {
-            isRecognizing = true;
-            alert('按下麥克風圖示，並開始說話。');
-        };
+        recognition.onstart = function () {};
 
         recognition.onerror = function (event) {
             if (event.error == 'no-speech') {
                 alert('偵測不到麥克風訊號，請調整裝置的設定。');
-                ignore_onend = true;
+                recognition.stop();
             }
             if (event.error == 'audio-capture') {
                 alert('偵測不到麥克風，請正確安裝。');
                 ignore_onend = true;
+                recognition.stop();
             }
             if (event.error == 'not-allowed') {
                 if (event.timeStamp - start_timestamp < 100) {
@@ -17574,13 +17537,14 @@ var Recognition = {
                     alert('存取麥克風被拒。');
                 }
                 ignore_onend = true;
+                recognition.stop();
             }
+            MeetingActions.changeRecognizeState();
         };
 
         recognition.onend = function () {
-            isRecognizing = false;
-            if (ignore_onend) {
-                return;
+            if (MeetingStore.state.isRecognizing) {
+                MeetingActions.changeRecognizeState();
             }
         };
 
@@ -17601,7 +17565,7 @@ var Recognition = {
                 }
             }
             final_transcript = capitalize(final_transcript);
-            action({
+            MeetingActions.updateResult({
                 temp: interim_transcript,
                 final: final_transcript
             });
@@ -17759,7 +17723,7 @@ var _alt = __webpack_require__(7);
 
 var _alt2 = _interopRequireDefault(_alt);
 
-var _ChatroomActions = __webpack_require__(73);
+var _ChatroomActions = __webpack_require__(72);
 
 var _ChatroomActions2 = _interopRequireDefault(_ChatroomActions);
 
@@ -17805,7 +17769,7 @@ var _alt = __webpack_require__(7);
 
 var _alt2 = _interopRequireDefault(_alt);
 
-var _FriendListActions = __webpack_require__(74);
+var _FriendListActions = __webpack_require__(73);
 
 var _FriendListActions2 = _interopRequireDefault(_FriendListActions);
 
@@ -17820,7 +17784,7 @@ var FriendListStore = function () {
     _classCallCheck(this, FriendListStore);
 
     this.bindActions(_FriendListActions2.default);
-    this.userlist = {};
+    this.userlist = [];
   }
 
   _createClass(FriendListStore, [{
@@ -17852,7 +17816,7 @@ var _alt = __webpack_require__(7);
 
 var _alt2 = _interopRequireDefault(_alt);
 
-var _HeaderActions = __webpack_require__(75);
+var _HeaderActions = __webpack_require__(74);
 
 var _HeaderActions2 = _interopRequireDefault(_HeaderActions);
 
@@ -17913,7 +17877,7 @@ var _alt = __webpack_require__(7);
 
 var _alt2 = _interopRequireDefault(_alt);
 
-var _HistoryActions = __webpack_require__(76);
+var _HistoryActions = __webpack_require__(75);
 
 var _HistoryActions2 = _interopRequireDefault(_HistoryActions);
 
@@ -17959,7 +17923,7 @@ var _alt = __webpack_require__(7);
 
 var _alt2 = _interopRequireDefault(_alt);
 
-var _MainActions = __webpack_require__(77);
+var _MainActions = __webpack_require__(76);
 
 var _MainActions2 = _interopRequireDefault(_MainActions);
 
@@ -17996,7 +17960,7 @@ exports.default = _alt2.default.createStore(MainStore);
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -18005,141 +17969,152 @@ var _alt = __webpack_require__(7);
 
 var _alt2 = _interopRequireDefault(_alt);
 
-var _MeetingActions = __webpack_require__(78);
+var _MeetingActions = __webpack_require__(77);
 
 var _MeetingActions2 = _interopRequireDefault(_MeetingActions);
-
-var _socket = __webpack_require__(81);
-
-var _socket2 = _interopRequireDefault(_socket);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var MeetingStore = function () {
-  function MeetingStore() {
-    _classCallCheck(this, MeetingStore);
+    function MeetingStore() {
+        _classCallCheck(this, MeetingStore);
 
-    this.bindActions(_MeetingActions2.default);
-    this.connections = {}; //存放連線中的人的socket.id
-    this.videoIsReady = false;
-    this.audioOn = false;
-    this.localVideoURL = '';
-    this.isStreaming = false;
-    this.meet_mytext = '';
-    this.langs = [['Afrikaans', ['af-ZA']], ['Bahasa Indonesia', ['id-ID']], ['Bahasa Melayu', ['ms-MY']], ['Català', ['ca-ES']], ['Čeština', ['cs-CZ']], ['Dansk', ['da-DK']], ['Deutsch', ['de-DE']], ['English', ['en-AU', 'Australia'], ['en-CA', 'Canada'], ['en-IN', 'India'], ['en-NZ', 'New Zealand'], ['en-ZA', 'South Africa'], ['en-GB', 'United Kingdom'], ['en-US', 'United States']], ['Español', ['es-AR', 'Argentina'], ['es-BO', 'Bolivia'], ['es-CL', 'Chile'], ['es-CO', 'Colombia'], ['es-CR', 'Costa Rica'], ['es-EC', 'Ecuador'], ['es-SV', 'El Salvador'], ['es-ES', 'España'], ['es-US', 'Estados Unidos'], ['es-GT', 'Guatemala'], ['es-HN', 'Honduras'], ['es-MX', 'México'], ['es-NI', 'Nicaragua'], ['es-PA', 'Panamá'], ['es-PY', 'Paraguay'], ['es-PE', 'Perú'], ['es-PR', 'Puerto Rico'], ['es-DO', 'República Dominicana'], ['es-UY', 'Uruguay'], ['es-VE', 'Venezuela']], ['Euskara', ['eu-ES']], ['Filipino', ['fil-PH']], ['Français', ['fr-FR']], ['Galego', ['gl-ES']], ['Hrvatski', ['hr_HR']], ['IsiZulu', ['zu-ZA']], ['Íslenska', ['is-IS']], ['Italiano', ['it-IT', 'Italia'], ['it-CH', 'Svizzera']], ['Lietuvių', ['lt-LT']], ['Magyar', ['hu-HU']], ['Nederlands', ['nl-NL']], ['Norsk bokmål', ['nb-NO']], ['Polski', ['pl-PL']], ['Português', ['pt-BR', 'Brasil'], ['pt-PT', 'Portugal']], ['Română', ['ro-RO']], ['Slovenščina', ['sl-SI']], ['Slovenčina', ['sk-SK']], ['Suomi', ['fi-FI']], ['Svenska', ['sv-SE']], ['Tiếng Việt', ['vi-VN']], ['Türkçe', ['tr-TR']], ['Ελληνικά', ['el-GR']], ['български', ['bg-BG']], ['Pусский', ['ru-RU']], ['Српски', ['sr-RS']], ['Українська', ['uk-UA']], ['한국어', ['ko-KR']], ['中文', ['cmn-Hans-CN', '普通话 (中国大陆)'], ['cmn-Hans-HK', '普通话 (香港)'], ['cmn-Hant-TW', '中文 (台灣)'], ['yue-Hant-HK', '粵語 (香港)']], ['日本語', ['ja-JP']], ['हिन्दी', ['hi-IN']], ['ภาษาไทย', ['th-TH']]];
-    this.interim_result = '';
-    this.final_result = '';
-    this.audioState = '取消辨識';
-    this.audioImg = 'audio-on';
-    this.videoState = '取消視訊';
-    this.videoImg = 'video-off';
-    this.inviteState = 'invite_detail_off';
-    this.recordState = 'recognition_detail_on';
-    this.agendaState = 'nowagenda-on';
-    this.agendaImg = 'agenda-off';
-    this.agendaList = {};
-    this.recognize = 'voice_img';
-  }
+        this.bindActions(_MeetingActions2.default);
+        this.connections = {}; //存放連線中的人的socket.id
+        this.remoteStreamURL = {}; //存放連線中的人的stream
+        this.videoIsReady = false;
+        this.localStream = '';
+        this.localVideoURL = '';
+        this.isStreaming = false;
+        this.meet_mytext = '';
+        this.langs = [['Afrikaans', ['af-ZA']], ['Bahasa Indonesia', ['id-ID']], ['Bahasa Melayu', ['ms-MY']], ['Català', ['ca-ES']], ['Čeština', ['cs-CZ']], ['Dansk', ['da-DK']], ['Deutsch', ['de-DE']], ['English', ['en-AU', 'Australia'], ['en-CA', 'Canada'], ['en-IN', 'India'], ['en-NZ', 'New Zealand'], ['en-ZA', 'South Africa'], ['en-GB', 'United Kingdom'], ['en-US', 'United States']], ['Español', ['es-AR', 'Argentina'], ['es-BO', 'Bolivia'], ['es-CL', 'Chile'], ['es-CO', 'Colombia'], ['es-CR', 'Costa Rica'], ['es-EC', 'Ecuador'], ['es-SV', 'El Salvador'], ['es-ES', 'España'], ['es-US', 'Estados Unidos'], ['es-GT', 'Guatemala'], ['es-HN', 'Honduras'], ['es-MX', 'México'], ['es-NI', 'Nicaragua'], ['es-PA', 'Panamá'], ['es-PY', 'Paraguay'], ['es-PE', 'Perú'], ['es-PR', 'Puerto Rico'], ['es-DO', 'República Dominicana'], ['es-UY', 'Uruguay'], ['es-VE', 'Venezuela']], ['Euskara', ['eu-ES']], ['Filipino', ['fil-PH']], ['Français', ['fr-FR']], ['Galego', ['gl-ES']], ['Hrvatski', ['hr_HR']], ['IsiZulu', ['zu-ZA']], ['Íslenska', ['is-IS']], ['Italiano', ['it-IT', 'Italia'], ['it-CH', 'Svizzera']], ['Lietuvių', ['lt-LT']], ['Magyar', ['hu-HU']], ['Nederlands', ['nl-NL']], ['Norsk bokmål', ['nb-NO']], ['Polski', ['pl-PL']], ['Português', ['pt-BR', 'Brasil'], ['pt-PT', 'Portugal']], ['Română', ['ro-RO']], ['Slovenščina', ['sl-SI']], ['Slovenčina', ['sk-SK']], ['Suomi', ['fi-FI']], ['Svenska', ['sv-SE']], ['Tiếng Việt', ['vi-VN']], ['Türkçe', ['tr-TR']], ['Ελληνικά', ['el-GR']], ['български', ['bg-BG']], ['Pусский', ['ru-RU']], ['Српски', ['sr-RS']], ['Українська', ['uk-UA']], ['한국어', ['ko-KR']], ['中文', ['cmn-Hans-CN', '普通话 (中国大陆)'], ['cmn-Hans-HK', '普通话 (香港)'], ['cmn-Hant-TW', '中文 (台灣)'], ['yue-Hant-HK', '粵語 (香港)']], ['日本語', ['ja-JP']], ['हिन्दी', ['hi-IN']], ['ภาษาไทย', ['th-TH']]];
+        this.interim_result = '';
+        this.final_result = '';
 
-  _createClass(MeetingStore, [{
-    key: 'changeAudioState',
-    value: function changeAudioState() {
-      if (this.audioState == '取消辨識' && this.recordState == 'recognition_detail_on') {
-        this.audioState = '開始辨識';
-        this.audioImg = 'audio-off';
-        this.recordState = 'recognition_detail_off';
-      } else {
-        this.audioState = '取消辨識';
-        this.audioImg = 'audio-on';
-        this.recordState = 'recognition_detail_on';
-      }
-    }
-  }, {
-    key: 'changeVideoState',
-    value: function changeVideoState() {
-      if (this.videoState == '取消視訊') {
-        this.videoState = '視訊';
-        this.videoImg = 'video-on';
-      } else {
+        this.isRecognizing = false;
+        this.recognizeState = '開始辨識';
         this.videoState = '取消視訊';
+        this.audioState = '靜音';
+
+        this.recognizeImg = 'audio-off';
         this.videoImg = 'video-off';
-      }
-    }
-  }, {
-    key: 'changeInviteState',
-    value: function changeInviteState() {
-      if (this.inviteState == 'invite_detail_off') {
-        this.inviteState = 'invite_detail_on';
-      } else {
+        this.audioImg = 'video-off';
+
         this.inviteState = 'invite_detail_off';
-      }
+        this.recordState = 'recognition_detail_on';
+        this.candidateQueue = {};
     }
-  }, {
-    key: 'changeAgendaState',
-    value: function changeAgendaState() {
-      if (this.agendaState == 'nowagenda-on') {
-        this.agendaState = 'nowagenda-off';
-        this.agendaImg = 'agenda-on';
-      } else {
-        this.agendaState = 'nowagenda-on';
-        this.agendaImg = 'agenda-off';
-      }
-    }
-  }, {
-    key: 'changeVideoReadyState',
-    value: function changeVideoReadyState() {
-      this.isStreaming = !this.isStreaming;
-      this.videoIsReady = !this.videoIsReady;
-    }
-  }, {
-    key: 'gotLocalVideo',
-    value: function gotLocalVideo(videoURL) {
-      this.localVideoURL = videoURL;
-    }
-  }, {
-    key: 'newParticipant',
-    value: function newParticipant(_ref) {
-      var a = _ref.a,
-          b = _ref.b;
 
-      connections[a] = b;
-    }
-  }, {
-    key: 'updateResult',
-    value: function updateResult(_ref2) {
-      var temp = _ref2.temp,
-          final = _ref2.final;
+    _createClass(MeetingStore, [{
+        key: 'changeRecognizeState',
+        value: function changeRecognizeState() {
+            if (this.recognizeState == '取消辨識' && this.recordState == 'recognition_detail_off') {
+                this.recognizeState = '開始辨識';
+                this.recognizeImg = 'audio-off';
+                this.recordState = 'recognition_detail_on';
+                this.isRecognizing = !this.isRecognizing;
+            } else {
+                this.recognizeState = '取消辨識';
+                this.recognizeImg = 'audio-on';
+                this.recordState = 'recognition_detail_off';
+                this.isRecognizing = !this.isRecognizing;
+            }
+        }
+    }, {
+        key: 'changeVideoState',
+        value: function changeVideoState() {
+            if (this.videoState == '取消視訊') {
+                this.videoState = '視訊';
+                this.videoImg = 'video-on';
+            } else {
+                this.videoState = '取消視訊';
+                this.videoImg = 'video-off';
+            }
+        }
+    }, {
+        key: 'changeAudioState',
+        value: function changeAudioState() {
+            if (this.audioState == '靜音') {
+                this.audioState = "收音";
+                this.audioImg = 'video-on';
+            } else {
+                this.audioState = '靜音';
+                this.audioImg = 'video-off';
+            }
+        }
+    }, {
+        key: 'changeInviteState',
+        value: function changeInviteState() {
+            if (this.inviteState == 'invite_detail_off') {
+                this.inviteState = 'invite_detail_on';
+            } else {
+                this.inviteState = 'invite_detail_off';
+            }
+        }
+    }, {
+        key: 'changeVideoReadyState',
+        value: function changeVideoReadyState() {
+            if (this.isStreaming) {
+                this.videoIsReady = false;
+            }
+            this.isStreaming = !this.isStreaming;
+        }
+    }, {
+        key: 'gotLocalVideo',
+        value: function gotLocalVideo(videoURL) {
+            this.localVideoURL = videoURL;
+        }
+    }, {
+        key: 'newParticipant',
+        value: function newParticipant(object) {
+            this.connections[object.a] = object.b;
+        }
+    }, {
+        key: 'updateResult',
+        value: function updateResult(_ref) {
+            var temp = _ref.temp,
+                final = _ref.final;
 
-      this.interim_result = temp;
-      this.final_result = final;
-    }
-  }, {
-    key: 'addMytext',
-    value: function addMytext(data) {
-      console.log(data);
-    }
-  }, {
-    key: 'addAgenda',
-    value: function addAgenda(data) {
-      this.agendaList[data] = data;
-      _socket2.default.emit('addAgenda', this.agendaList);
-    }
-  }, {
-    key: 'deleteAgenda',
-    value: function deleteAgenda(data) {
-      delete this.agendaList[data];
-      _socket2.default.emit('deleteAgenda', this.agendaList);
-    }
-  }, {
-    key: 'listenAgenda',
-    value: function listenAgenda(data) {
-      this.agendaList = data;
-    }
-  }]);
+            this.interim_result = temp;
+            this.final_result = final;
+        }
+    }, {
+        key: 'addMytext',
+        value: function addMytext(data) {
+            // this.meet_mytext
+        }
+    }, {
+        key: 'addRemoteTag',
+        value: function addRemoteTag(obj) {
+            this.remoteVideoTag[obj.a] = obj.b;
+        }
+    }, {
+        key: 'deleteRemoteTag',
+        value: function deleteRemoteTag(id) {
+            delete this.remoteVideoTag[id];
+            delete this.remoteStreamURL[id];
+            delete this.connections[id];
+        }
+    }, {
+        key: 'stopRemoteStream',
+        value: function stopRemoteStream(id) {
+            delete this.remoteStreamURL[id];
+        }
+    }, {
+        key: 'addRemoteStreamURL',
+        value: function addRemoteStreamURL(obj) {
+            this.remoteStreamURL[obj.a] = obj.b;
+        }
+    }, {
+        key: 'queueCandidate',
+        value: function queueCandidate(obj) {
+            this.candidateQueue[obj.b] = obj.a;
+        }
+    }]);
 
-  return MeetingStore;
+    return MeetingStore;
 }();
 
 exports.default = _alt2.default.createStore(MeetingStore);
@@ -18161,7 +18136,7 @@ var _alt = __webpack_require__(7);
 
 var _alt2 = _interopRequireDefault(_alt);
 
-var _UserStateActions = __webpack_require__(79);
+var _UserStateActions = __webpack_require__(78);
 
 var _UserStateActions2 = _interopRequireDefault(_UserStateActions);
 
@@ -18509,12 +18484,12 @@ module.exports.parser = __webpack_require__(19);
  * Module dependencies.
  */
 
-var transports = __webpack_require__(83);
+var transports = __webpack_require__(81);
 var Emitter = __webpack_require__(26);
 var debug = __webpack_require__(34)('engine.io-client:socket');
-var index = __webpack_require__(90);
+var index = __webpack_require__(88);
 var parser = __webpack_require__(19);
-var parseuri = __webpack_require__(92);
+var parseuri = __webpack_require__(90);
 var parsejson = __webpack_require__(185);
 var parseqs = __webpack_require__(50);
 
@@ -18649,7 +18624,7 @@ Socket.protocol = parser.protocol; // this is an int
 
 Socket.Socket = Socket;
 Socket.Transport = __webpack_require__(44);
-Socket.transports = __webpack_require__(83);
+Socket.transports = __webpack_require__(81);
 Socket.parser = __webpack_require__(19);
 
 /**
@@ -19255,7 +19230,7 @@ Socket.prototype.filterUpgrades = function (upgrades) {
  * Module requirements.
  */
 
-var Polling = __webpack_require__(84);
+var Polling = __webpack_require__(82);
 var inherit = __webpack_require__(33);
 
 /**
@@ -19493,7 +19468,7 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
  */
 
 var XMLHttpRequest = __webpack_require__(45);
-var Polling = __webpack_require__(84);
+var Polling = __webpack_require__(82);
 var Emitter = __webpack_require__(26);
 var inherit = __webpack_require__(33);
 var debug = __webpack_require__(34)('engine.io-client:polling-xhr');
@@ -19927,7 +19902,7 @@ var Transport = __webpack_require__(44);
 var parser = __webpack_require__(19);
 var parseqs = __webpack_require__(50);
 var inherit = __webpack_require__(33);
-var yeast = __webpack_require__(125);
+var yeast = __webpack_require__(124);
 var debug = __webpack_require__(34)('engine.io-client:websocket');
 var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
@@ -20224,7 +20199,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(91);
+exports.humanize = __webpack_require__(89);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -21492,7 +21467,7 @@ var _createTransitionManager = __webpack_require__(48);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(89);
+var _DOMUtils = __webpack_require__(87);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21804,7 +21779,7 @@ var _createTransitionManager = __webpack_require__(48);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
-var _DOMUtils = __webpack_require__(89);
+var _DOMUtils = __webpack_require__(87);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -23246,7 +23221,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
   }
 }).call(this);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(124)(module), __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(123)(module), __webpack_require__(6)))
 
 /***/ }),
 /* 185 */
@@ -24063,7 +24038,7 @@ module.exports = ARIADOMPropertyConfig;
 
 var ReactDOMComponentTree = __webpack_require__(5);
 
-var focusNode = __webpack_require__(86);
+var focusNode = __webpack_require__(84);
 
 var AutoFocusUtils = {
   focusDOMComponent: function () {
@@ -24480,7 +24455,7 @@ module.exports = BeforeInputEventPlugin;
 
 
 
-var CSSProperty = __webpack_require__(94);
+var CSSProperty = __webpack_require__(92);
 var ExecutionEnvironment = __webpack_require__(8);
 var ReactInstrumentation = __webpack_require__(12);
 
@@ -24703,7 +24678,7 @@ var SyntheticEvent = __webpack_require__(14);
 
 var getEventTarget = __webpack_require__(63);
 var isEventSupported = __webpack_require__(64);
-var isTextInputElement = __webpack_require__(111);
+var isTextInputElement = __webpack_require__(109);
 
 var eventTypes = {
   change: {
@@ -25238,7 +25213,7 @@ var _assign = __webpack_require__(3);
 
 var PooledClass = __webpack_require__(17);
 
-var getTextContentAccessor = __webpack_require__(109);
+var getTextContentAccessor = __webpack_require__(107);
 
 /**
  * This helper class stores information about text content of a target node,
@@ -25577,10 +25552,10 @@ module.exports = HTMLDOMPropertyConfig;
 
 var ReactReconciler = __webpack_require__(22);
 
-var instantiateReactComponent = __webpack_require__(110);
+var instantiateReactComponent = __webpack_require__(108);
 var KeyEscapeUtils = __webpack_require__(55);
 var shouldUpdateReactComponent = __webpack_require__(65);
-var traverseAllChildren = __webpack_require__(113);
+var traverseAllChildren = __webpack_require__(111);
 var warning = __webpack_require__(1);
 
 var ReactComponentTreeHook;
@@ -25591,7 +25566,7 @@ if (typeof process !== 'undefined' && process.env && "production" === 'test') {
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(116);
+  ReactComponentTreeHook = __webpack_require__(114);
 }
 
 function instantiateChild(childInstances, child, name, selfDebugID) {
@@ -25779,7 +25754,7 @@ var ReactCurrentOwner = __webpack_require__(15);
 var ReactErrorUtils = __webpack_require__(58);
 var ReactInstanceMap = __webpack_require__(31);
 var ReactInstrumentation = __webpack_require__(12);
-var ReactNodeTypes = __webpack_require__(104);
+var ReactNodeTypes = __webpack_require__(102);
 var ReactReconciler = __webpack_require__(22);
 
 if (false) {
@@ -26681,13 +26656,13 @@ module.exports = ReactCompositeComponent;
 
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactDefaultInjection = __webpack_require__(217);
-var ReactMount = __webpack_require__(103);
+var ReactMount = __webpack_require__(101);
 var ReactReconciler = __webpack_require__(22);
 var ReactUpdates = __webpack_require__(13);
 var ReactVersion = __webpack_require__(230);
 
 var findDOMNode = __webpack_require__(246);
-var getHostComponentFromComposite = __webpack_require__(108);
+var getHostComponentFromComposite = __webpack_require__(106);
 var renderSubtreeIntoContainer = __webpack_require__(253);
 var warning = __webpack_require__(1);
 
@@ -26803,15 +26778,15 @@ var CSSPropertyOperations = __webpack_require__(194);
 var DOMLazyTree = __webpack_require__(20);
 var DOMNamespaces = __webpack_require__(52);
 var DOMProperty = __webpack_require__(21);
-var DOMPropertyOperations = __webpack_require__(96);
+var DOMPropertyOperations = __webpack_require__(94);
 var EventPluginHub = __webpack_require__(29);
 var EventPluginRegistry = __webpack_require__(53);
 var ReactBrowserEventEmitter = __webpack_require__(37);
-var ReactDOMComponentFlags = __webpack_require__(97);
+var ReactDOMComponentFlags = __webpack_require__(95);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactDOMInput = __webpack_require__(210);
 var ReactDOMOption = __webpack_require__(211);
-var ReactDOMSelect = __webpack_require__(98);
+var ReactDOMSelect = __webpack_require__(96);
 var ReactDOMTextarea = __webpack_require__(214);
 var ReactInstrumentation = __webpack_require__(12);
 var ReactMultiChild = __webpack_require__(223);
@@ -27968,7 +27943,7 @@ module.exports = ReactDOMIDOperations;
 var _prodInvariant = __webpack_require__(2),
     _assign = __webpack_require__(3);
 
-var DOMPropertyOperations = __webpack_require__(96);
+var DOMPropertyOperations = __webpack_require__(94);
 var LinkedValueUtils = __webpack_require__(56);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactUpdates = __webpack_require__(13);
@@ -28259,7 +28234,7 @@ var _assign = __webpack_require__(3);
 
 var React = __webpack_require__(23);
 var ReactDOMComponentTree = __webpack_require__(5);
-var ReactDOMSelect = __webpack_require__(98);
+var ReactDOMSelect = __webpack_require__(96);
 
 var warning = __webpack_require__(1);
 var didWarnInvalidOptionChildren = false;
@@ -28386,7 +28361,7 @@ module.exports = ReactDOMOption;
 var ExecutionEnvironment = __webpack_require__(8);
 
 var getNodeForCharacterOffset = __webpack_require__(250);
-var getTextContentAccessor = __webpack_require__(109);
+var getTextContentAccessor = __webpack_require__(107);
 
 /**
  * While `isCollapsed` is available on the Selection object and `collapsed`
@@ -29304,7 +29279,7 @@ module.exports = ReactEventEmitterMixin;
 
 var _assign = __webpack_require__(3);
 
-var EventListener = __webpack_require__(85);
+var EventListener = __webpack_require__(83);
 var ExecutionEnvironment = __webpack_require__(8);
 var PooledClass = __webpack_require__(17);
 var ReactDOMComponentTree = __webpack_require__(5);
@@ -29466,9 +29441,9 @@ var DOMProperty = __webpack_require__(21);
 var EventPluginHub = __webpack_require__(29);
 var EventPluginUtils = __webpack_require__(54);
 var ReactComponentEnvironment = __webpack_require__(57);
-var ReactEmptyComponent = __webpack_require__(99);
+var ReactEmptyComponent = __webpack_require__(97);
 var ReactBrowserEventEmitter = __webpack_require__(37);
-var ReactHostComponent = __webpack_require__(101);
+var ReactHostComponent = __webpack_require__(99);
 var ReactUpdates = __webpack_require__(13);
 
 var ReactInjection = {
@@ -30134,10 +30109,10 @@ module.exports = ReactPropTypesSecret;
 
 var _assign = __webpack_require__(3);
 
-var CallbackQueue = __webpack_require__(95);
+var CallbackQueue = __webpack_require__(93);
 var PooledClass = __webpack_require__(17);
 var ReactBrowserEventEmitter = __webpack_require__(37);
-var ReactInputSelection = __webpack_require__(102);
+var ReactInputSelection = __webpack_require__(100);
 var ReactInstrumentation = __webpack_require__(12);
 var Transaction = __webpack_require__(39);
 var ReactUpdateQueue = __webpack_require__(59);
@@ -30977,11 +30952,11 @@ module.exports = SVGDOMPropertyConfig;
 var EventPropagators = __webpack_require__(30);
 var ExecutionEnvironment = __webpack_require__(8);
 var ReactDOMComponentTree = __webpack_require__(5);
-var ReactInputSelection = __webpack_require__(102);
+var ReactInputSelection = __webpack_require__(100);
 var SyntheticEvent = __webpack_require__(14);
 
-var getActiveElement = __webpack_require__(87);
-var isTextInputElement = __webpack_require__(111);
+var getActiveElement = __webpack_require__(85);
+var isTextInputElement = __webpack_require__(109);
 var shallowEqual = __webpack_require__(46);
 
 var skipSelectionChangeEvent = ExecutionEnvironment.canUseDOM && 'documentMode' in document && document.documentMode <= 11;
@@ -31173,7 +31148,7 @@ module.exports = SelectEventPlugin;
 
 var _prodInvariant = __webpack_require__(2);
 
-var EventListener = __webpack_require__(85);
+var EventListener = __webpack_require__(83);
 var EventPropagators = __webpack_require__(30);
 var ReactDOMComponentTree = __webpack_require__(5);
 var SyntheticAnimationEvent = __webpack_require__(234);
@@ -31946,7 +31921,7 @@ module.exports = adler32;
 
 
 
-var CSSProperty = __webpack_require__(94);
+var CSSProperty = __webpack_require__(92);
 var warning = __webpack_require__(1);
 
 var isUnitlessNumber = CSSProperty.isUnitlessNumber;
@@ -32036,7 +32011,7 @@ var ReactCurrentOwner = __webpack_require__(15);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactInstanceMap = __webpack_require__(31);
 
-var getHostComponentFromComposite = __webpack_require__(108);
+var getHostComponentFromComposite = __webpack_require__(106);
 var invariant = __webpack_require__(0);
 var warning = __webpack_require__(1);
 
@@ -32097,7 +32072,7 @@ module.exports = findDOMNode;
 
 
 var KeyEscapeUtils = __webpack_require__(55);
-var traverseAllChildren = __webpack_require__(113);
+var traverseAllChildren = __webpack_require__(111);
 var warning = __webpack_require__(1);
 
 var ReactComponentTreeHook;
@@ -32108,7 +32083,7 @@ if (typeof process !== 'undefined' && process.env && "production" === 'test') {
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(116);
+  ReactComponentTreeHook = __webpack_require__(114);
 }
 
 /**
@@ -32546,7 +32521,7 @@ module.exports = quoteAttributeValueForBrowser;
 
 
 
-var ReactMount = __webpack_require__(103);
+var ReactMount = __webpack_require__(101);
 
 module.exports = ReactMount.renderSubtreeIntoContainer;
 
@@ -32688,7 +32663,7 @@ HashRouter.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Link__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Link__ = __webpack_require__(112);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -32819,7 +32794,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "BrowserRouter", function() { return __WEBPACK_IMPORTED_MODULE_0__BrowserRouter__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HashRouter__ = __webpack_require__(255);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "HashRouter", function() { return __WEBPACK_IMPORTED_MODULE_1__HashRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Link__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Link__ = __webpack_require__(112);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return __WEBPACK_IMPORTED_MODULE_2__Link__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__ = __webpack_require__(256);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return __WEBPACK_IMPORTED_MODULE_3__MemoryRouter__["a"]; });
@@ -33391,7 +33366,7 @@ Switch.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__ = __webpack_require__(183);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(113);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -35187,7 +35162,7 @@ module.exports = ReactPropTypeLocationNames;
 var _require = __webpack_require__(24),
     isValidElement = _require.isValidElement;
 
-var factory = __webpack_require__(93);
+var factory = __webpack_require__(91);
 
 module.exports = factory(isValidElement);
 
@@ -35392,7 +35367,7 @@ module.exports = onlyChild;
 var _prodInvariant = __webpack_require__(25);
 
 var ReactCurrentOwner = __webpack_require__(15);
-var REACT_ELEMENT_TYPE = __webpack_require__(117);
+var REACT_ELEMENT_TYPE = __webpack_require__(115);
 
 var getIteratorFn = __webpack_require__(283);
 var invariant = __webpack_require__(0);
@@ -35638,7 +35613,7 @@ module.exports = resolvePathname;
  * Module dependencies.
  */
 
-var parseuri = __webpack_require__(92);
+var parseuri = __webpack_require__(90);
 var debug = __webpack_require__(42)('socket.io-client:url');
 
 /**
@@ -35728,7 +35703,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(91);
+exports.humanize = __webpack_require__(89);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -35928,7 +35903,7 @@ function coerce(val) {
  */
 
 var isArray = __webpack_require__(49);
-var isBuf = __webpack_require__(122);
+var isBuf = __webpack_require__(121);
 
 /**
  * Replaces every Buffer | ArrayBuffer in packet with a numbered placeholder.
@@ -37055,7 +37030,7 @@ module.exports = __webpack_amd_options__;
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(124)(module), __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(123)(module), __webpack_require__(6)))
 
 /***/ }),
 /* 299 */
@@ -37067,7 +37042,7 @@ module.exports = __webpack_amd_options__;
 /* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(126);
+module.exports = __webpack_require__(125);
 
 
 /***/ })

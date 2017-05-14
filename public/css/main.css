@@ -1,6 +1,5 @@
 html, body, #app, #app>div {
-  height: 100%;
-  outline: none;
+  height: 100%
 }
 
 [data-reactroot] 

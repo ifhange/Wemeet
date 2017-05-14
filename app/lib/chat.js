@@ -2,7 +2,6 @@
 
 let Chat = {
     createNew: (MeetingActions, MeetingStore) => {
-
         let localStream = '';
         let fileChannels = {};
         let msgChannels = {};

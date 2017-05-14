@@ -7,7 +7,7 @@ import FriendListActions from '../actions/FriendListActions';
 class FriendListStore {
   constructor() {
     this.bindActions(FriendListActions);
-    this.userlist = {};
+    this.userlist = [];
   }
 
   getUserlist(data){

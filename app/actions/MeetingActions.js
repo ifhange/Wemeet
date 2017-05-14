@@ -7,15 +7,12 @@ class MeetingActions {
       'changeRecognizeState',
       'changeVideoState',
       'changeInviteState',
-      'changeAgendaState',
+
       'addMytext',
       'changeVideoReadyState',
       'gotLocalVideo',
       'newParticipant',
       'updateResult',
-      'addAgenda',
-      'deleteAgenda',
-      'listenAgenda'
       'addRemoteTag',
       'deleteRemoteTag',
       'addRemoteStreamURL',
