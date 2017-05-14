@@ -264,7 +264,7 @@ class Meeting extends React.Component {
 
         let remoteVideo = [];
         for (let id in this.state.remoteStreamURL) {
-            remoteVideo.push(<div id='VideoUser'><video autoPlay={true}  id={["videoSrc"]} width="220" key={id}><source src={this.state.remoteStreamURL[id]} /></video></div>);
+            remoteVideo.push(<video autoPlay={true} className={["userVideo"]} key={id}><source src={this.state.remoteStreamURL[id]} /></video>);
         }
 
         //0514 07:39 +1新增
@@ -352,7 +352,6 @@ class Meeting extends React.Component {
                     </div>
 
                     <div id="meet_main" ref="meet_main">
-
                         <div id={this.state.recordState} >
                             <select name="language" id='language' ref='select_language'>
                             </select>
@@ -364,8 +363,11 @@ class Meeting extends React.Component {
                             <div id='meetpage'>網址：</div>
                             <textarea id='pagetext' >{this.meetpage}</textarea>
                         </div>
-                        <div id='VideoUser'><video id='videoSrc' width="220" src={this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹"} autoPlay={true}></video></div>
-                        {remoteVideo}
+
+                        <div id='video_box'>
+                             <video className='userVideo' src={this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹"} autoPlay={true}></video>
+                            {remoteVideo}
+                        </div>
 
                         <div id={this.state.agendaState}>
                             <div id='now_agenda'>議程清單</div>
@@ -377,7 +379,6 @@ class Meeting extends React.Component {
                             <input type='text' id='user_input' maxLength="25" ref='agenda_input' />
                             <button id='agenda_button' type="submit" onClick={this.onClick_addAgenda.bind(this)}>新增</button>
                         </div>
-
 
                     </div>
                 </div>

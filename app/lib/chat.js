@@ -128,7 +128,6 @@ let Chat = {
             };
             channel.onmessage = (event) => {
                 if (channel.label == 'files') {
-                    console.log(event.data);
                     if (typeof event.data === 'string') {
                         let received = new window.Blob(receiveBuffer);
                         receiveBuffer = [];
@@ -137,7 +136,7 @@ let Chat = {
                     //把每個ArrayBuffer都存在同一個陣列裡
                     receiveBuffer.push(event.data); //把資料push進陣列
                 } else if (channel.label == 'messages') {
-                    msgContainer = event.data;
+                    MeetingActions.receiveMsg(event.data);
                 }
             };
         };
@@ -150,15 +149,19 @@ let Chat = {
             //取得現在時間
             let date = new Date();
             //自定義時間格式:Hour-Minute
-            let formattedTime = date.getHours() + ':' + date.getMinutes();
+            let formattedTime = date.getHours() + ':' + (date.getMinutes()<10?'0':'') + date.getMinutes();
 
             for (let id in msgChannels) {
-                msgChannels[id].send(localUserID + '[' + formattedTime + ']: ' + value);
+                msgChannels[id].send(JSON.stringify({
+                'UserID': localUserID,
+                'Sendtime': formattedTime,
+                'Text': value
+            }));
             }
             return ({
                 'UserID': localUserID,
                 'Sendtime': formattedTime,
-                'MyText': value
+                'Text': value
             })
         };
 

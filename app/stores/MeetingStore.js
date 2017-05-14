@@ -99,7 +99,7 @@ class MeetingStore {
 
     this.recognizeImg = 'recognize-off';
     this.videoImg = 'video-off';
-    this.audioImg = 'audio-off';
+    this.audioImg = 'audio-on';
 
     this.inviteState = 'invite_detail_off';
     this.recordState = 'recognition_detail_on';
@@ -110,7 +110,11 @@ class MeetingStore {
     this.agendaList = {};
     this.recognize = 'voice_img';
     this.voiceimg = '../img/mic.gif';
-
+    this.mychattext = {};
+    this.otherchattext = {};
+    this.ChatList = [];
+    this.msgContainer = {};
+    this.videoSrc = {visibility: 'visible'};
   }
 
   changeRecognizeState() {
@@ -134,19 +138,21 @@ class MeetingStore {
     if (this.videoState == '取消視訊') {
       this.videoState = '視訊';
       this.videoImg = 'video-on';
+      this.videoSrc = {visibility: 'hidden'};
     } else {
       this.videoState = '取消視訊';
       this.videoImg = 'video-off';
+      this.videoSrc = {visibility: 'visible'};
     }
   }
 
   changeAudioState() {
     if (this.audioState == '靜音') {
       this.audioState = "取消靜音"
-      this.audioImg = 'audio-on';
+      this.audioImg = 'audio-off';
     } else {
       this.audioState = '靜音';
-      this.audioImg = 'audio-off';
+      this.audioImg = 'audio-on';
     }
   }
 
@@ -226,6 +232,16 @@ class MeetingStore {
     this.agendaList= data;
   }
 
+  //0514 07:41 +1Update
+  Updatetext(obj){
+    this.mychattext = obj;
+    this.mychatstatus = true;
+  }
+  //0514 07:41 +1End
+
+  receiveMsg(msg){
+    this.otherchattext = JSON.parse(msg);
+  }
 }
 
 export default alt.createStore(MeetingStore);

@@ -7,7 +7,7 @@ class MeetingActions {
       'changeRecognizeState',
       'changeVideoState',
       'changeInviteState',
-      'addMytext',
+      'Updatetext',
       'changeVideoReadyState',
       'gotLocalVideo',
       'newParticipant',
@@ -19,7 +19,8 @@ class MeetingActions {
       'deleteRemoteTag',
       'addRemoteStreamURL',
       'queueCandidate',
-      'changeAgendaState'
+      'changeAgendaState',
+      'receiveMsg'
     );
   }
 }

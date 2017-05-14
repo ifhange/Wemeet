@@ -9159,7 +9159,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var MeetingActions = function MeetingActions() {
   _classCallCheck(this, MeetingActions);
 
-  this.generateActions('changeAudioState', 'changeRecognizeState', 'changeVideoState', 'changeInviteState', 'addMytext', 'changeVideoReadyState', 'gotLocalVideo', 'newParticipant', 'updateResult', 'addAgenda', 'deleteAgenda', 'listenAgenda', 'addRemoteTag', 'deleteRemoteTag', 'addRemoteStreamURL', 'queueCandidate', 'changeAgendaState');
+  this.generateActions('changeAudioState', 'changeRecognizeState', 'changeVideoState', 'changeInviteState', 'Updatetext', 'changeVideoReadyState', 'gotLocalVideo', 'newParticipant', 'updateResult', 'addAgenda', 'deleteAgenda', 'listenAgenda', 'addRemoteTag', 'deleteRemoteTag', 'addRemoteStreamURL', 'queueCandidate', 'changeAgendaState', 'receiveMsg');
 };
 
 exports.default = _alt2.default.createActions(MeetingActions);
@@ -9334,6 +9334,7 @@ var Meeting = function (_React$Component) {
         _this.isRecording = true;
         _this.isPlaying = true;
         _this.meetpage = window.location.href;
+        _this.ChatList = [];
         return _this;
     }
 
@@ -9361,13 +9362,13 @@ var Meeting = function (_React$Component) {
 
             //加入房間訊息
             _socket2.default.on('joined', function (room, clientID) {
-                console.log('This peer has joined room: ' + room + ' with client ID ' + clientID);
+                //console.log('This peer has joined room: ' + room + ' with client ID ' + clientID);
             });
 
             _socket2.default.on('newParticipantB', function (participantID) {
                 //接到新人加入的訊息時，檢查是否已有連線
                 if (_this2.state.connections[participantID]) {
-                    console.log("Connections with" + participantID + "already exists");
+                    //console.log("Connections with" + participantID + "already exists");
                     return;
                 } else {
                     //主動建立連線
@@ -9392,13 +9393,13 @@ var Meeting = function (_React$Component) {
             _socket2.default.on('onIceCandidateB', function (candidate, sender) {
                 //console.log('收到遠端的candidate，要加入: ' + JSON.stringify(candidate));
                 if (_this2.state.connections[sender]) {
-                    console.log('加到了!');
+                    //console.log('加到了!');
                     _this2.state.connections[sender].addIceCandidate(new RTCIceCandidate(candidate)).catch(function (e) {
                         console.log('發生錯誤了看這裡: ' + e);
                     });
                 }
                 _MeetingActions2.default.queueCandidate({ a: candidate, b: sender });
-                console.log('不!來不及加');
+                //console.log('不!來不及加');
             });
 
             _socket2.default.on('offer', function (offer, sender) {
@@ -9412,7 +9413,7 @@ var Meeting = function (_React$Component) {
                     peerConn.setRemoteDescription(new RTCSessionDescription(offer)).then(function () {
                         return peerConn.createAnswer();
                     }).then(function (answer) {
-                        console.log('創建好本地端的 answer，要傳出去');
+                        // console.log('創建好本地端的 answer，要傳出去');
                         peerConn.setLocalDescription(answer);
                         _socket2.default.emit('answerRemotePeer', answer, _this2.localUserID, sender);
                     }).catch(function (e) {
@@ -9429,7 +9430,7 @@ var Meeting = function (_React$Component) {
             });
 
             _socket2.default.on('videoFromDB', function (arrayBuffer) {
-                console.log("Getting blob form DB and server!!");
+                //console.log("Getting blob form DB and server!!");
                 var blob = new Blob([arrayBuffer], { type: 'video/webm' });
                 var url = window.URL.createObjectURL(blob);
                 var a = document.createElement("a");
@@ -9456,6 +9457,9 @@ var Meeting = function (_React$Component) {
         value: function sendText() {
             var inputText = this.refs.meet_input.value;
             var mytext = this.Chat.sendText(inputText, this.localUserID);
+            _MeetingActions2.default.Updatetext(mytext);
+            this.refs.meet_input.value = '';
+            inputText = '';
         }
     }, {
         key: 'toUser',
@@ -9585,11 +9589,80 @@ var Meeting = function (_React$Component) {
             var remoteVideo = [];
             for (var id in this.state.remoteStreamURL) {
                 remoteVideo.push(_react2.default.createElement(
-                    'video',
-                    { autoPlay: true, className: ["userVideo"], key: id },
-                    _react2.default.createElement('source', { src: this.state.remoteStreamURL[id] })
+                    'div',
+                    { id: 'VideoUser' },
+                    _react2.default.createElement(
+                        'video',
+                        { autoPlay: true, id: ["videoSrc"], width: '220', key: id },
+                        _react2.default.createElement('source', { src: this.state.remoteStreamURL[id] })
+                    )
                 ));
             }
+
+            //0514 07:39 +1新增
+
+            /*<div id="number_sent">
+                <div className="arrow_box"><div id="meet_text">{this.myself_text}</div></div>
+            </div>
+              <div id="me_sent">
+                <div className="arrow_box1"><div id="meet_text">測試測試</div></div>
+            </div>*/
+            /*let othertext = this.state.otherchattext;
+            ChatList.push(
+              );*/
+
+            if (this.state.otherchattext.Text != null) {
+                var othertext = this.state.otherchattext;
+                this.ChatList.push(_react2.default.createElement(
+                    'div',
+                    { id: 'number_sent' },
+                    _react2.default.createElement(
+                        'div',
+                        { id: 'number-userid' },
+                        othertext.UserID
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'arrow_box3' },
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'number-text' },
+                            othertext.Text
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { id: 'number-sendtime' },
+                        othertext.Sendtime
+                    )
+                ));
+                this.state.otherchattext.Text = null;
+            }
+
+            if (this.state.mychattext.Text != null) {
+                var mytext = this.state.mychattext;
+                this.ChatList.push(_react2.default.createElement(
+                    'div',
+                    { id: 'me_sent' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'arrow_box4' },
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'me-text' },
+                            mytext.Text
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { id: 'me-sendtime' },
+                        mytext.Sendtime
+                    )
+                ));
+                this.state.mychattext.Text = null;
+            }
+
+            //0514 07:39 End
             return _react2.default.createElement(
                 'div',
                 { id: 'in' },
@@ -9612,32 +9685,7 @@ var Meeting = function (_React$Component) {
                         _react2.default.createElement(
                             'div',
                             { id: 'chatbox' },
-                            _react2.default.createElement(
-                                'div',
-                                { id: 'number_sent' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'arrow_box' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { id: 'meet_text' },
-                                        this.myself_text
-                                    )
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { id: 'me_sent' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'arrow_box1' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { id: 'meet_text' },
-                                        '\u6E2C\u8A66\u6E2C\u8A66'
-                                    )
-                                )
-                            )
+                            this.ChatList
                         ),
                         _react2.default.createElement(
                             'div',
@@ -9656,7 +9704,7 @@ var Meeting = function (_React$Component) {
                             _react2.default.createElement('input', { type: 'text', id: 'meet_input', ref: 'meet_input' }),
                             _react2.default.createElement(
                                 'button',
-                                { className: 'sent', type: 'submit', ref: 'meet_submit', onClick: this.sendText.bind(this) },
+                                { className: 'sent', type: 'submit', ref: 'meet_submit', maxLength: '25', onClick: this.sendText.bind(this) },
                                 '\u9001\u51FA'
                             )
                         )
@@ -9742,10 +9790,10 @@ var Meeting = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'div',
-                            { id: 'video_box' },
-                            _react2.default.createElement('video', { className: 'userVideo', id: 'user', src: this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹", autoPlay: true }),
-                            remoteVideo
+                            { id: 'VideoUser' },
+                            _react2.default.createElement('video', { id: 'videoSrc', width: '220', src: this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹", autoPlay: true })
                         ),
+                        remoteVideo,
                         _react2.default.createElement(
                             'div',
                             { id: this.state.agendaState },
@@ -17033,31 +17081,6 @@ var Main = function (_React$Component) {
         value: function handleJoin(e) {
             e.preventDefault();
             window.location = 'https://140.123.175.95:8787/meeting#' + this.refs.create_input.value;
-            //join();
-            //開始通訊
-
-
-            //開始錄影
-            //let recorder = Recorder.createNew(傳入錄影的東西);
-            // {
-            //     recordedVideo:this.refs.xxx, //播放錄影檔的DOM物件
-            //     recordButton:this.refs.xxx,  //開始錄影的按鈕
-            //     playButton:this.refs.xxx,  //撥放錄影的按鈕
-            //     downloadButton:this.refs.xxx  //下載錄影的按鈕
-            // }
-
-            //開始語音辨識
-            //let recognizer = Recognizer.createNew(new webkitSpeechRecognition(),傳入需求如下:
-            /*  在物件裡面加入ref屬性，就可以用:this.refs."ref的value"取的這個DOM物件
-                {
-                    select_language:this.refs.xxx   //選擇語言的下拉式選單的DOM物件
-                    select_dialect:this.refs.xxx   //選擇方言的下拉式選單的DOM物件
-                    start_button:this.refs.xxx   //開始辨識的按鈕的DOM物件
-                    final_span:this.refs.xxx   //要取得文字資料的物件
-                    interim_span:this.refs.xxx  //要取得暫時文字資料的物件
-                }
-            */
-            //);
         }
     }, {
         key: 'render',
@@ -17429,7 +17452,6 @@ var Chat = {
             };
             channel.onmessage = function (event) {
                 if (channel.label == 'files') {
-                    console.log(event.data);
                     if (typeof event.data === 'string') {
                         var received = new window.Blob(receiveBuffer);
                         receiveBuffer = [];
@@ -17438,7 +17460,7 @@ var Chat = {
                     //把每個ArrayBuffer都存在同一個陣列裡
                     receiveBuffer.push(event.data); //把資料push進陣列
                 } else if (channel.label == 'messages') {
-                    msgContainer = event.data;
+                    MeetingActions.receiveMsg(event.data);
                 }
             };
         };
@@ -17451,15 +17473,19 @@ var Chat = {
             //取得現在時間
             var date = new Date();
             //自定義時間格式:Hour-Minute
-            var formattedTime = date.getHours() + ':' + date.getMinutes();
+            var formattedTime = date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
 
             for (var id in msgChannels) {
-                msgChannels[id].send(localUserID + '[' + formattedTime + ']: ' + value);
+                msgChannels[id].send(JSON.stringify({
+                    'UserID': localUserID,
+                    'Sendtime': formattedTime,
+                    'Text': value
+                }));
             }
             return {
                 'UserID': localUserID,
                 'Sendtime': formattedTime,
-                'MyText': value
+                'Text': value
             };
         };
 
@@ -18065,7 +18091,7 @@ var MeetingStore = function () {
 
     this.recognizeImg = 'recognize-off';
     this.videoImg = 'video-off';
-    this.audioImg = 'audio-off';
+    this.audioImg = 'audio-on';
 
     this.inviteState = 'invite_detail_off';
     this.recordState = 'recognition_detail_on';
@@ -18076,6 +18102,11 @@ var MeetingStore = function () {
     this.agendaList = {};
     this.recognize = 'voice_img';
     this.voiceimg = '../img/mic.gif';
+    this.mychattext = {};
+    this.otherchattext = {};
+    this.ChatList = [];
+    this.msgContainer = {};
+    this.videoSrc = { visibility: 'visible' };
   }
 
   _createClass(MeetingStore, [{
@@ -18101,9 +18132,11 @@ var MeetingStore = function () {
       if (this.videoState == '取消視訊') {
         this.videoState = '視訊';
         this.videoImg = 'video-on';
+        this.videoSrc = { visibility: 'hidden' };
       } else {
         this.videoState = '取消視訊';
         this.videoImg = 'video-off';
+        this.videoSrc = { visibility: 'visible' };
       }
     }
   }, {
@@ -18111,10 +18144,10 @@ var MeetingStore = function () {
     value: function changeAudioState() {
       if (this.audioState == '靜音') {
         this.audioState = "取消靜音";
-        this.audioImg = 'audio-on';
+        this.audioImg = 'audio-off';
       } else {
         this.audioState = '靜音';
-        this.audioImg = 'audio-off';
+        this.audioImg = 'audio-on';
       }
     }
   }, {
@@ -18210,6 +18243,22 @@ var MeetingStore = function () {
     key: 'listenAgenda',
     value: function listenAgenda(data) {
       this.agendaList = data;
+    }
+
+    //0514 07:41 +1Update
+
+  }, {
+    key: 'Updatetext',
+    value: function Updatetext(obj) {
+      this.mychattext = obj;
+      this.mychatstatus = true;
+    }
+    //0514 07:41 +1End
+
+  }, {
+    key: 'receiveMsg',
+    value: function receiveMsg(msg) {
+      this.otherchattext = JSON.parse(msg);
     }
   }]);
 

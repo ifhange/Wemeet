@@ -6,12 +6,13 @@
 }
 
 .arrow_box {
-  width: 40%;
+  width: 70%;
   height: 40px;
 	position: relative;
   top: 8%;
   left: 5%;
 	background: #fff;
+	word-break: break-all;
 }
 
 .arrow_box:after {
@@ -38,7 +39,7 @@
 
 .arrow_box1 {
   margin-top: 2%;
-  width: 40%;
+  width: 70%;
   height: 40px;
 	position: relative;
   top: 8%;

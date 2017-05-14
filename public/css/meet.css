@@ -7,9 +7,7 @@
 }
 
 video {
-    height: 100%;
-    width: 100%;
-    display: block;
+    margin-left: -20%;
 }
 
 #number:hover{
@@ -332,6 +330,7 @@ video {
   margin-top:-8%;
   float: left;
   outline: none;
+  background-color: #FFFFBB;
 }
 
 #pause{
@@ -419,22 +418,27 @@ video {
 #chatbox{
   width: 100%;
   height: 370px;
+  font-size: 13px;
   background-color: #6e3667;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 #yourvoice{
   width: 100%;
   height: 30px;
   background-color: white;
+  color: black;
 }
 
 #meet_main{
-  float:left;
   width: 80%;
   height: 500px;
-  margin-top: -0.2%;
+  margin-top: -0.8%;
   font-size: 12px;
   background-color: #1a0315;
+  overflow: hidden;
 }
 
 #invite_detail_on {
@@ -467,21 +471,11 @@ video {
   -webkit-animation:fadeIn 0.5s;/*针对webkit内核*/  
 }
 
-#number_sent{
-    margin-top: 3%;
-    margin-left: 1%;
-}
 
-#me_sent{
-    margin-top: 2%;
-    margin-right: 1%;
-}
-
-#meet_text{
+#number-text{
+  margin-left: 3%;
   color: black;
-  text-align: center;
-  line-height:280% ;
-  font-size: 11px;
+  text-align: left;
 }
 
 #meet_upload{
@@ -490,10 +484,9 @@ video {
   background-color: white;
 }
 
-.userVideo{
-  width: 300px;
+#userVideo{
+  width: 225.27px;
   height: 150px;
-  background-color: white;
 }
 
 #user{
@@ -661,11 +654,23 @@ video {
   opacity: 0;
 }
 
+#VideoUser{
+  background-image: url('../img/user-image.png');
+  background-size: 70% 100%;
+  background-repeat:no-repeat;
+  background-color: #c5c5c5;
+  background-position: center 20%;
+  width: 220px;
+  height: 165px;
+  margin:2%;
+  display: inline-block;
+}
+
 #video_box{
   width: 100%;
   height: 500px;
-  margin-top: -5.5%;
-  float: left;
+  margin-top: 1%;
+  background-color: yellow;
 }
 
 #now_agenda{
@@ -682,9 +687,10 @@ video {
   BORDER-BOTTOM-STYLE: none;
   width: 33%;
   height: 150px;
-  float: right;
+  position: relative;
+  top: -82.5%;
+  left: 66.5%;
   margin-right: 1%;
-  margin-top: -54.5%;
   background: #6e3667;
   animation: fadeIn;/*动画名称*/    
   animation-duration: 0.5s;/*动画持续时间*/    
@@ -698,9 +704,10 @@ video {
   BORDER-BOTTOM-STYLE: none;
   width: 33%;
   height: 150px;
-  float: right;
+  position: relative;
+  top: -82.5%;
+  left: 66.5%;
   margin-right: 1%;
-  margin-top: -54.5%;
   background: #6e3667;
   visibility: hidden;
   opacity: 0;
@@ -785,3 +792,104 @@ video {
   height: 100%;
   float: left;
 }
+
+#number-userid{
+  text-align: left;
+  margin-left: 5%;
+}
+
+#number_sent{
+    width: 100%;
+    height: 65px;
+    margin-top: 1%;
+    margin-left: 1%;
+    margin-bottom: 5%;
+    animation: fadeIn;/*动画名称*/    
+    animation-duration: 0.5s;/*动画持续时间*/    
+    -webkit-animation:fadeIn 0.5s;/*针对webkit内核*/  
+}
+
+#me_sent{
+    width: 100%;
+    height: 65px;
+    margin-bottom: 5%;
+    margin-right: 1%;
+    animation: fadeIn;/*动画名称*/    
+    animation-duration: 0.5s;/*动画持续时间*/    
+    -webkit-animation:fadeIn 0.5s;/*针对webkit内核*/  
+}
+
+.arrow_box3 {
+  width: 75%;
+  height: 35px;
+	position: relative;
+  top: 4%;
+  left: 4%;
+	background: #fff;
+	word-break: break-all;
+  border-radius: 4px;
+}
+
+.arrow_box3:after {
+	right: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(255, 255, 255, 0);
+	border-right-color: #fff;
+	border-width: 8px;
+	margin-top: -8px;
+}
+
+.arrow_box4 {
+  margin-top: 2%;
+  width: 75%;
+  height: 35px;
+	position: relative;
+  left: 15%;
+	background: #fff;
+	word-break: break-all;
+  border-radius: 4px;
+}
+
+.arrow_box4:after {
+  left: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(255, 255, 255, 0);
+	border-left-color: #fff;
+	border-width: 8px;
+	margin-top: -8px;
+}
+
+#number-sendtime{
+  float: right;
+  margin-right: 16%;
+  margin-top: 1%;
+}
+
+#me-sendtime{
+  float: left;
+  margin-left: 16%;
+}
+
+#me-text{
+  color: black;
+  text-align: left;
+  margin-left:3%;
+  matgin-top:1%;
+}
+
+#videoSrc {
+  margin-left:0%;
+}
+
