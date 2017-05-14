@@ -273,10 +273,10 @@ video {
   BORDER-RIGHT-STYLE: none;
   BORDER-LEFT-STYLE: none;
   BORDER-BOTTOM-STYLE: none;
-  width: 76.4%;
-  height: 86px;
+  width: 78.1%;
+  height: 72px;
   float: left;
-
+  outline: none;
 }
 
 #pause{
@@ -355,27 +355,28 @@ video {
   color:#ffffff;
   font-size:20px;
   font-weight:bold;
-  padding:32px 3.2px;
+  padding:34px 3.2px;
   text-decoration:none;
   text-shadow:0px 1px 0px #528009;
+  margin-top: -9%; 
 }
 
 #chatbox{
   width: 100%;
-  height: 350px;
+  height: 370px;
   background-color: #6e3667;
 }
 
 #yourvoice{
   width: 100%;
   height: 30px;
-  background-color: yellow;
+  background-color: white;
 }
 
 #meet_main{
   float:left;
   width: 80%;
-  height: 510px;
+  height: 500px;
   margin-top: -0.2%;
   font-size: 12px;
   background-color: #1a0315;
@@ -389,8 +390,8 @@ video {
   position: relative;
   background: #91d524;
   animation: fadeIn;/*动画名称*/    
-  animation-duration: 1s;/*动画持续时间*/    
-  -webkit-animation:fadeIn 1.5s;/*针对webkit内核*/  
+  animation-duration: 0.5s;/*动画持续时间*/    
+  -webkit-animation:fadeIn 0.5s;/*针对webkit内核*/  
 }
 
 #invite_detail_on:after {
@@ -407,8 +408,8 @@ video {
   border-width: 5px;
   margin-left: -50px;
   animation: fadeIn;/*动画名称*/    
-  animation-duration: 1s;/*动画持续时间*/    
-  -webkit-animation:fadeIn 1.5s;/*针对webkit内核*/  
+  animation-duration: 0.5s;/*动画持续时间*/    
+  -webkit-animation:fadeIn 0.5s;/*针对webkit内核*/  
 }
 
 #number_sent{
@@ -430,7 +431,8 @@ video {
 
 #meet_upload{
   width: 100%;
-  height: 30px;
+  height: 20px;
+  background-color: white;
 }
 
 .userVideo{
@@ -472,9 +474,8 @@ video {
   position: relative;
   background: #91d524;
   visibility: hidden;
-  animation: fadeOut;/*动画名称*/    
-  animation-duration: 1s;/*动画持续时间*/    
-  -webkit-animation:fadeOut 1.5s;/*针对webkit内核*/  
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
 #invite_detail_off:after {
@@ -491,9 +492,8 @@ video {
   border-width: 5px;
   margin-left: -50px;
   visibility: hidden;
-  animation: fadeOut;/*动画名称*/    
-  animation-duration: 1s;/*动画持续时间*/    
-  -webkit-animation:fadeOut 1.5s;/*针对webkit内核*/  
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
 #recognition_detail_on {
@@ -504,8 +504,8 @@ video {
   position: relative;
   background: #91d524;
   animation: fadeIn;/*动画名称*/    
-  animation-duration: 1s;/*动画持续时间*/    
-  -webkit-animation:fadeIn 1.5s;/*针对webkit内核*/  
+  animation-duration: 0.5s;/*动画持续时间*/    
+  -webkit-animation:fadeIn 0.5s;/*针对webkit内核*/  
 }
 
 #recognition_detail_on:after {
@@ -522,8 +522,8 @@ video {
   border-width: 5px;
   margin-left: -50px;
   animation: fadeIn;/*动画名称*/    
-  animation-duration: 1s;/*动画持续时间*/    
-  -webkit-animation:fadeIn 1.5s;/*针对webkit内核*/  
+  animation-duration: 0.5s;/*动画持续时间*/    
+  -webkit-animation:fadeIn 0.5s;/*针对webkit内核*/  
 }
 
 
@@ -535,6 +535,8 @@ video {
   position: relative;
   background: #91d524;
   visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
 #recognition_detail_off:after {
@@ -551,6 +553,8 @@ video {
   border-width: 5px;
   margin-left: -50px;
   visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
 #dialect {
@@ -586,23 +590,25 @@ video {
 }
 
 #fileicon{
-  width: 10%;
-  height: 65%;
- position:relative;
- top:20px;
- left:-40px;
+  width: 8%;
+  height: 90%;
+  position:relative;
+  top: 3px;
+  left:-110px;
 }
-
 
 #filefake{
   width: 10%;
   height: 65%;
+  margin-left: 3%;
+  margin-top: 2%;
   float: left;
+  opacity: 0;
 }
 
 #video_box{
   width: 100%;
-  height: 510px;
+  height: 500px;
   margin-top: -5.5%;
   float: left;
 }
@@ -623,8 +629,11 @@ video {
   height: 150px;
   float: right;
   margin-right: 1%;
-  margin-top: -55.5%;
+  margin-top: -54.5%;
   background: #6e3667;
+  animation: fadeIn;/*动画名称*/    
+  animation-duration: 0.5s;/*动画持续时间*/    
+  -webkit-animation:fadeIn 0.5s;/*针对webkit内核*/  
 }
 
 #nowagenda-off{
@@ -639,6 +648,8 @@ video {
   margin-top: -55.5%;
   background: #6e3667;
   visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
 #user_input{
@@ -712,4 +723,10 @@ video {
 
 #li-text {
   width: 90%;
+}
+
+#voice_img{
+  width: 15%;
+  height: 100%;
+  float: left;
 }

@@ -99,6 +99,7 @@ class MeetingStore {
     this.agendaState = 'nowagenda-on';
     this.agendaImg = 'agenda-off';
     this.agendaList = {};
+    this.recognize = 'voice_img';
   }
 
   changeAudioState() {

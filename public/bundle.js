@@ -9720,7 +9720,11 @@ var Meeting = function (_React$Component) {
                                 )
                             )
                         ),
-                        _react2.default.createElement('div', { id: 'yourvoice' }),
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'yourvoice' },
+                            _react2.default.createElement('img', { id: 'voice_img', src: '../img/mic.gif' })
+                        ),
                         _react2.default.createElement(
                             'div',
                             { id: 'meet_chat_input' },
@@ -9730,7 +9734,7 @@ var Meeting = function (_React$Component) {
                                 _react2.default.createElement('img', { id: 'fileicon', src: '../img/upload.png' }),
                                 _react2.default.createElement('input', { id: 'filefake', type: 'file', ref: 'meet_fileupload' })
                             ),
-                            _react2.default.createElement('textarea', { id: 'meet_input', ref: 'meet_input' }),
+                            _react2.default.createElement('input', { type: 'text', id: 'meet_input', ref: 'meet_input' }),
                             _react2.default.createElement(
                                 'button',
                                 { className: 'sent', type: 'submit', ref: 'meet_submit', onClick: this.sendText.bind(this) },
@@ -18036,6 +18040,7 @@ var MeetingStore = function () {
     this.agendaState = 'nowagenda-on';
     this.agendaImg = 'agenda-off';
     this.agendaList = {};
+    this.recognize = 'voice_img';
   }
 
   _createClass(MeetingStore, [{
