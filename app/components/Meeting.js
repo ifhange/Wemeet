@@ -28,6 +28,7 @@ class Meeting extends React.Component {
         this.recorder = new Recorder();
         this.Chat = chat.createNew(MeetingActions, MeetingStore);
         this.Recognizer = recognition.createNew(MeetingActions, MeetingStore);
+
         this.localUserID = "";
         // this.videoList = [];
         // this.tagList = {};
@@ -140,6 +141,17 @@ class Meeting extends React.Component {
             a.download = this.localUserID + '.webm';
             a.click();
             window.URL.revokeObjectURL(url);
+        })
+
+        socket.on('addAgendaForAll', function(agenda){
+            console.log(agenda);
+            MeetingActions.listenAgenda(agenda);
+        });
+
+        socket.on('deleteAgendaForAll', function(agenda){
+            console.log(agenda);
+            MeetingActions.listenAgenda(agenda);
+
         });
     }
 
@@ -211,6 +223,11 @@ class Meeting extends React.Component {
     onClick_videoToggle() {
         this.Chat.toggleUserMedia();
         MeetingActions.changeVideoState();
+        if(this.state.isStreaming){
+			this.Chat.toggleUserMedia();
+		} else {
+			this.Chat.getUserMedia(MeetingActions.gotLocalVideo);
+		}
     }
 
     onClick_invitepage() {
@@ -221,11 +238,41 @@ class Meeting extends React.Component {
         window.location = 'https://140.123.175.95:8787/';
     }
 
+    onClick_agenda() {
+        MeetingActions.changeAgendaState();
+    }
+
+    onClick_deleteAgenda(text) {
+        let deleteText = text;
+        MeetingActions.deleteAgenda(deleteText);
+    }
+
+    onClick_addAgenda(){
+        if(this.refs.agenda_input.value != '') {
+            let newText = this.refs.agenda_input.value;
+            this.refs.agenda_input.value = '';
+            MeetingActions.addAgenda(newText);
+        };
+    }
+
     render() {
+        let agendalist =  Object.keys(this.state.agendaList).map((keyName, keyIndex) => {
+            this.agendatext = keyName;
+            return (
+                <li id='agenda-li'>{this.agendatext}<button onClick={this.onClick_deleteAgenda.bind(this,this.agendatext)} id='cancel'>刪除</button></li>
+            )
+        });
+    
+
+        // for (let id in this.state.connections) {
+        // 	this.tagList[id] = <video key={id} className={xxx} ></video>;
+        // }
+
         let v = [];
         for (let id in this.state.remoteStreamURL) {
             v.push(<video autoPlay={true} className={["userVideo"]} key={id}><source src={this.state.remoteStreamURL[id]} /></video>);
         }
+
         /*let meetChatTest = Object.keys(this.state.userlist).map((keyName, keyIndex) => {
             return (
                 <a href="chatroom"><div id="friend_person">
@@ -239,7 +286,6 @@ class Meeting extends React.Component {
                 <div className="box-b">
                     <div id="meet_chat">
                         <div id="chat_menu">
-                            <div id="button"></div>
                             <div id="meet_name">WeMeet開會群組</div>
                         </div>
 
@@ -254,12 +300,16 @@ class Meeting extends React.Component {
 
                         </div>
 
-                        <div id='meet_upload'>
-                            <input id='fileicon' type='file' ref='meet_fileupload' />
+                        <div id='yourvoice'>
+                            <img id='voice_img'src='../img/mic.gif'></img>
                         </div>
 
                         <div id="meet_chat_input">
-                            <textarea id="meet_input" ref='meet_input' ></textarea>
+                            <div id='meet_upload'>
+                                <img id='fileicon' src='../img/upload.png' />
+                                <input id='filefake' type='file' ref='meet_fileupload' />
+                            </div>
+                            <input type='text' id="meet_input" ref='meet_input' />
                             <button className="sent" type="submit" ref='meet_submit' onClick={this.sendText.bind(this)}>送出</button>
                         </div>
 
@@ -274,7 +324,8 @@ class Meeting extends React.Component {
 
                         <div className="center">
                             <button id="invite" onClick={this.onClick_invitepage}>邀請</button>
-                            <button id="number" onClick={this.state.invite}>目前議程</button>
+                            <button id={this.state.agendaImg} onClick={this.onClick_agenda.bind(this)}>議程清單</button>
+
 
                             <button id="brainstorming" onClick={this.state.invite}>腦力激盪</button>
                             <button id="collaborative" onClick={this.state.invite}>共筆</button>
@@ -286,25 +337,30 @@ class Meeting extends React.Component {
                     </div>
                     <div id="meet_main" ref="meet_main">
                         <div id={this.state.recordState} >
-                            <select name="language" id='language' ref='select_language' onChange={this.updateCountry.bind(this)}>
+                            <select name="language" id='language' ref='select_language'>
                             </select>
-                            <select name="dialect" id='dialect' ref='select_dialect' onChange={this.setLanguage.bind(this)}>
+                            <select name="dialect" id='dialect' ref='select_dialect'>
                             </select>
                         </div>
 
-                        <div id={this.state.inviteState} >
-                            <div id='meetpage'>網址：</div>
-                            <textarea id='pagetext' >{this.meetpage}</textarea>
+                            <div id={this.state.inviteState} >
+                                <div id='meetpage'>網址：</div>
+                                <textarea id='pagetext' >{this.meetpage}</textarea>
+                            </div>
+
+                        <div id='video_box'>
+                            <video className='userVideo' id='user' src={this.state.videoIsReady ? this.state.localVideoURL : ""}></video>
                         </div>
-                        <video className='userVideo' id='user' src={this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹"} autoPlay={true}></video>
-                        {v}   
-                        <div id='meet_agenda'>
-                            <div id='now_agenda'>目前議程</div>
-                            <textarea id='agenda_text'>
-                                1. ㄚㄚㄚㄚ
-                                2. 哀哀哀哀哀
-                                3. GOOOOO
-                            </textarea>
+
+                        <div id={this.state.agendaState}>
+                            <div id='now_agenda'>議程清單</div>
+                            <div id='agenda_content'>
+                                <ol>
+                                    {agendalist}
+                                </ol>
+                            </div>
+                            <input type='text' id='user_input' maxLength="25" ref='agenda_input' />
+                            <button id='agenda_button' type="submit" onClick={this.onClick_addAgenda.bind(this)}>新增</button>
                         </div>
                     </div>
                 </div>
