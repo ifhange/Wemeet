@@ -5,10 +5,8 @@ class MeetingStore {
     constructor() {
         this.bindActions(MeetingActions);
         this.connections = {}; //存放連線中的人的socket.id
-        this.remoteVideoTag = {}; //存放連線中的人的videoTag
         this.remoteStreamURL = {}; //存放連線中的人的stream
         this.videoIsReady = false;
-        this.audioOn = false;
         this.localStream = '';
         this.localVideoURL = '';
         this.isStreaming = false;
@@ -92,25 +90,32 @@ class MeetingStore {
         ];
         this.interim_result = '';
         this.final_result = '';
-        this.audioState = '取消辨識';
-        this.audioImg = 'audio-on';
+
+        this.isRecognizing = false;
+        this.recognizeState = '開始辨識';
         this.videoState = '取消視訊';
+        this.audioState = '靜音';
+
+        this.recognizeImg = 'audio-off';
         this.videoImg = 'video-off';
+        this.audioImg = 'video-off';
+
         this.inviteState = 'invite_detail_off';
         this.recordState = 'recognition_detail_on';
         this.candidateQueue = {};
-
     }
 
-    changeAudioState() {
-        if (this.audioState == '取消辨識' && this.recordState == 'recognition_detail_on') {
-            this.audioState = '開始辨識';
-            this.audioImg = 'audio-off';
-            this.recordState = 'recognition_detail_off';
-        } else {
-            this.audioState = '取消辨識';
-            this.audioImg = 'audio-on';
+    changeRecognizeState() {
+        if (this.recognizeState == '取消辨識' && this.recordState == 'recognition_detail_off') {
+            this.recognizeState = '開始辨識';
+            this.recognizeImg = 'audio-off';
             this.recordState = 'recognition_detail_on';
+            this.isRecognizing = !this.isRecognizing;
+        } else {
+            this.recognizeState = '取消辨識';
+            this.recognizeImg = 'audio-on';
+            this.recordState = 'recognition_detail_off';
+            this.isRecognizing = !this.isRecognizing;
         }
     }
 
@@ -124,6 +129,16 @@ class MeetingStore {
         }
     }
 
+    changeAudioState() {
+        if (this.audioState == '靜音') {
+            this.audioState = "收音"
+            this.audioImg = 'video-on';
+        } else {
+            this.audioState = '靜音';
+            this.audioImg = 'video-off';
+        }
+    }
+
     changeInviteState() {
         if (this.inviteState == 'invite_detail_off') {
             this.inviteState = 'invite_detail_on';
@@ -132,9 +147,12 @@ class MeetingStore {
         }
     }
     changeVideoReadyState() {
+        if (this.isStreaming) {
+            this.videoIsReady = false;
+        }
         this.isStreaming = !this.isStreaming;
-        this.videoIsReady = !this.videoIsReady;
     }
+
     gotLocalVideo(videoURL) {
         this.localVideoURL = videoURL;
     }
@@ -162,12 +180,14 @@ class MeetingStore {
         delete this.connections[id];
     }
 
+    stopRemoteStream(id) {
+        delete this.remoteStreamURL[id];
+    }
+
     addRemoteStreamURL(obj) {
-        this.remoteVideoTag[obj.a].srcObject = obj.c;
-        this.remoteVideoTag[obj.a].setAttribute('src', obj.b);
         this.remoteStreamURL[obj.a] = obj.b;
     }
-    queueCandidate(obj){
+    queueCandidate(obj) {
         this.candidateQueue[obj.b] = obj.a;
     }
 }

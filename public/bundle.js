@@ -9137,7 +9137,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var MeetingActions = function MeetingActions() {
   _classCallCheck(this, MeetingActions);
 
-  this.generateActions('changeAudioState', 'changeVideoState', 'changeInviteState', 'addMytext', 'changeVideoReadyState', 'gotLocalVideo', 'newParticipant', 'updateResult', 'addRemoteTag', 'deleteRemoteTag', 'addRemoteStreamURL', 'queueCandidate');
+  this.generateActions('changeAudioState', 'changeRecognizeState', 'changeVideoState', 'changeInviteState', 'addMytext', 'changeVideoReadyState', 'gotLocalVideo', 'newParticipant', 'updateResult', 'addRemoteTag', 'deleteRemoteTag', 'addRemoteStreamURL', 'queueCandidate');
 };
 
 exports.default = _alt2.default.createActions(MeetingActions);
@@ -16681,7 +16681,7 @@ var Meeting = function (_React$Component) {
         _this.onChange = _this.onChange.bind(_this);
         _this.recorder = new _recorder2.default();
         _this.Chat = _chat2.default.createNew(_MeetingActions2.default, _MeetingStore2.default);
-        _this.Recognizer = _recognition2.default.createNew(_MeetingActions2.default.updateResult);
+        _this.Recognizer = _recognition2.default.createNew(_MeetingActions2.default, _MeetingStore2.default);
         _this.localUserID = "";
         // this.videoList = [];
         // this.tagList = {};
@@ -16701,17 +16701,11 @@ var Meeting = function (_React$Component) {
                 if (!room) {
                     room = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);
                     window.location.hash = room;
-                };
+                }
                 _this2.localUserID = id;
                 _this2.Chat.getUserMedia(id, room, _socket2.default);
                 _socket2.default.emit('join', room);
             });
-
-            //加入房間訊息
-            _socket2.default.on('joined', function (room, clientID) {
-                console.log('This peer has joined room: ' + room + ' with client ID ' + clientID);
-            });
-
             for (var i = 0; i < this.state.langs.length; i++) {
                 this.refs.select_language.options[i] = new Option(this.state.langs[i][0], i);
             }
@@ -16719,17 +16713,20 @@ var Meeting = function (_React$Component) {
             this.updateCountry();
             this.refs.select_dialect.selectedIndex = 2;
 
+            //加入房間訊息
+            _socket2.default.on('joined', function (room, clientID) {
+                console.log('This peer has joined room: ' + room + ' with client ID ' + clientID);
+            });
+
             _socket2.default.on('newParticipantB', function (participantID) {
                 //接到新人加入的訊息時，檢查是否已有連線
                 if (_this2.state.connections[participantID]) {
                     console.log("Connections with" + participantID + "already exists");
                     return;
                 } else {
-                    var videoTag = _this2.addTag();
-                    _MeetingActions2.default.addRemoteTag({ a: participantID, b: videoTag });
                     //主動建立連線
                     var isInitiator = true;
-                    var peerConn = _this2.Chat.createPeerConnection(isInitiator, configuration, participantID, _socket2.default, videoTag, _MeetingActions2.default);
+                    var peerConn = _this2.Chat.createPeerConnection(isInitiator, configuration, participantID, _socket2.default, _MeetingActions2.default);
                     peerConn.createOffer().then(function (offer) {
                         peerConn.setLocalDescription(offer);
                         _socket2.default.emit('offerRemotePeer', offer, _this2.localUserID, participantID);
@@ -16763,11 +16760,9 @@ var Meeting = function (_React$Component) {
                     console.log("Connections with" + sender + "already exists");
                     return;
                 } else {
-                    var videoTag = _this2.addTag();
-                    _MeetingActions2.default.addRemoteTag({ a: sender, b: videoTag });
                     //console.log('收到遠端的 offer，要建立連線並處理');
                     var isInitiator = false;
-                    var peerConn = _this2.Chat.createPeerConnection(isInitiator, configuration, sender, _socket2.default, videoTag, _MeetingActions2.default);
+                    var peerConn = _this2.Chat.createPeerConnection(isInitiator, configuration, sender, _socket2.default, _MeetingActions2.default);
                     peerConn.setRemoteDescription(new RTCSessionDescription(offer)).then(function () {
                         return peerConn.createAnswer();
                     }).then(function (answer) {
@@ -16782,9 +16777,8 @@ var Meeting = function (_React$Component) {
             });
 
             _socket2.default.on('participantLeft', function (participantID) {
-                if (_this2.state.remoteVideoTag[participantID]) {
-                    _this2.refs.meet_main.removeChild(_this2.state.remoteVideoTag[participantID]);
-                    _MeetingActions2.default.deleteRemoteTag(participantID);
+                if (_this2.state.remoteStreamURL[participantID]) {
+                    delete _this2.state.remoteStreamURL[participantID];
                 }
             });
 
@@ -16800,14 +16794,6 @@ var Meeting = function (_React$Component) {
                 a.click();
                 window.URL.revokeObjectURL(url);
             });
-        }
-    }, {
-        key: 'addTag',
-        value: function addTag() {
-            var a = document.createElement('video');
-            a.classList = 'userVideo';
-            this.refs.meet_main.appendChild(a);
-            return a;
         }
     }, {
         key: 'componentWillUnmount',
@@ -16842,9 +16828,10 @@ var Meeting = function (_React$Component) {
             this.isPlaying = false;
         }
     }, {
-        key: 'toggleRecognizing',
-        value: function toggleRecognizing() {
-            this.Recognizer.toggleButtonOnclick();
+        key: 'toggleAudio',
+        value: function toggleAudio() {
+            this.Chat.toggleAudio();
+            _MeetingActions2.default.changeAudioState();
         }
     }, {
         key: 'download',
@@ -16858,31 +16845,37 @@ var Meeting = function (_React$Component) {
             this.isPlaying = true;
         }
     }, {
+        key: 'setLanguage',
+        value: function setLanguage(e) {
+            this.Recognizer.setLanguage(e.target);
+        }
+    }, {
         key: 'updateCountry',
         value: function updateCountry() {
+            //有換國家，就清空方言列
             for (var i = this.refs.select_dialect.options.length - 1; i >= 0; i--) {
                 this.refs.select_dialect.remove(i);
             }
-            //方言
+            //接著把那個國家的方言陣列取出來
             var list = this.state.langs[this.refs.select_language.selectedIndex];
+            //把那個國家的方言new出來
             for (var _i = 1; _i < list.length; _i++) {
+                //選項      //值
                 this.refs.select_dialect.options.add(new Option(list[_i][1], list[_i][0]));
             }
+            //this.refs.select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
+            this.Recognizer.setLanguage(this.refs.select_dialect);
         }
     }, {
-        key: 'onClick_audioToggle',
-        value: function onClick_audioToggle() {
-            _MeetingActions2.default.changeAudioState();
+        key: 'onClick_recognizeToggle',
+        value: function onClick_recognizeToggle() {
+            this.Recognizer.toggleButtonOnclick();
         }
     }, {
         key: 'onClick_videoToggle',
         value: function onClick_videoToggle() {
+            this.Chat.toggleUserMedia();
             _MeetingActions2.default.changeVideoState();
-            if (this.state.isStreaming) {
-                this.Chat.toggleUserMedia();
-            } else {
-                this.Chat.getUserMedia(_MeetingActions2.default.gotLocalVideo);
-            }
         }
     }, {
         key: 'onClick_invitepage',
@@ -16897,6 +16890,14 @@ var Meeting = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            var v = [];
+            for (var id in this.state.remoteStreamURL) {
+                v.push(_react2.default.createElement(
+                    'video',
+                    { autoPlay: true, className: ["userVideo"], key: id },
+                    _react2.default.createElement('source', { src: this.state.remoteStreamURL[id] })
+                ));
+            }
             /*let meetChatTest = Object.keys(this.state.userlist).map((keyName, keyIndex) => {
                 return (
                     <a href="chatroom"><div id="friend_person">
@@ -16978,13 +16979,18 @@ var Meeting = function (_React$Component) {
                             { className: 'left' },
                             _react2.default.createElement(
                                 'button',
-                                { id: this.state.audioImg, onClick: this.onClick_audioToggle.bind(this) },
-                                this.state.audioState
+                                { id: this.state.recognizeImg, onClick: this.onClick_recognizeToggle.bind(this) },
+                                this.state.recognizeState
                             ),
                             _react2.default.createElement(
                                 'button',
                                 { id: this.state.videoImg, onClick: this.onClick_videoToggle.bind(this) },
                                 this.state.videoState
+                            ),
+                            _react2.default.createElement(
+                                'button',
+                                { id: this.state.audioImg, onClick: this.toggleAudio.bind(this) },
+                                this.state.audioState
                             )
                         ),
                         _react2.default.createElement(
@@ -17028,7 +17034,7 @@ var Meeting = function (_React$Component) {
                             'div',
                             { id: this.state.recordState },
                             _react2.default.createElement('select', { name: 'language', id: 'language', ref: 'select_language', onChange: this.updateCountry.bind(this) }),
-                            _react2.default.createElement('select', { name: 'dialect', id: 'dialect', ref: 'select_dialect' })
+                            _react2.default.createElement('select', { name: 'dialect', id: 'dialect', ref: 'select_dialect', onChange: this.setLanguage.bind(this) })
                         ),
                         _react2.default.createElement(
                             'div',
@@ -17044,7 +17050,8 @@ var Meeting = function (_React$Component) {
                                 this.meetpage
                             )
                         ),
-                        _react2.default.createElement('video', { className: 'userVideo', id: 'user', src: this.state.videoIsReady ? this.state.localVideoURL : "沒有加到啦幹" }),
+                        _react2.default.createElement('video', { className: 'userVideo', id: 'user', src: this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹", autoPlay: true }),
+                        v,
                         _react2.default.createElement(
                             'div',
                             { id: 'meet_agenda' },
@@ -17237,7 +17244,6 @@ exports.default = UserState;
 
 var Chat = {
     createNew: function createNew(MeetingActions, MeetingStore) {
-        Chat.isReady = false;
         var localStream = '';
         var fileChannels = {};
         var msgChannels = {};
@@ -17249,18 +17255,18 @@ var Chat = {
                 audio: true,
                 video: true
             }).then(function (stream) {
-                var track = stream.getTracks()[0];
+                console.log('有聲音!!!');
                 var videoURL = window.URL.createObjectURL(stream);
                 MeetingActions.gotLocalVideo(videoURL);
-                console.log(MeetingStore.state.localVideoURL);
                 localStream = stream;
                 MeetingActions.changeVideoReadyState();
                 socket.emit('newParticipantA', id, room);
             }).catch(function (e) {
-                if (e) {
+                if (e && !localStream) {
                     navigator.mediaDevices.getUserMedia({
                         audio: true
                     }).then(function () {
+                        console.log('有聲音!!!');
                         socket.emit('newParticipantA', id, room);
                     });
                 }
@@ -17268,16 +17274,15 @@ var Chat = {
         };
 
         Chat.toggleUserMedia = function () {
-            if (localStream) {
-                MeetingActions.changeVideoReadyState();
-                localStream.getTracks().forEach(function (track) {
-                    track.stop();
-                });
-            }
+            localStream.getVideoTracks()[0].enabled = !localStream.getVideoTracks()[0].enabled;
+        };
+
+        Chat.toggleAudio = function () {
+            localStream.getAudioTracks()[0].enabled = !localStream.getAudioTracks()[0].enabled;
         };
 
         //建立點對點連線物件，以及為連線標的創建影像視窗
-        Chat.createPeerConnection = function (isInitiator, config, remotePeer, socket, videoTag, action) {
+        Chat.createPeerConnection = function (isInitiator, config, remotePeer, socket, action) {
             var peerConn = new RTCPeerConnection(config);
             if (localStream) {
                 peerConn.addStream(localStream);
@@ -17292,6 +17297,7 @@ var Chat = {
             };
 
             peerConn.onaddstream = function (event) {
+                console.log('有人進來ㄌ');
                 var url = URL.createObjectURL(event.stream);
                 MeetingActions.addRemoteStreamURL({
                     a: remotePeer,
@@ -17300,8 +17306,9 @@ var Chat = {
             };
 
             peerConn.onremovestream = function (event) {
+                console.log('有人走ㄌ');
                 console.log('Remote stream removed. Event: ', event);
-                MeetingActions.deleteRemoteTag(remotePeer);
+                // MeetingActions.stopRemoteStream(remotePeer);
             };
 
             //如果是開啟P2P的人
@@ -17468,13 +17475,12 @@ module.exports = Chat;
 
 
 var Recognition = {
-    createNew: function createNew(action) {
+    createNew: function createNew(MeetingActions, MeetingStore) {
         //模組物件
         var recognizer = {};
 
         //模組接口的需求:Select選單物件、中途判定之文字輸出口、最終結果文字輸出口
         var final_transcript = '';
-        recognizer.isRecognizing = false;
         var ignore_onend = void 0;
         var start_timestamp = void 0;
 
@@ -17482,8 +17488,8 @@ var Recognition = {
         recognition.continuous = true;
         recognition.interimResults = true;
 
-        recognizer.setLanguage = function () {
-            recognition.lang = select_dialect.value;
+        recognizer.setLanguage = function (dialect) {
+            recognition.lang = dialect.value;
         };
 
         var two_line = /\n\n/g;
@@ -17498,29 +17504,31 @@ var Recognition = {
         };
 
         recognizer.toggleButtonOnclick = function () {
-            if (isRecognizing) {
+            if (MeetingStore.state.isRecognizing) {
                 recognition.stop();
-                return;
+                alert('結束!');
+                MeetingActions.changeRecognizeState();
+            } else {
+                final_transcript = '';
+                ignore_onend = false;
+                start_timestamp = event.timeStamp;
+                alert('開始!');
+                recognition.start();
+                MeetingActions.changeRecognizeState();
             }
-            final_transcript = '';
-            recognition.start();
-            ignore_onend = false;
-            start_timestamp = event.timeStamp;
         };
 
-        recognition.onstart = function () {
-            isRecognizing = true;
-            alert('按下麥克風圖示，並開始說話。');
-        };
+        recognition.onstart = function () {};
 
         recognition.onerror = function (event) {
             if (event.error == 'no-speech') {
                 alert('偵測不到麥克風訊號，請調整裝置的設定。');
-                ignore_onend = true;
+                recognition.stop();
             }
             if (event.error == 'audio-capture') {
                 alert('偵測不到麥克風，請正確安裝。');
                 ignore_onend = true;
+                recognition.stop();
             }
             if (event.error == 'not-allowed') {
                 if (event.timeStamp - start_timestamp < 100) {
@@ -17529,13 +17537,14 @@ var Recognition = {
                     alert('存取麥克風被拒。');
                 }
                 ignore_onend = true;
+                recognition.stop();
             }
+            MeetingActions.changeRecognizeState();
         };
 
         recognition.onend = function () {
-            isRecognizing = false;
-            if (ignore_onend) {
-                return;
+            if (MeetingStore.state.isRecognizing) {
+                MeetingActions.changeRecognizeState();
             }
         };
 
@@ -17556,7 +17565,7 @@ var Recognition = {
                 }
             }
             final_transcript = capitalize(final_transcript);
-            action({
+            MeetingActions.updateResult({
                 temp: interim_transcript,
                 final: final_transcript
             });
@@ -17974,10 +17983,8 @@ var MeetingStore = function () {
 
         this.bindActions(_MeetingActions2.default);
         this.connections = {}; //存放連線中的人的socket.id
-        this.remoteVideoTag = {}; //存放連線中的人的videoTag
         this.remoteStreamURL = {}; //存放連線中的人的stream
         this.videoIsReady = false;
-        this.audioOn = false;
         this.localStream = '';
         this.localVideoURL = '';
         this.isStreaming = false;
@@ -17985,26 +17992,34 @@ var MeetingStore = function () {
         this.langs = [['Afrikaans', ['af-ZA']], ['Bahasa Indonesia', ['id-ID']], ['Bahasa Melayu', ['ms-MY']], ['Català', ['ca-ES']], ['Čeština', ['cs-CZ']], ['Dansk', ['da-DK']], ['Deutsch', ['de-DE']], ['English', ['en-AU', 'Australia'], ['en-CA', 'Canada'], ['en-IN', 'India'], ['en-NZ', 'New Zealand'], ['en-ZA', 'South Africa'], ['en-GB', 'United Kingdom'], ['en-US', 'United States']], ['Español', ['es-AR', 'Argentina'], ['es-BO', 'Bolivia'], ['es-CL', 'Chile'], ['es-CO', 'Colombia'], ['es-CR', 'Costa Rica'], ['es-EC', 'Ecuador'], ['es-SV', 'El Salvador'], ['es-ES', 'España'], ['es-US', 'Estados Unidos'], ['es-GT', 'Guatemala'], ['es-HN', 'Honduras'], ['es-MX', 'México'], ['es-NI', 'Nicaragua'], ['es-PA', 'Panamá'], ['es-PY', 'Paraguay'], ['es-PE', 'Perú'], ['es-PR', 'Puerto Rico'], ['es-DO', 'República Dominicana'], ['es-UY', 'Uruguay'], ['es-VE', 'Venezuela']], ['Euskara', ['eu-ES']], ['Filipino', ['fil-PH']], ['Français', ['fr-FR']], ['Galego', ['gl-ES']], ['Hrvatski', ['hr_HR']], ['IsiZulu', ['zu-ZA']], ['Íslenska', ['is-IS']], ['Italiano', ['it-IT', 'Italia'], ['it-CH', 'Svizzera']], ['Lietuvių', ['lt-LT']], ['Magyar', ['hu-HU']], ['Nederlands', ['nl-NL']], ['Norsk bokmål', ['nb-NO']], ['Polski', ['pl-PL']], ['Português', ['pt-BR', 'Brasil'], ['pt-PT', 'Portugal']], ['Română', ['ro-RO']], ['Slovenščina', ['sl-SI']], ['Slovenčina', ['sk-SK']], ['Suomi', ['fi-FI']], ['Svenska', ['sv-SE']], ['Tiếng Việt', ['vi-VN']], ['Türkçe', ['tr-TR']], ['Ελληνικά', ['el-GR']], ['български', ['bg-BG']], ['Pусский', ['ru-RU']], ['Српски', ['sr-RS']], ['Українська', ['uk-UA']], ['한국어', ['ko-KR']], ['中文', ['cmn-Hans-CN', '普通话 (中国大陆)'], ['cmn-Hans-HK', '普通话 (香港)'], ['cmn-Hant-TW', '中文 (台灣)'], ['yue-Hant-HK', '粵語 (香港)']], ['日本語', ['ja-JP']], ['हिन्दी', ['hi-IN']], ['ภาษาไทย', ['th-TH']]];
         this.interim_result = '';
         this.final_result = '';
-        this.audioState = '取消辨識';
-        this.audioImg = 'audio-on';
+
+        this.isRecognizing = false;
+        this.recognizeState = '開始辨識';
         this.videoState = '取消視訊';
+        this.audioState = '靜音';
+
+        this.recognizeImg = 'audio-off';
         this.videoImg = 'video-off';
+        this.audioImg = 'video-off';
+
         this.inviteState = 'invite_detail_off';
         this.recordState = 'recognition_detail_on';
         this.candidateQueue = {};
     }
 
     _createClass(MeetingStore, [{
-        key: 'changeAudioState',
-        value: function changeAudioState() {
-            if (this.audioState == '取消辨識' && this.recordState == 'recognition_detail_on') {
-                this.audioState = '開始辨識';
-                this.audioImg = 'audio-off';
-                this.recordState = 'recognition_detail_off';
-            } else {
-                this.audioState = '取消辨識';
-                this.audioImg = 'audio-on';
+        key: 'changeRecognizeState',
+        value: function changeRecognizeState() {
+            if (this.recognizeState == '取消辨識' && this.recordState == 'recognition_detail_off') {
+                this.recognizeState = '開始辨識';
+                this.recognizeImg = 'audio-off';
                 this.recordState = 'recognition_detail_on';
+                this.isRecognizing = !this.isRecognizing;
+            } else {
+                this.recognizeState = '取消辨識';
+                this.recognizeImg = 'audio-on';
+                this.recordState = 'recognition_detail_off';
+                this.isRecognizing = !this.isRecognizing;
             }
         }
     }, {
@@ -18019,6 +18034,17 @@ var MeetingStore = function () {
             }
         }
     }, {
+        key: 'changeAudioState',
+        value: function changeAudioState() {
+            if (this.audioState == '靜音') {
+                this.audioState = "收音";
+                this.audioImg = 'video-on';
+            } else {
+                this.audioState = '靜音';
+                this.audioImg = 'video-off';
+            }
+        }
+    }, {
         key: 'changeInviteState',
         value: function changeInviteState() {
             if (this.inviteState == 'invite_detail_off') {
@@ -18030,8 +18056,10 @@ var MeetingStore = function () {
     }, {
         key: 'changeVideoReadyState',
         value: function changeVideoReadyState() {
+            if (this.isStreaming) {
+                this.videoIsReady = false;
+            }
             this.isStreaming = !this.isStreaming;
-            this.videoIsReady = !this.videoIsReady;
         }
     }, {
         key: 'gotLocalVideo',
@@ -18070,10 +18098,13 @@ var MeetingStore = function () {
             delete this.connections[id];
         }
     }, {
+        key: 'stopRemoteStream',
+        value: function stopRemoteStream(id) {
+            delete this.remoteStreamURL[id];
+        }
+    }, {
         key: 'addRemoteStreamURL',
         value: function addRemoteStreamURL(obj) {
-            this.remoteVideoTag[obj.a].srcObject = obj.c;
-            this.remoteVideoTag[obj.a].setAttribute('src', obj.b);
             this.remoteStreamURL[obj.a] = obj.b;
         }
     }, {

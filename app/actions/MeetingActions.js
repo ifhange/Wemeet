@@ -4,8 +4,10 @@ class MeetingActions {
   constructor() {
     this.generateActions(
       'changeAudioState',
+      'changeRecognizeState',
       'changeVideoState',
       'changeInviteState',
+
       'addMytext',
       'changeVideoReadyState',
       'gotLocalVideo',
