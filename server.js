@@ -77,24 +77,23 @@ app.post("/api/db/create/photo", (req, res) => {
 });
 
 app.post("/api/db/save/video", (req, res) => {
-    
+
 
 })
 
-app.get("/api/db/test", (req, res) => {
-    res.sendFile(__dirname + '/public/src/je.jpg');
-});
+// app.get("/api/db/test", (req, res) => {
+//     res.sendFile(__dirname + '/public/src/je.jpg');
+// });
 
 io.on('connection', function(socket) {
     connection[socket.id] = socket;
-    console.log("接收到使用者: " + socket.id + " 的連線");
-
     //監聽使用者人數
-    if(!onlineUser.hasOwnProperty(socket.id)) {
+    if (!onlineUser.hasOwnProperty(socket.id)) {
         onlineUser[socket.id] = socket.id;
-        onlineCount ++;
-        console.log("使用者目前人數: " + onlineCount + " 人");
-        socket.broadcast.emit('login', [onlineUser,onlineCount]);
+        onlineCount++;
+        //console.log("使用者目前人數: " + onlineCount + " 人");
+        socket.emit('login', [onlineUser, onlineCount]);
+        socket.broadcast.emit('login', [onlineUser, onlineCount]);
     };
 
     socket.on('addAgenda', function(list) {
@@ -105,16 +104,22 @@ io.on('connection', function(socket) {
         socket.broadcast.emit('deleteAgendaForAll',list);
     });
 
+    socket.on('id', (msg) => {
+        socket.emit('success', socket.id);
+    })
+
+
     socket.on('join', function(room) {
-        console.log('收到「加入」房間: ' + room + ' 的請求');
         socket.join(room);
-        console.log('Client ID ' + socket.id + ' joined room ' + room);
+        console.log('加入成功!',socket.id,room);
         socket.emit('joined', room, socket.id);
     });
 
-    socket.on('newParticipant', function(msgSender, room) {
-        socket.to(room).emit('newParticipant', msgSender);
+
+    socket.on('newParticipantA', function(msgSender, room) {
+        socket.to(room).emit('newParticipantB', msgSender);
     });
+
 
     socket.on('offerRemotePeer', function(offer, sender, receiver) {
         socket.to(receiver).emit('offer', offer, sender);
@@ -124,22 +129,19 @@ io.on('connection', function(socket) {
         socket.to(receiver).emit('answer', answer, sender);
     });
 
-    socket.on('onIceCandidate', function(candidate, sender, receiver) {
-        socket.to(receiver).emit('onIceCandidate', candidate, sender);
+    socket.on('onIceCandidateA', function(candidate, sender, receiver) {
+        socket.to(receiver).emit('onIceCandidateB', candidate, sender);
     });
 
     socket.on('disconnect', function() {
         console.log("使用者: " + socket.id + " 離開了");
         socket.broadcast.emit('participantLeft', socket.id);
-
-        //監聽用戶退出
-        if(onlineUser.hasOwnProperty(socket.id)) {
-            onlineUser[socket.id] = socket.id;
-            delete onlineUser[socket.id];
-            onlineCount --;
-            console.log("使用者目前人數: " + onlineCount + " 人");
-            socket.broadcast.emit('logout', [onlineUser,onlineCount] );
-        }
+        onlineUser[socket.id] = socket.id;
+        delete onlineUser[socket.id];
+        onlineCount--;
+        console.log("使用者目前人數: " + onlineCount + " 人");
+        socket.emit('logout', [onlineUser, onlineCount]);
+        socket.broadcast.emit('login', [onlineUser, onlineCount]);
     });
 
     socket.on('requestVideoFromUser', function(sender) {

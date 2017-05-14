@@ -4,6 +4,7 @@ class MeetingActions {
   constructor() {
     this.generateActions(
       'changeAudioState',
+      'changeRecognizeState',
       'changeVideoState',
       'changeInviteState',
       'changeAgendaState',
@@ -15,6 +16,10 @@ class MeetingActions {
       'addAgenda',
       'deleteAgenda',
       'listenAgenda'
+      'addRemoteTag',
+      'deleteRemoteTag',
+      'addRemoteStreamURL',
+      'queueCandidate'
     );
   }
 }
