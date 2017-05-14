@@ -1,12 +1,13 @@
 'use strict';
 
 let Recognition = {
-    createNew: (MeetingActions, MeetingStore) => {
+    createNew: (action) => {
         //模組物件
         let recognizer = {};
 
         //模組接口的需求:Select選單物件、中途判定之文字輸出口、最終結果文字輸出口
         let final_transcript = '';
+        recognizer.isRecognizing = false;
         let ignore_onend;
         let start_timestamp;
 
@@ -14,8 +15,8 @@ let Recognition = {
         recognition.continuous = true;
         recognition.interimResults = true;
 
-        recognizer.setLanguage = (dialect) => {
-            recognition.lang = dialect.value;
+        recognizer.setLanguage = () => {
+            recognition.lang = select_dialect.value;
         }
 
         let two_line = /\n\n/g;
@@ -30,32 +31,29 @@ let Recognition = {
         };
 
         recognizer.toggleButtonOnclick = () => {
-            if (MeetingStore.state.isRecognizing) {
+            if (isRecognizing) {
                 recognition.stop();
-                alert('結束!')
-                MeetingActions.changeRecognizeState();
-            } else {
-                final_transcript = '';
-                ignore_onend = false;
-                start_timestamp = event.timeStamp;
-                alert('開始!')
-                recognition.start();
-                MeetingActions.changeRecognizeState();
+                return;
             }
-        }
+            final_transcript = '';
+            recognition.start();
+            ignore_onend = false;
+            start_timestamp = event.timeStamp;
+        };
 
         recognition.onstart = () => {
+            isRecognizing = true;
+            alert('按下麥克風圖示，並開始說話。');
         };
 
         recognition.onerror = (event) => {
             if (event.error == 'no-speech') {
                 alert('偵測不到麥克風訊號，請調整裝置的設定。');
-                recognition.stop();
+                ignore_onend = true;
             }
             if (event.error == 'audio-capture') {
                 alert('偵測不到麥克風，請正確安裝。');
                 ignore_onend = true;
-                recognition.stop();
             }
             if (event.error == 'not-allowed') {
                 if (event.timeStamp - start_timestamp < 100) {
@@ -64,14 +62,13 @@ let Recognition = {
                     alert('存取麥克風被拒。');
                 }
                 ignore_onend = true;
-                recognition.stop();
             }
-            MeetingActions.changeRecognizeState();
         };
 
         recognition.onend = () => {
-            if(MeetingStore.state.isRecognizing){
-                MeetingActions.changeRecognizeState();
+            isRecognizing = false;
+            if (ignore_onend) {
+                return;
             }
         };
 
@@ -92,7 +89,7 @@ let Recognition = {
                 }
             }
             final_transcript = capitalize(final_transcript);
-            MeetingActions.updateResult({
+            action({
                 temp: interim_transcript,
                 final: final_transcript
             });

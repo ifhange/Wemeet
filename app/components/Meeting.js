@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import MeetingStore from '../stores/MeetingStore';
 import MeetingActions from '../actions/MeetingActions';
@@ -7,17 +5,6 @@ import chat from '../lib/chat';
 import recognition from '../lib/recognition';
 import Recorder from '../lib/recorder';
 import socket from '../socket';
-
-socket.emit('id', 'ayy');
-
-let configuration = {
-    'iceServers': [{
-        'url': 'stun:stun.l.google.com:19302'
-    }, {
-        'url': 'stun:stun.services.mozilla.com'
-    }]
-};
-
 let room = window.location.hash;
 
 class Meeting extends React.Component {
@@ -26,9 +13,8 @@ class Meeting extends React.Component {
         this.state = MeetingStore.getState();
         this.onChange = this.onChange.bind(this);
         this.recorder = new Recorder();
-        this.Chat = chat.createNew(MeetingActions, MeetingStore);
-        this.Recognizer = recognition.createNew(MeetingActions, MeetingStore);
-
+        this.Chat = chat.createNew(MeetingActions.changeVideoReadyState);
+        this.Recognizer = recognition.createNew(MeetingActions.updateResult);
         this.localUserID = "";
         // this.videoList = [];
         // this.tagList = {};
@@ -38,37 +24,37 @@ class Meeting extends React.Component {
     }
 
     componentDidMount() {
-        MeetingStore.listen(this.onChange);
-        socket.on('success', (id) => {
-            if (!room) {
-                room = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);
-                window.location.hash = room;
-            }
-            this.localUserID = id;
-            this.Chat.getUserMedia(id, room, socket);
-            socket.emit('join', room);
-        });
-        for (let i = 0; i < this.state.langs.length; i++) {
+
+        for (var i = 0; i < this.state.langs.length; i++) {
             this.refs.select_language.options[i] = new Option(this.state.langs[i][0], i);
         }
         this.refs.select_language.selectedIndex = 36;
         this.updateCountry();
         this.refs.select_dialect.selectedIndex = 2;
+        MeetingStore.listen(this.onChange);
+        this.Chat.getUserMedia(MeetingActions.gotLocalVideo);
+        if (!room) {
+            window.location.hash = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);
+        };
 
         //加入房間訊息
         socket.on('joined', (room, clientID) => {
             console.log('This peer has joined room: ' + room + ' with client ID ' + clientID);
+            this.localUserID = clientID;
+            socket.emit('newParticipant', clientID, room);
         });
 
-        socket.on('newParticipantB', (participantID) => {
+        socket.on('newParticipant', (participantID) => {
+            console.log('收到新人加入的訊息');
             //接到新人加入的訊息時，檢查是否已有連線
             if (this.state.connections[participantID]) {
                 console.log("Connections with" + participantID + "already exists");
                 return;
             } else {
+                let remote = this.addUser();
                 //主動建立連線
                 let isInitiator = true;
-                let peerConn = this.Chat.createPeerConnection(isInitiator, configuration, participantID, socket, MeetingActions);
+                let peerConn = this.Chat.createPeerConnection(isInitiator, configuration, participantID, socket, remote);
                 peerConn.createOffer()
                     .then((offer) => {
                         peerConn.setLocalDescription(offer);
@@ -81,23 +67,12 @@ class Meeting extends React.Component {
             }
         });
 
-        socket.on('answer', (answer, sender) => {
-            //console.log('answer' + JSON.stringify(answer));
-            //console.log('有收到answer喔!');
-            this.state.connections[sender].setRemoteDescription(new RTCSessionDescription(answer));
-        });
-
-        socket.on('onIceCandidateB', (candidate, sender) => {
-            //console.log('收到遠端的candidate，要加入: ' + JSON.stringify(candidate));
-            if (this.state.connections[sender]) {
-                console.log('加到了!');
-                this.state.connections[sender].addIceCandidate(new RTCIceCandidate(candidate))
-                    .catch((e) => {
-                        console.log('發生錯誤了看這裡: ' + e);
-                    });
-            }
-            MeetingActions.queueCandidate({ a: candidate, b: sender });
-            console.log('不!來不及加');
+        socket.on('onIceCandidate', (candidate, sender) => {
+            console.log('收到遠端的candidate，要加入: ' + JSON.stringify(candidate));
+            this.state.connections[sender].addIceCandidate(new RTCIceCandidate(candidate))
+                .catch((e) => {
+                    console.log('發生錯誤了看這裡: ' + e);
+                });
         });
 
         socket.on('offer', (offer, sender) => {
@@ -105,9 +80,10 @@ class Meeting extends React.Component {
                 console.log("Connections with" + sender + "already exists");
                 return;
             } else {
-                //console.log('收到遠端的 offer，要建立連線並處理');
+                let remote = this.addUser();
+                console.log('收到遠端的 offer，要建立連線並處理');
                 let isInitiator = false;
-                let peerConn = this.Chat.createPeerConnection(isInitiator, configuration, sender, socket, MeetingActions);
+                let peerConn = this.Chat.createPeerConnection(isInitiator, configuration, sender, socket, remote);
                 peerConn.setRemoteDescription(new RTCSessionDescription(offer))
                     .then(() => {
                         return peerConn.createAnswer();
@@ -124,10 +100,13 @@ class Meeting extends React.Component {
             }
         });
 
+        socket.on('answer', (answer, sender) => {
+            console.log('answer' + JSON.stringify(answer));
+            connections[sender].setRemoteDescription(new RTCSessionDescription(answer));
+        });
+
         socket.on('participantLeft', (participantID) => {
-            if (this.state.remoteStreamURL[participantID]) {
-                delete this.state.remoteStreamURL[participantID];
-            }
+            delete this.state.connections[participantID];
         });
 
         socket.on('videoFromDB', (arrayBuffer) => {
@@ -138,7 +117,7 @@ class Meeting extends React.Component {
             document.body.appendChild(a);
             a.style = "display: none";
             a.href = url;
-            a.download = this.localUserID + '.webm';
+            a.download = localUserID + '.webm';
             a.click();
             window.URL.revokeObjectURL(url);
         })
@@ -151,7 +130,6 @@ class Meeting extends React.Component {
         socket.on('deleteAgendaForAll', function(agenda){
             console.log(agenda);
             MeetingActions.listenAgenda(agenda);
-
         });
     }
 
@@ -169,6 +147,13 @@ class Meeting extends React.Component {
         MeetingActions.addMytext(mytext);
     }
 
+    addUser() {
+        let remote = document.createElement('video');
+        remote.classList.add('userVideo');
+        this.refs.meet_main.appendChild(remote);
+        socket.broadcast.emit('addAgenda',this.agendaList);
+    }
+
     toUser() {
         let file = this.refs.meet_fileupload.files[0];
         this.Chat.sendFileToUser(file);
@@ -182,46 +167,35 @@ class Meeting extends React.Component {
         this.isPlaying = false;
     }
 
-    toggleAudio() {
-        this.Chat.toggleAudio();
-        MeetingActions.changeAudioState();
-    }
-
-    download() {
-        this.recorder.download();
-    }
-
-    play() {
-        this.recorder.play();
-        this.isPlaying = true;
-    }
-
-    setLanguage(e){
-        this.Recognizer.setLanguage(e.target);
-    }
-
-    updateCountry() {
-        //有換國家，就清空方言列
-        for (let i = this.refs.select_dialect.options.length - 1; i >= 0; i--) {
-            this.refs.select_dialect.remove(i);
-        }
-        //接著把那個國家的方言陣列取出來
-        let list = this.state.langs[this.refs.select_language.selectedIndex];
-        //把那個國家的方言new出來
-        for (let i = 1; i < list.length; i++) {
-                                                            //選項      //值
-            this.refs.select_dialect.options.add(new Option(list[i][1], list[i][0]));
-        }
-        //this.refs.select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
-        this.Recognizer.setLanguage(this.refs.select_dialect);
-    }
-
-    onClick_recognizeToggle() {
+    toggleRecognizing() {
         this.Recognizer.toggleButtonOnclick();
     }
 
+    download() {
+        this.recorder.download()
+    }
+
+    play() {
+        this.recorder.play()
+        this.isPlaying = true;
+    }
+
+    updateCountry() {
+        for (let i = this.refs.select_dialect.options.length - 1; i >= 0; i--) {
+            this.refs.select_dialect.remove(i);
+        }
+        //方言
+        let list = this.state.langs[this.refs.select_language.selectedIndex];
+        for (let i = 1; i < list.length; i++) {
+            this.refs.select_dialect.options.add(new Option(list[i][1], list[i][0]));
+        }
+    }
+
+    onClick_audioToggle() {
+        MeetingActions.changeAudioState();
+    }
+
     onClick_videoToggle() {
-        this.Chat.toggleUserMedia();
         MeetingActions.changeVideoState();
         if(this.state.isStreaming){
 			this.Chat.toggleUserMedia();
@@ -256,6 +230,7 @@ class Meeting extends React.Component {
     }
 
     render() {
+
         let agendalist =  Object.keys(this.state.agendaList).map((keyName, keyIndex) => {
             this.agendatext = keyName;
             return (
@@ -268,11 +243,6 @@ class Meeting extends React.Component {
         // 	this.tagList[id] = <video key={id} className={xxx} ></video>;
         // }
 
-        let v = [];
-        for (let id in this.state.remoteStreamURL) {
-            v.push(<video autoPlay={true} className={["userVideo"]} key={id}><source src={this.state.remoteStreamURL[id]} /></video>);
-        }
-
         /*let meetChatTest = Object.keys(this.state.userlist).map((keyName, keyIndex) => {
             return (
                 <a href="chatroom"><div id="friend_person">
@@ -281,6 +251,7 @@ class Meeting extends React.Component {
                 </div></a>
             )
         });*/
+
         return (
             <div id='in'>
                 <div className="box-b">
@@ -317,15 +288,13 @@ class Meeting extends React.Component {
                     <div id="feature">
 
                         <div className="left">
-                            <button id={this.state.recognizeImg} onClick={this.onClick_recognizeToggle.bind(this)} >{this.state.recognizeState}</button>
+                            <button id={this.state.audioImg} onClick={this.onClick_audioToggle.bind(this)} >{this.state.audioState}</button>
                             <button id={this.state.videoImg} onClick={this.onClick_videoToggle.bind(this)} >{this.state.videoState}</button>
-                            <button id={this.state.audioImg} onClick={this.toggleAudio.bind(this)} >{this.state.audioState}</button>
                         </div>
 
                         <div className="center">
                             <button id="invite" onClick={this.onClick_invitepage}>邀請</button>
                             <button id={this.state.agendaImg} onClick={this.onClick_agenda.bind(this)}>議程清單</button>
-
 
                             <button id="brainstorming" onClick={this.state.invite}>腦力激盪</button>
                             <button id="collaborative" onClick={this.state.invite}>共筆</button>
@@ -362,6 +331,7 @@ class Meeting extends React.Component {
                             <input type='text' id='user_input' maxLength="25" ref='agenda_input' />
                             <button id='agenda_button' type="submit" onClick={this.onClick_addAgenda.bind(this)}>新增</button>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -369,3 +339,4 @@ class Meeting extends React.Component {
     }
 }
 export default Meeting;
+

@@ -1,49 +1,38 @@
 'use strict';
 
 let Chat = {
-    createNew: (MeetingActions, MeetingStore) => {
-
+    createNew: (callback) => {
+        Chat.isReady = false;
         let localStream = '';
         let fileChannels = {};
         let msgChannels = {};
-        let localUserID = '';
         //取得使用者端的影像
-        Chat.getUserMedia = (id, room, socket) => {
-            localUserID = id;
+        Chat.getUserMedia = (gotLocalVideo) => {
             navigator.mediaDevices.getUserMedia({
-                    audio: true,
-                    video: true
-                })
+                audio: true,
+                video: true
+            })
                 .then((stream) => {
-                    console.log('有聲音!!!')
+                    var track = stream.getTracks()[0];
                     let videoURL = window.URL.createObjectURL(stream);
-                    MeetingActions.gotLocalVideo(videoURL);
+                    callback();
+                    gotLocalVideo(videoURL);
                     localStream = stream;
-                    MeetingActions.changeVideoReadyState();
-                    socket.emit('newParticipantA', id, room);
                 })
                 .catch((e) => {
-                    if (e && !localStream) {
-                        navigator.mediaDevices.getUserMedia({
-                            audio: true
-                        }).then(() => {
-                            console.log('有聲音!!!')
-                            socket.emit('newParticipantA', id, room);
-                        });
-                    }
+                    console.log('發生錯誤了看這裡:' + e);
                 });
         };
 
         Chat.toggleUserMedia = () => {
-            localStream.getVideoTracks()[0].enabled = !(localStream.getVideoTracks()[0].enabled);
+            if (localStream) {
+                callback();
+                localStream.getTracks().forEach((track) => { track.stop(); });
+            }
         };
 
-        Chat.toggleAudio = ()=>{
-            localStream.getAudioTracks()[0].enabled = !(localStream.getAudioTracks()[0].enabled);
-        }
-
         //建立點對點連線物件，以及為連線標的創建影像視窗
-        Chat.createPeerConnection = (isInitiator, config, remotePeer, socket, action) => {
+        Chat.createPeerConnection = (isInitiator, config, remotePeer, socket, videoTag) => {
             let peerConn = new RTCPeerConnection(config);
             if (localStream) {
                 peerConn.addStream(localStream);
@@ -52,29 +41,23 @@ let Chat = {
             // send any ice candidates to the other peer
             peerConn.onicecandidate = (event) => {
                 if (event.candidate) {
-                    //console.log('local端找到ice candidate>要傳出去: ' + JSON.stringify(event.candidate));
-                    socket.emit('onIceCandidateA', event.candidate, localUserID, remotePeer);
+                    console.log('local端找到ice candidate>要傳出去: ' + JSON.stringify(event.candidate));
+                    socket.emit('onIceCandidate', event.candidate, localUserID, remotePeer);
                 }
             };
 
             peerConn.onaddstream = (event) => {
-                console.log('有人進來ㄌ');
-                let url = URL.createObjectURL(event.stream);
-                MeetingActions.addRemoteStreamURL({
-                    a: remotePeer,
-                    b: url
-                });
+                console.log('Remote stream added.');
+                videoTag.srcObject = event.stream;
             };
 
             peerConn.onremovestream = (event) => {
-                console.log('有人走ㄌ');
                 console.log('Remote stream removed. Event: ', event);
-                // MeetingActions.stopRemoteStream(remotePeer);
             };
 
             //如果是開啟P2P的人
             if (isInitiator) {
-                console.log('Createing Data Channel');
+                console.log('Creating Data Channel');
                 //建立資料傳送頻道、訊息傳送頻道
                 let fileChannel = peerConn.createDataChannel('files');
                 let msgChannel = peerConn.createDataChannel('messages');
@@ -107,10 +90,10 @@ let Chat = {
                         //     URL.revokeObjectURL(downloadAnchor.href);
                         //     downloadAnchor.removeAttribute('href');
                         // }
-                        let fileChannel = event.channel;
-                        fileChannels[remotePeer] = fileChannel;
-                        console.log('joined channel' + event.channel.label);
-                        onDataChannelCreated(fileChannel);
+                        // let fileChannel = event.channel;
+                        // fileChannels[remotePeer] = fileChannel;
+                        // console.log('joined channel' + event.channel.label);
+                        // onDataChannelCreated(fileChannel);
                     } else if (event.channel.label == 'messages') {
                         let msgChannel = event.channel;
                         msgChannels[remotePeer] = msgChannel;
@@ -194,7 +177,7 @@ let Chat = {
                                 'fileName': file.name,
                                 'fileSize': file.size,
                                 'fileType': file.type
-                            }));
+                            }))
                         }
                     }
                 };
