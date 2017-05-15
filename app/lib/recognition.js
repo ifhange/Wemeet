@@ -1,7 +1,7 @@
 'use strict';
 
 let Recognition = {
-    createNew: (MeetingActions, MeetingStore) => {
+    createNew: (MeetingActions, MeetingStore, socket, room) => {
         //模組物件
         let recognizer = {};
 
@@ -9,6 +9,7 @@ let Recognition = {
         let final_transcript = '';
         let ignore_onend;
         let start_timestamp;
+        recognizer.id = '';
 
         let recognition = new webkitSpeechRecognition();
         recognition.continuous = true;
@@ -44,8 +45,6 @@ let Recognition = {
                 MeetingActions.changeRecognizeState();
             }
         }
-
-        recognition.onstart = () => {};
 
         recognition.onerror = (event) => {
             if (event.error == 'no-speech') {
@@ -84,43 +83,26 @@ let Recognition = {
                 return;
             }
             let meetingHistory = [];
-            var date = new Date();
-            let time = data.getTime();
+            let date = new Date();
+            let time = date.getTime();
             for (let i = event.resultIndex; i < event.results.length; ++i) {
-                let time = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
                 if (event.results[i].isFinal) {
-                    meetingHistory.push({
-                        id: '這是假的名字',
-                        time: time,
-                        result: event.results[i][0].transcript
-                    })
+                    console.log(recognizer.id);
+                    socket.emit('history', JSON.stringify({
+                        'time': time,
+                        'name': recognizer.id,
+                        'value': event.results[i][0].transcript
+                    }), room);
                     final_transcript = event.results[i][0].transcript;
                 } else {
                     interim_transcript += event.results[i][0].transcript;
                 }
             }
-
             MeetingActions.updateResult({
                 temp: interim_transcript,
                 final: final_transcript
             });
-
-        };
-
-        recognizer.sendData = () => {
-            var xhr = new XMLHttpRequest();
-            var url = "https://140.123.175.95:8787/api/history";
-            xhr.open("POST", url, true);
-            xhr.setRequestHeader("Content-type", "application/json");
-            var data = JSON.stringify({
-                "id": id,
-                "time": time,
-                "result": result
-            });
-            xhr.send(data);
-            console.log(123);
         }
-
         return recognizer;
     }
 };
