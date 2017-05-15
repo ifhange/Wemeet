@@ -32,10 +32,11 @@ var conn = mongoose.createConnection('mongodb://admin:admin@140.123.175.95:9487/
 // get: function, defines a custom getter for this property using Object.defineProperty().
 // set: function, defines a custom setter for this property using
 
+
+
 let historySchema = new mongoose.Schema({
-    id: String,
-    time: String,
-    result: String
+    room: String,
+    history: mongoose.Schema.Types.Mixed
 });
 
 exports.History = conn.model('History', historySchema);
