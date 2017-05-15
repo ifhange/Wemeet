@@ -11,25 +11,35 @@ let Chat = {
             localUserID = id;
             navigator.mediaDevices.getUserMedia({
                     audio: true,
-                    video: true
+                    video: { frameRate: { min: 15 } }
                 })
                 .then((stream) => {
-                    console.log('有聲音!!!')
-                    let videoURL = window.URL.createObjectURL(stream);
-                    MeetingActions.gotLocalVideo(videoURL);
-                    localStream = stream;
-                    MeetingActions.changeVideoReadyState();
-                    socket.emit('newParticipantA', id, room);
-                })
-                .catch((e) => {
-                    if (e && !localStream) {
+                    if (stream.getVideoTracks().length > 0 && stream.getAudioTracks().length > 0) {
+                        console.log('有影像而且有聲音!');
+                        let videoURL = window.URL.createObjectURL(stream);
+                        MeetingActions.gotLocalVideo(videoURL);
+                        localStream = stream;
+                        MeetingActions.changeVideoReadyState();
+                        socket.emit('newParticipantA', id, room);
+                    } else {
                         navigator.mediaDevices.getUserMedia({
                             audio: true
-                        }).then(() => {
-                            console.log('有聲音!!!')
+                        }).then((stream) => {
+                            console.log('沒有影像但是有聲音!');
+                            let videoURL = window.URL.createObjectURL(stream);
+                            MeetingActions.gotLocalVideo(videoURL);
+                            localStream = stream;
+                            MeetingActions.changeVideoReadyState();
                             socket.emit('newParticipantA', id, room);
+                        }).catch((e) => {
+                            console.log(e);
                         });
                     }
+                })
+                .catch((e) => {
+                    console.log('沒有影像但是有聲音!');
+                    MeetingActions.changeVideoReadyState();
+                    socket.emit('newParticipantA', id, room);
                 });
         };
 
@@ -37,15 +47,24 @@ let Chat = {
             localStream.getVideoTracks()[0].enabled = !(localStream.getVideoTracks()[0].enabled);
         };
 
-        Chat.toggleAudio = ()=>{
+        Chat.toggleAudio = () => {
             localStream.getAudioTracks()[0].enabled = !(localStream.getAudioTracks()[0].enabled);
         }
 
         //建立點對點連線物件，以及為連線標的創建影像視窗
-        Chat.createPeerConnection = (isInitiator, config, remotePeer, socket, action) => {
+        Chat.createPeerConnection = (isInitiator, config, remotePeer, socket) => {
+            console.log(1);
             let peerConn = new RTCPeerConnection(config);
+            console.log(2);
             if (localStream) {
                 peerConn.addStream(localStream);
+            }
+
+            for (let id in MeetingStore.state.candidateQueue) {
+                console.log('加回來');
+                if (id == remotePeer) {
+                    peerConn.addIceCandidate(new RTCIceCandidate(MeetingStore.state.candidateQueue[id]));
+                }
             }
 
             // send any ice candidates to the other peer
@@ -57,7 +76,7 @@ let Chat = {
             };
 
             peerConn.onaddstream = (event) => {
-                console.log('有人進來ㄌ');
+                console.log('收到遠端加入影像');
                 let url = URL.createObjectURL(event.stream);
                 MeetingActions.addRemoteStreamURL({
                     a: remotePeer,
@@ -66,14 +85,15 @@ let Chat = {
             };
 
             peerConn.onremovestream = (event) => {
-                console.log('有人走ㄌ');
-                console.log('Remote stream removed. Event: ', event);
-                // MeetingActions.stopRemoteStream(remotePeer);
+                console.log('收到遠端離開');
+                // console.log('Remote stream removed. Event: ', event);
+                MeetingActions.userLeft(remotePeer);
             };
 
             //如果是開啟P2P的人
             if (isInitiator) {
-                console.log('Createing Data Channel');
+                console.log(3);
+                //console.log('Createing Data Channel');
                 //建立資料傳送頻道、訊息傳送頻道
                 let fileChannel = peerConn.createDataChannel('files');
                 let msgChannel = peerConn.createDataChannel('messages');
@@ -149,14 +169,14 @@ let Chat = {
             //取得現在時間
             let date = new Date();
             //自定義時間格式:Hour-Minute
-            let formattedTime = date.getHours() + ':' + (date.getMinutes()<10?'0':'') + date.getMinutes();
+            let formattedTime = date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
 
             for (let id in msgChannels) {
                 msgChannels[id].send(JSON.stringify({
-                'UserID': localUserID,
-                'Sendtime': formattedTime,
-                'Text': value
-            }));
+                    'UserID': localUserID,
+                    'Sendtime': formattedTime,
+                    'Text': value
+                }));
             }
             return ({
                 'UserID': localUserID,
