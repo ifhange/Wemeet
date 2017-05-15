@@ -7,7 +7,6 @@ import recognition from '../lib/recognition';
 import Recorder from '../lib/recorder';
 import socket from '../socket';
 
-
 socket.emit('id', 'ayy');
 
 let configuration = {
@@ -19,12 +18,8 @@ let configuration = {
 };
 let room = window.location.hash;
 
-
 class Meeting extends React.Component {
     constructor(props) {
-        window.onbeforeunload = function() {
-            socket.emit('leaveRoom', room);
-        };
         super(props);
         this.state = MeetingStore.getState();
         this.onChange = this.onChange.bind(this);
@@ -51,7 +46,6 @@ class Meeting extends React.Component {
             this.Chat.getUserMedia(id, room, socket);
             socket.emit('join', room);
         });
-
         for (let i = 0; i < this.state.langs.length; i++) {
             this.refs.select_language.options[i] = new Option(this.state.langs[i][0], i);
         }
@@ -59,34 +53,36 @@ class Meeting extends React.Component {
         this.updateCountry();
         this.refs.select_dialect.selectedIndex = 2;
 
+        //加入房間訊息
+        socket.on('joined', (room, clientID) => {
+            //console.log('This peer has joined room: ' + room + ' with client ID ' + clientID);
+        });
+
         socket.on('newParticipantB', (participantID) => {
             //接到新人加入的訊息時，檢查是否已有連線
             if (this.state.connections[participantID]) {
-                console.log('已存在刪除該連線，再重新連線');
-                MeetingActions.userLeft(participantID);
+                //console.log("Connections with" + participantID + "already exists");
+                return;
+            } else {
+                //主動建立連線
+                let isInitiator = true;
+                let peerConn = this.Chat.createPeerConnection(isInitiator, configuration, participantID, socket, MeetingActions);
+                peerConn.createOffer()
+                    .then((offer) => {
+                        peerConn.setLocalDescription(offer);
+                        socket.emit('offerRemotePeer', offer, this.localUserID, participantID);
+                    })
+                    .catch((e) => {
+                        console.log('發生錯誤了看這裡: ' + e);
+                    });
+                MeetingActions.newParticipant({ a: participantID, b: peerConn });
             }
-            //主動建立連線
-            let isInitiator = true;
-            let peerConn = this.Chat.createPeerConnection(isInitiator, configuration, participantID, socket);
-            MeetingActions.newParticipant({ a: participantID, b: peerConn });
-            peerConn.createOffer()
-                .then((offer) => {
-                    console.log('offer' + JSON.stringify(offer));
-                    peerConn.setLocalDescription(offer);
-                    socket.emit('offerRemotePeer', offer, this.localUserID, participantID);
-                })
-                .catch((e) => {
-                    console.log('發生錯誤了看這裡: ' + e);
-                });
-            //MeetingActions.addRemoteStreamURL
-            console.log(peerConn.getRemoteStreams());
         });
 
         socket.on('answer', (answer, sender) => {
-            console.log('answer' + JSON.stringify(answer));
+            //console.log('answer' + JSON.stringify(answer));
             //console.log('有收到answer喔!');
             this.state.connections[sender].setRemoteDescription(new RTCSessionDescription(answer));
-            //console.log(this.state.connections[sender].getRemoteStreams()[0]);
         });
 
         socket.on('onIceCandidateB', (candidate, sender) => {
@@ -97,36 +93,39 @@ class Meeting extends React.Component {
                     .catch((e) => {
                         console.log('發生錯誤了看這裡: ' + e);
                     });
-            } else {
-                MeetingActions.queueCandidate({ a: candidate, b: sender });
-                console.log('不!來不及加');
             }
+            MeetingActions.queueCandidate({ a: candidate, b: sender });
+            //console.log('不!來不及加');
         });
 
         socket.on('offer', (offer, sender) => {
             if (this.state.connections[sender]) {
-                MeetingActions.userLeft(sender);
+                console.log("Connections with" + sender + "already exists");
+                return;
+            } else {
+                //console.log('收到遠端的 offer，要建立連線並處理');
+                let isInitiator = false;
+                let peerConn = this.Chat.createPeerConnection(isInitiator, configuration, sender, socket, MeetingActions);
+                peerConn.setRemoteDescription(new RTCSessionDescription(offer))
+                    .then(() => {
+                        return peerConn.createAnswer();
+                    })
+                    .then((answer) => {
+                       // console.log('創建好本地端的 answer，要傳出去');
+                        peerConn.setLocalDescription(answer);
+                        socket.emit('answerRemotePeer', answer, this.localUserID, sender);
+                    })
+                    .catch((e) => {
+                        console.log('發生錯誤了看這裡:' + e);
+                    });
+                MeetingActions.newParticipant({ a: sender, b: peerConn });
             }
-            //console.log('收到遠端的 offer，要建立連線並處理');
-            let isInitiator = false;
-            let peerConn = this.Chat.createPeerConnection(isInitiator, configuration, sender, socket);
-            MeetingActions.newParticipant({ a: sender, b: peerConn });
-            peerConn.setRemoteDescription(new RTCSessionDescription(offer))
-                .then(() => {
-                    return peerConn.createAnswer();
-                })
-                .then((answer) => {
-                    console.log('創建好本地端的 ' + answer + '，要傳出去');
-                    peerConn.setLocalDescription(answer);
-                    socket.emit('answerRemotePeer', answer, this.localUserID, sender);
-                })
-                .catch((e) => {
-                    console.log('發生錯誤了看這裡:' + e);
-                });
         });
 
         socket.on('participantLeft', (participantID) => {
-            MeetingActions.userLeft(participantID);
+            if (this.state.remoteStreamURL[participantID]) {
+                delete this.state.remoteStreamURL[participantID];
+            }
         });
 
         socket.on('videoFromDB', (arrayBuffer) => {
@@ -144,13 +143,6 @@ class Meeting extends React.Component {
     }
 
     componentWillUnmount() {
-        window.onbeforeunload = function() {
-            var prevent = false;
-            events.emit("will-leave", {
-                preventDefault: function(reason) { prevent = reason }
-            });
-            if (prevent) return prevent;
-        }
         MeetingStore.unlisten(this.onChange);
     }
 
@@ -184,7 +176,7 @@ class Meeting extends React.Component {
         this.recorder.download()
     }
 
-    play() {
+    play() {o
         this.recorder.play()
         this.isPlaying = true;
     }
@@ -205,6 +197,8 @@ class Meeting extends React.Component {
             //選項      //值
             this.refs.select_dialect.options.add(new Option(list[i][1], list[i][0]));
         }
+        //this.refs.select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
+        this.Recognizer.setLanguage(this.refs.select_dialect);
     }
 
     onClick_recognizeToggle() {
@@ -254,7 +248,8 @@ class Meeting extends React.Component {
         if (keycode == 13) {
             myfield.form.submit();
             return false;
-        } else
+        }
+        else
             return true;
     }
 
@@ -268,12 +263,8 @@ class Meeting extends React.Component {
         });
 
         let remoteVideo = [];
-        for (let id in this.state.connections) {
-            if (this.state.remoteStreamURL[id]) {
-                remoteVideo.push(<div id='VideoUser'><video autoPlay={true}  id={"videoSrc"} width="220" key={id}><source src={this.state.remoteStreamURL[id]? this.state.remoteStreamURL[id]:'沒加到啦幹'} /></video></div>);
-            } else {
-                remoteVideo.push(<div id='VideoUser'><video autoPlay={true}  id={"videoSrc"} width="220" key={id}></video></div>);
-            }
+        for (let id in this.state.remoteStreamURL) {
+            remoteVideo.push(<video autoPlay={true} className={["userVideo"]} key={id}><source src={this.state.remoteStreamURL[id]} /></video>);
         }
 
         //0514 07:39 +1新增
@@ -285,14 +276,14 @@ class Meeting extends React.Component {
         <div id="me_sent">
             <div className="arrow_box1"><div id="meet_text">測試測試</div></div>
         </div>*/
-        /*let othertext = this.state.otherchattext;
-        ChatList.push(
+            /*let othertext = this.state.otherchattext;
+            ChatList.push(
 
-        );*/
+            );*/
 
-        if (this.state.otherchattext.Text != null) {
-            let othertext = this.state.otherchattext;
-            this.ChatList.push(
+        if(this.state.otherchattext.Text!=null){
+        let othertext = this.state.otherchattext;
+        this.ChatList.push(
                 <div id="number_sent">
                     <div id='number-userid'>{othertext.UserID}</div>
                     <div className="arrow_box3"><div id="number-text">{othertext.Text}</div></div>
@@ -302,17 +293,17 @@ class Meeting extends React.Component {
             this.state.otherchattext.Text = null;
         }
 
-        if (this.state.mychattext.Text != null) {
+        if(this.state.mychattext.Text!=null){
             let mytext = this.state.mychattext;
             this.ChatList.push(
-                <div id="me_sent">
+                    <div id="me_sent">
                         <div className="arrow_box4"><div id="me-text">{mytext.Text}</div></div>
                         <div id='me-sendtime'>{mytext.Sendtime}</div>
                     </div>
-            );
+                );
             this.state.mychattext.Text = null;
         }
-
+        
         //0514 07:39 End
         return (
             <div id='in'>
@@ -328,8 +319,6 @@ class Meeting extends React.Component {
 
                         <div id='yourvoice'>
                             <img id='voice_img' src={this.state.voiceimg}></img>
-                            緩衝值:{this.state.interim_result}<br></br>
-                            最終值:{this.state.final_result}
                         </div>
 
                         <div id="meet_chat_input">
@@ -343,6 +332,7 @@ class Meeting extends React.Component {
 
                     </div>
                     <div id="feature">
+
                         <div className="left">
                             <button id={this.state.recognizeImg} onClick={this.onClick_recognizeToggle.bind(this)} >{this.state.recognizeState}</button>
                             <button id={this.state.videoImg} onClick={this.onClick_videoToggle.bind(this)} >{this.state.videoState}</button>
@@ -353,7 +343,7 @@ class Meeting extends React.Component {
                             <button id="invite" onClick={this.onClick_invitepage}>邀請</button>
                             <button id={this.state.agendaImg} onClick={this.onClick_agenda.bind(this)}>議程清單</button>
                             <button id="brainstorming" onClick={this.state.invite}>腦力激盪</button>
-                            <button id="collaborative" >共筆</button>
+                            <button id="collaborative" onClick={this.state.invite}>共筆</button>
                         </div>
 
                         <div className="right">
@@ -362,11 +352,10 @@ class Meeting extends React.Component {
                     </div>
 
                     <div id="meet_main" ref="meet_main">
-
                         <div id={this.state.recordState} >
-                            <select name="language" id='language' ref='select_language' onClick={this.updateCountry.bind(this)}>
+                            <select name="language" id='language' ref='select_language'>
                             </select>
-                            <select name="dialect" id='dialect' ref='select_dialect' onClick={this.setLanguage.bind(this)}>
+                            <select name="dialect" id='dialect' ref='select_dialect'>
                             </select>
                         </div>
 
@@ -374,8 +363,12 @@ class Meeting extends React.Component {
                             <div id='meetpage'>網址：</div>
                             <textarea id='pagetext' >{this.meetpage}</textarea>
                         </div>
-                        <div id='VideoUser'><video id='videoSrc' width="220" src={this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹"} autoPlay={true}></video></div>
-                        {remoteVideo}
+
+                        <div id='video_box'>
+                             <video className='userVideo' src={this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹"} autoPlay={true}></video>
+                            {remoteVideo}
+                        </div>
+
                         <div id={this.state.agendaState}>
                             <div id='now_agenda'>議程清單</div>
                             <div id='agenda_content'>
@@ -386,6 +379,7 @@ class Meeting extends React.Component {
                             <input type='text' id='user_input' maxLength="25" ref='agenda_input' />
                             <button id='agenda_button' type="submit" onClick={this.onClick_addAgenda.bind(this)}>新增</button>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -393,3 +387,4 @@ class Meeting extends React.Component {
     }
 }
 export default Meeting;
+

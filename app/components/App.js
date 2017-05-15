@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route , browserHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom';
 import UserState from './UserState';
 import Header from './Header';
 import Menu from './Menu';
@@ -12,28 +12,33 @@ import socketIO from 'socket.io-client';
 
 
 let configuration = {
-  'iceServers': [{
-    'url': 'stun:stun.l.google.com:19302'
-  }, {
-    'url': 'stun:stun.services.mozilla.com'
-  }]
-};
-
+    'iceServers': [{
+        'url': 'stun:stun.l.google.com:19302'
+    }, {
+        'url': 'stun:stun.services.mozilla.com'
+    }]
+}
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    componentDidMount() {
+
+    }
     render() {
         return (
-        	<Router history={browserHistory}>
-	            <div>
-	                <UserState/>  
-	                <Header/>
+            <Router history={browserHistory}>
+                <div>
+                    <UserState/>  
+                    <Header/>
                     <Menu/>
                     <FriendList />
-	                <Route exact={true} path="/" component={Main}/>
+                    <Route exact={true} path="/" component={Main}/>
                     <Route exact={true} path='/chatroom' component={Chatroom} />
                     <Route exact={true} path='/meeting'  component={Meeting} />
                     <Route exact={true} path='/history' component={History} />
-	            </div>
+                </div>
             </Router>
         );
     }

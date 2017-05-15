@@ -30,21 +30,21 @@ class UserStateActions {
     }
 */
     getUserImg() {
-        fetch('https://140.123.175.95:8787/api/db/test')
-            .then((res) => {
-                if (res.ok) {
-                    return res.blob();
-                }
-                this.actions.getUserImgFail(res);
-            })
-            .then(blob => {
-                var objectURL = URL.createObjectURL(blob)
-                this.actions.getUserImgSuccess(objectURL);
-            })
-            .catch(
-            function (error) {
-                //alert(error);
-            })
+        // fetch('https://140.123.175.95:8787/api/db/test')
+        //     .then((res) => {
+        //         if (res.ok) {
+        //             return res.blob();
+        //         }
+        //         this.actions.getUserImgFail(res);
+        //     })
+        //     .then(blob => {
+        //         var objectURL = URL.createObjectURL(blob)
+        //         this.actions.getUserImgSuccess(objectURL);
+        //     })
+        //     .catch(
+        //     function (error) {
+        //         //alert(error);
+        //     })
     }
 /*
     getOnline() {

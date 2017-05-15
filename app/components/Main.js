@@ -29,33 +29,6 @@ class Main extends React.Component {
     handleJoin(e) {
         e.preventDefault();
         window.location = 'https://140.123.175.95:8787/meeting#' + this.refs.create_input.value;
-        //join();
-        //開始通訊
-
-
-
-
-        //開始錄影
-        //let recorder = Recorder.createNew(傳入錄影的東西);
-        // {
-        //     recordedVideo:this.refs.xxx, //播放錄影檔的DOM物件
-        //     recordButton:this.refs.xxx,  //開始錄影的按鈕
-        //     playButton:this.refs.xxx,  //撥放錄影的按鈕
-        //     downloadButton:this.refs.xxx  //下載錄影的按鈕
-        // }
-
-        //開始語音辨識
-        //let recognizer = Recognizer.createNew(new webkitSpeechRecognition(),傳入需求如下:
-        /*  在物件裡面加入ref屬性，就可以用:this.refs."ref的value"取的這個DOM物件
-            {
-                select_language:this.refs.xxx   //選擇語言的下拉式選單的DOM物件
-                select_dialect:this.refs.xxx   //選擇方言的下拉式選單的DOM物件
-                start_button:this.refs.xxx   //開始辨識的按鈕的DOM物件
-                final_span:this.refs.xxx   //要取得文字資料的物件
-                interim_span:this.refs.xxx  //要取得暫時文字資料的物件
-            }
-        */
-        //);
     }
 
     render() {

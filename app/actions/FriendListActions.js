@@ -3,7 +3,8 @@ import alt from '../alt';
 class FriendListActions {
   constructor() {
     this.generateActions(
-    	'getUserlist'
+    	'setRoomList',
+    	'setUserList'
     );
   } 
 
