@@ -34,13 +34,11 @@ let Recognition = {
         recognizer.toggleButtonOnclick = () => {
             if (MeetingStore.state.isRecognizing) {
                 recognition.stop();
-                alert('結束!')
                 MeetingActions.changeRecognizeState();
             } else {
                 final_transcript = '';
                 ignore_onend = false;
                 start_timestamp = event.timeStamp;
-                alert('開始!')
                 recognition.start();
                 MeetingActions.changeRecognizeState();
             }

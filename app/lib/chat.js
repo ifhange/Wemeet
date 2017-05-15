@@ -37,6 +37,7 @@ let Chat = {
                     }
                 })
                 .catch((e) => {
+                    socket.emit('newParticipantA', id, room);
                     alert("無法偵測到您的麥克風或鏡頭，請重新授權，WeMeet基於WebRTC連線，必需要其中");
                     window.location.replace('https://140.123.175.95:8787');
                 });

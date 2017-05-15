@@ -1,6 +1,8 @@
 import React from 'react';
 import MainStore from '../stores/MainStore';
 import MainActions from '../actions/MainActions';
+import FriendList from './FriendList';
+import IndexLogo from './IndexLogo';
 
 class Main extends React.Component {
     constructor(props) {
@@ -35,6 +37,9 @@ class Main extends React.Component {
 
     render() {
         return (
+            <div>
+                <IndexLogo />  
+                <FriendList />
             <div className="box-b">
                 <div id="in">
                     <div id="add_meet">
@@ -63,6 +68,7 @@ class Main extends React.Component {
                         <input type="submit" className="myButton" name="login" id="login" value="GO!" onClick={this.handleJoin.bind(this)}/>
                     </div>
                 </div>
+          </div>
           </div>
         );
     }

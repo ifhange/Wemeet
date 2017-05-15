@@ -33,9 +33,10 @@ class FriendList extends React.Component {
 
     render() {
         //好友名單上限資料
+
         let userList = this.state.userList.map((user) => {
             return (
-                <a href="chatroom">
+                <a href="#">
                     <div id="friend_person">
                         <div id="circle1">
                             <img id="friend_image" src="../img/logo_user.png"></img>
@@ -46,25 +47,23 @@ class FriendList extends React.Component {
             );
         })
 
-        // let user = this.state.userList.map((user) => {
-        //     return (
-        //         <a href="chatroom">
-        //             <div id="friend_person">
-        //                 <div id="circle1">
-        //                     <img id="friend_image" src="../img/logo_user.png"></img>
-        //                 </div>
-        //                 <div id="friend_name">{user}</div>
-        //             </div>
-        //         </a>
-        //     );
-        // })
+        let user = this.state.userList.map((user) => {
+            return (
+                <a href="#">
+                    <div id="friend_person">
+                        <div id="circle1">
+                            <img id="friend_image" src="../img/logo_user.png"></img>
+                        </div>
+                        <div id="friend_name">{user}</div>
+                    </div>
+                </a>
+            );
+        })
 
         return (
             <div id="friendlist">
                 <div id='friend_text'>正在線上：</div>
-                <div id='online'>
-                    {userList}
-                </div>
+                    {user}
             </div>
         );
     }

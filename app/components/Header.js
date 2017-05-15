@@ -29,7 +29,7 @@ class Header extends React.Component {
             <div id="status">
                 <div id="time">目前時間:{this.state.systemTime}</div>      
                 <div id="order">近期預約的會議：{this.state.orderTime}</div>
-                <div id="logo"><img src='/img/index_logo2.png'></img></div>
+                <a href='https://140.123.175.95:8787'><div id="logo"><img src='/img/index_logo2.png'></img></div></a>
             </div>
         );
     }

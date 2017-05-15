@@ -8,20 +8,20 @@ app.use(bodyParser.urlencoded({ type: 'image/*', extended: false, limit: '50mb' 
 app.use(bodyParser.json({ type: 'application/*', limit: '50mb' }));
 app.use(bodyParser.text({ type: 'text/plain' }));
 const fs = require('fs');
-const db = require('./app/lib/db.js');
+//const db = require('./app/lib/db.js');
 let roomList = [];
 let userInRoom = {};
 let onlineUser = {}; //在線用戶
 let onlineCount = 0; //在線用戶人數
 
 //HTTPS參數
-const option = {
-    key: fs.readFileSync('./public/certificate/privatekey.pem'),
-    cert: fs.readFileSync('./public/certificate/certificate.pem')
-};
+// const option = {
+//     key: fs.readFileSync('./public/certificate/privatekey.pem'),
+//     cert: fs.readFileSync('./public/certificate/certificate.pem')
+// };
 
 //對https Server內傳入express的處理物件
-const server = require('https').createServer(option, app);
+const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 server.listen(8787);
 console.log('已啟動伺服器!');
@@ -61,12 +61,13 @@ app.post("/api/db/save/video", (req, res) => {
 
 });
 
-app.get("/api/db/test", (req, res) => {
-    res.sendFile(__dirname + '/public/src/je.jpg');
-});
-
 io.on('connection', function(socket) {
     //console.log("接收到使用者: " + socket.id + " 的連線");
+
+    //0516 Update
+    socket.on('OpenBrain', function(list) {
+        socket.broadcast.emit('OpenBrainForAll', list);
+    });
 
     socket.on('addAgenda', function(list) {
         socket.broadcast.emit('addAgendaForAll', list);
@@ -98,11 +99,9 @@ io.on('connection', function(socket) {
         //將新的房間列表廣播出去
         socket.broadcast.emit('newRoom', roomList);
         socket.emit('newRoom', roomList);
-        //console.log('廣播房間名單囉!', roomList)
-
         socket.broadcast.emit('userList', userInRoom[room]);
         socket.emit('userList', userInRoom[room]);
-        //console.log('廣播使用者名單囉!', userInRoom[room])
+        console.log('廣播使用者名單囉!', userInRoom[room])
     });
 
     socket.on('leaveRoom', function(room) {
@@ -208,3 +207,4 @@ app.use(express.static(__dirname + '/public'));
 app.get('*', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
+
