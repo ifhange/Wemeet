@@ -4,11 +4,9 @@ import socket from '../socket';
 
 class MeetingStore {
     constructor() {
-        this.bindActions(MeetingActions);
-        
+        this.bindActions(MeetingActions);  
         this.connections = {}; //存放連線中的人的socket.id
         this.remoteStreamURL = {}; //存放連線中的人的stream
-
         this.videoIsReady = false;
         this.localStream = '';
         this.localVideoURL = '';

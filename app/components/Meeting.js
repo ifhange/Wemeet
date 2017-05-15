@@ -9,12 +9,11 @@ import socket from '../socket';
 import FriendList from './FriendList';
 import IndexLogo from './IndexLogo';
 import FriendListStore from '../stores/FriendListStore';
-import HistoryAction from '../actions/HistoryActions'
+import HistoryAction from '../actions/HistoryActions';
 
 
 
 socket.emit('id', 'ayy');
-
 let configuration = {
     'iceServers': [{
         'url': 'stun:stun.l.google.com:19302'
@@ -22,8 +21,8 @@ let configuration = {
         'url': 'stun:stun.services.mozilla.com'
     }]
 };
-let room = window.location.hash;
 
+let room = window.location.hash;
 
 class Meeting extends React.Component {
     constructor(props) {
@@ -35,7 +34,7 @@ class Meeting extends React.Component {
         this.onChange = this.onChange.bind(this);
         this.recorder = new Recorder();
         this.Chat = chat.createNew(MeetingActions, MeetingStore);
-        this.Recognizer = recognition.createNew(MeetingActions, MeetingStore);
+        this.Recognizer = recognition.createNew(MeetingActions, MeetingStore, socket, room);
         this.localUserID = "";
         // this.videoList = [];
         // this.tagList = {};
@@ -43,8 +42,11 @@ class Meeting extends React.Component {
         this.isPlaying = true;
         this.meetpage = window.location.href;
         this.ChatList = [];
+        this.room = window.location.hash;
     }
+    componentWillMount() {
 
+    }
     componentDidMount() {
         MeetingStore.listen(this.onChange);
 
@@ -74,10 +76,11 @@ class Meeting extends React.Component {
                 window.location.hash = room;
             }
             this.localUserID = id;
+            this.Recognizer.id = this.localUserID;
             this.Chat.getUserMedia(id, room, socket);
             socket.emit('join', room);
         });
-
+        MeetingStore.listen(this.onChange);
         for (let i = 0; i < this.state.langs.length; i++) {
             this.refs.select_language.options[i] = new Option(this.state.langs[i][0], i);
         }
@@ -206,7 +209,6 @@ class Meeting extends React.Component {
         this.isPlaying = false;
     }
 
-
     download() {
         this.recorder.download()
     }
@@ -253,9 +255,11 @@ class Meeting extends React.Component {
     }
 
     onClick_backtoindex() {
-        this.Recognizer.sendData();
-        HistoryAction.saveUserList(FriendListStore.state.userList);        
-        window.location = 'https://140.123.175.95:8787/history';
+        let txt;
+        let r = confirm("要結束會議，並檢視會議紀錄?");
+        if (r == true) {
+            window.location.href = 'https://140.123.175.95:8787/history' + room;
+        }
     }
 
     onClick_agenda() {
@@ -305,7 +309,6 @@ class Meeting extends React.Component {
     onClick_changeHat(){
         MeetingActions.RandomBrain();
     }
-
 
     render() {
         let agendalist = Object.keys(this.state.agendaList).map((keyName, keyIndex) => {
