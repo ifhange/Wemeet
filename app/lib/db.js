@@ -32,43 +32,38 @@ var conn = mongoose.createConnection('mongodb://admin:admin@140.123.175.95:9487/
 // get: function, defines a custom getter for this property using Object.defineProperty().
 // set: function, defines a custom setter for this property using
 
-let accountSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    photo: { type: mongoose.Schema.Types.Mixed },
-    name: { type: String, required: true },
-    birthday: Number,
-    email: String,
-    registerTime: { type: Number, required: true }
+let historySchema = new mongoose.Schema({
+    id: String,
+    time: String,
+    result: String
 });
-accountSchema.plugin(uniqueValidator);
-exports.Account = conn.model('Account', accountSchema);
+
+exports.History = conn.model('History', historySchema);
+
+// let onlineListSchema = new mongoose.Schema({
+//     onlineTime: { type: Number, required: true }
+// });
+// exports.OnlineList = conn.model('OnlineList', onlineListSchema);
 
 
-let onlineListSchema = new mongoose.Schema({
-    onlineTime: { type: Number, required: true }
-});
-exports.OnlineList = conn.model('OnlineList', onlineListSchema);
+// let meetingListSchema = new mongoose.Schema({
+//     hostUID: { type: String, required: true, unique: true },
+//     memberUID: { type: String, required: true, unique: true },
+//     startTime: { type: Number, required: true },
+//     endTime: { type: Number, required: true },
+//     meetingRecord: { type: String, required: true, unique: true }
+// });
+// meetingListSchema.plugin(uniqueValidator);
+// exports.MeetingList = conn.model('MeetingList', meetingListSchema);
 
 
-let meetingListSchema = new mongoose.Schema({
-    hostUID: { type: String, required: true, unique: true },
-    memberUID: { type: String, required: true, unique: true },
-    startTime: { type: Number, required: true },
-    endTime: { type: Number, required: true },
-    meetingRecord: { type: String, required: true, unique: true }
-});
-meetingListSchema.plugin(uniqueValidator);
-exports.MeetingList = conn.model('MeetingList', meetingListSchema);
-
-
-let sourceListSchema = new mongoose.Schema({
-    fileName: { type: String, required: true },
-    fileType: { type: String, required: true },
-    fileBuffer: { type: Buffer, required: true },
-    uploadTime: { type: String, required: true, }
-});
-exports.SourceList = conn.model('SourceList', sourceListSchema);
+// let sourceListSchema = new mongoose.Schema({
+//     fileName: { type: String, required: true },
+//     fileType: { type: String, required: true },
+//     fileBuffer: { type: Buffer, required: true },
+//     uploadTime: { type: String, required: true, }
+// });
+// exports.SourceList = conn.model('SourceList', sourceListSchema);
 
 
 //model用來定義操作資料的函數(create/remove/update/find/save...)

@@ -45,8 +45,7 @@ let Recognition = {
             }
         }
 
-        recognition.onstart = () => {
-        };
+        recognition.onstart = () => {};
 
         recognition.onerror = (event) => {
             if (event.error == 'no-speech') {
@@ -71,7 +70,7 @@ let Recognition = {
         };
 
         recognition.onend = () => {
-            if(MeetingStore.state.isRecognizing){
+            if (MeetingStore.state.isRecognizing) {
                 MeetingActions.changeRecognizeState();
             }
         };
@@ -84,20 +83,44 @@ let Recognition = {
                 recognition.stop();
                 return;
             }
-
+            let meetingHistory = [];
+            var date = new Date();
+            let time = data.getTime();
             for (let i = event.resultIndex; i < event.results.length; ++i) {
+                let time = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
                 if (event.results[i].isFinal) {
-                    final_transcript += event.results[i][0].transcript;
+                    meetingHistory.push({
+                        id: '這是假的名字',
+                        time: time,
+                        result: event.results[i][0].transcript
+                    })
+                    final_transcript = event.results[i][0].transcript;
                 } else {
                     interim_transcript += event.results[i][0].transcript;
                 }
             }
-            
+
             MeetingActions.updateResult({
                 temp: interim_transcript,
                 final: final_transcript
             });
+
         };
+
+        recognizer.sendData = () => {
+            var xhr = new XMLHttpRequest();
+            var url = "https://140.123.175.95:8787/api/history";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-type", "application/json");
+            var data = JSON.stringify({
+                "id": id,
+                "time": time,
+                "result": result
+            });
+            xhr.send(data);
+            console.log(123);
+        }
+
         return recognizer;
     }
 };

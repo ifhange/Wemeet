@@ -13,12 +13,12 @@ class FriendListStore {
 
     setUserList(data) {
         this.userList = data;
-        console.log(data,this.userList);
+        //console.log(data,this.userList);
     }
 
     setRoomList(data){
     	this.roomList = data;
-    	console.log(data,this.roomList);
+    	//console.log(data,this.roomList);
     }
 
 }

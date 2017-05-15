@@ -6,6 +6,8 @@ import chat from '../lib/chat';
 import recognition from '../lib/recognition';
 import Recorder from '../lib/recorder';
 import socket from '../socket';
+import FriendListStore from '../stores/FriendListStore';
+import HistoryAction from '../actions/HistoryActions'
 
 
 socket.emit('id', 'ayy');
@@ -126,6 +128,7 @@ class Meeting extends React.Component {
         });
 
         socket.on('participantLeft', (participantID) => {
+            this.recorder.downloadRemoteVideo()
             MeetingActions.userLeft(participantID);
         });
 
@@ -226,7 +229,9 @@ class Meeting extends React.Component {
     }
 
     onClick_backtoindex() {
-        window.location = 'https://140.123.175.95:8787/';
+        this.Recognizer.sendData();
+        HistoryAction.saveUserList(FriendListStore.state.userList);        
+        window.location = 'https://140.123.175.95:8787/history';
     }
 
     onClick_agenda() {
@@ -374,7 +379,7 @@ class Meeting extends React.Component {
                             <div id='meetpage'>網址：</div>
                             <textarea id='pagetext' >{this.meetpage}</textarea>
                         </div>
-                        <div id='VideoUser'><video id='videoSrc' width="220" src={this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹"} autoPlay={true}></video></div>
+                        <div id='VideoUser'><video id='videoSrc' muted="muted" width="220" src={this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹"} autoPlay={true}></video></div>
                         {remoteVideo}
                         <div id={this.state.agendaState}>
                             <div id='now_agenda'>議程清單</div>

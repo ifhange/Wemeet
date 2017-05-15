@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ type: 'image/*', extended: false, limit: '50mb' 
 app.use(bodyParser.json({ type: 'application/*', limit: '50mb' }));
 app.use(bodyParser.text({ type: 'text/plain' }));
 const fs = require('fs');
-//const db = require('./app/lib/db.js');
+const db = require('./app/lib/db.js');
 let roomList = [];
 let userInRoom = {};
 let onlineUser = {}; //在線用戶
@@ -29,44 +29,24 @@ console.log('已啟動伺服器!');
 
 
 //資料庫「查詢」部分
-app.get("/api/db/read/account", (req, res) => {
-    db.Account.find({}, function(err, data) {
+app.get("/api/db/history", (req, res) => {
+    db.History.find({}, function(err, data) {
         if (err) throw err;
         res.send(data);
-    })
-});
-app.get("/api/db/read/onlineList", (req, res) => {
-    db.OnlineList.find({}, function(err, data) {
-        if (err) throw err;
-        res.send(data);
-    })
-});
-app.get("/api/db/read/meetingList", (req, res) => {
-    db.MeetingList.find({}, function(err, data) {
-        if (err) throw err;
-        res.send(data);
-    })
-});
-app.get("/api/db/read/sourceList", (req, res) => {
-    db.SourceList.find({}, function(err, data) {
-        if (err) throw err;
-        res.send(data);
-    })
+    });
 });
 
 //資料庫「新增」部分
-app.post("/api/db/create/register", (req, res) => {
-    var { username, password, name, birthday, email, registerTime } = req.body;
-    db.Account.create({
-        username: username,
-        password: password,
-        name: name,
-        birthday: birthday,
-        email: email,
-        registerTime: registerTime
+app.post("/api/db/history", (req, res) => {
+    let { id, time, result } = req.body;
+    db.History.create({
+        id: id,
+        time: time,
+        result: result
     }, function(err, data) {
-        if (err) console.log(err);
-        console.log(data);
+        if (err) {
+            console.log(err);
+        }
     });
 });
 
@@ -84,8 +64,6 @@ app.post("/api/db/save/video", (req, res) => {
 app.get("/api/db/test", (req, res) => {
     res.sendFile(__dirname + '/public/src/je.jpg');
 });
-
-
 
 io.on('connection', function(socket) {
     //console.log("接收到使用者: " + socket.id + " 的連線");
@@ -120,33 +98,34 @@ io.on('connection', function(socket) {
         //將新的房間列表廣播出去
         socket.broadcast.emit('newRoom', roomList);
         socket.emit('newRoom', roomList);
-        console.log('廣播房間名單囉!', roomList)
+        //console.log('廣播房間名單囉!', roomList)
 
         socket.broadcast.emit('userList', userInRoom[room]);
         socket.emit('userList', userInRoom[room]);
-        console.log('廣播使用者名單囉!', userInRoom[room])
+        //console.log('廣播使用者名單囉!', userInRoom[room])
     });
 
     socket.on('leaveRoom', function(room) {
         //當使用者離開聊天室，就將他移出房間
         socket.leave(room);
+        console.log('有人離開ㄌ', userInRoom[room])
         if (userInRoom[room]) {
             //如果那間房存在，就從裡面把這個人移除
-            userInRoom[room].slice(1, userInRoom[room].indexOf(socket.id));
+            userInRoom[room].splice(userInRoom[room].indexOf(socket.id), 1);
         }
         if (!userInRoom[room]) {
             //如果房間裏面都沒人了，就把房間刪掉
-            roomList.slice(1, roomList.indexOf(room));
+            roomList.splice(roomList.indexOf(room), 1);
         }
         //將新的房間名單傳出去
         socket.broadcast.emit('newRoom', roomList);
         socket.emit('newRoom', roomList);
-        console.log('廣播房間名單囉!', roomList)
+        //console.log('廣播房間名單囉!', roomList)
 
         //再使用者加入房間的時候，把把房內人員名單傳給使用者
         socket.broadcast.emit('userList', userInRoom[room]);
         socket.emit('userList', userInRoom[room]);
-        console.log('廣播使用者名單囉!', userInRoom[room])
+        //console.log('廣播使用者名單囉!', userInRoom[room])
     });
 
     socket.on('newParticipantA', function(msgSender, room) {
@@ -170,8 +149,29 @@ io.on('connection', function(socket) {
     });
 
     socket.on('disconnect', function() {
-        //console.log("使用者: " + socket.id + " 離開了");
+        let room = socket.rooms
+            //console.log("使用者: " + socket.id + " 離開了");
         socket.broadcast.emit('participantLeft', socket.id);
+        //當使用者離開聊天室，就將他移出房間
+        socket.leave(room);
+        //console.log('有人離開ㄌ',userInRoom[room])
+        if (userInRoom[room]) {
+            //如果那間房存在，就從裡面把這個人移除
+            userInRoom[room].splice(userInRoom[room].indexOf(socket.id), 1);
+        }
+        if (!userInRoom[room]) {
+            //如果房間裏面都沒人了，就把房間刪掉
+            roomList.splice(roomList.indexOf(room), 1);
+        }
+        //將新的房間名單傳出去
+        socket.broadcast.emit('newRoom', roomList);
+        socket.emit('newRoom', roomList);
+        //console.log('廣播房間名單囉!', roomList)
+
+        //再使用者加入房間的時候，把把房內人員名單傳給使用者
+        socket.broadcast.emit('userList', userInRoom[room]);
+        socket.emit('userList', userInRoom[room]);
+        //console.log('廣播使用者名單囉!', userInRoom[room])
     });
 
     socket.on('requestVideoFromUser', function(sender) {

@@ -9087,8 +9087,10 @@ exports.default = _alt2.default.createActions(HeaderActions);
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _alt = __webpack_require__(7);
 
@@ -9098,15 +9100,37 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var HistoryActions = function HistoryActions() {
-  _classCallCheck(this, HistoryActions);
+var HistoryActions = function () {
+    function HistoryActions() {
+        _classCallCheck(this, HistoryActions);
 
-  this.generateActions();
-}
+        this.generateActions('getHistorySuccess', 'getHistoryFail');
+    }
 
-//尚未完成
+    _createClass(HistoryActions, [{
+        key: 'getHistory',
+        value: function getHistory() {
+            var xhr = new XMLHttpRequest();
+            var url = "https://140.123.175.95:8787/api/history";
+            xhr.open("GET", url, true);
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.responseText == 'success') {
+                        this.actions.getHistorySuccess(xhr.response);
+                    } else {
+                        this.actions.getHistoryFail(xhr.response);
+                    }
+                } else {
+                    this.actions.getHistoryFail(xhr.statusText);
+                }
+            };
+            xhr.send(data);
+        }
+    }]);
 
-;
+    return HistoryActions;
+}();
 
 exports.default = _alt2.default.createActions(HistoryActions);
 
@@ -9132,7 +9156,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var MainActions = function MainActions() {
     _classCallCheck(this, MainActions);
 
-    this.generateActions();
+    this.generateActions('saveRoomName');
 };
 
 exports.default = _alt2.default.createActions(MainActions);
@@ -15834,6 +15858,10 @@ var _socket = __webpack_require__(44);
 
 var _socket2 = _interopRequireDefault(_socket);
 
+var _MainStore = __webpack_require__(150);
+
+var _MainStore2 = _interopRequireDefault(_MainStore);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -15882,28 +15910,7 @@ var FriendList = function (_React$Component) {
         key: 'render',
         value: function render() {
             //好友名單上限資料
-            var room = this.state.roomList.map(function (room) {
-                return _react2.default.createElement(
-                    'a',
-                    { href: 'chatroom' },
-                    _react2.default.createElement(
-                        'div',
-                        { id: 'friend_person' },
-                        _react2.default.createElement(
-                            'div',
-                            { id: 'circle1' },
-                            _react2.default.createElement('img', { id: 'friend_image', src: '../img/logo_user.png' })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { id: 'friend_name' },
-                            room
-                        )
-                    )
-                );
-            });
-
-            var user = this.state.userList.map(function (user) {
+            var userList = this.state.userList.map(function (user) {
                 return _react2.default.createElement(
                     'a',
                     { href: 'chatroom' },
@@ -15924,6 +15931,19 @@ var FriendList = function (_React$Component) {
                 );
             });
 
+            // let user = this.state.userList.map((user) => {
+            //     return (
+            //         <a href="chatroom">
+            //             <div id="friend_person">
+            //                 <div id="circle1">
+            //                     <img id="friend_image" src="../img/logo_user.png"></img>
+            //                 </div>
+            //                 <div id="friend_name">{user}</div>
+            //             </div>
+            //         </a>
+            //     );
+            // })
+
             return _react2.default.createElement(
                 'div',
                 { id: 'friendlist' },
@@ -15935,7 +15955,7 @@ var FriendList = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     { id: 'online' },
-                    user.length > 1 ? user : room
+                    userList
                 )
             );
         }
@@ -16050,7 +16070,7 @@ exports.default = Header;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -16076,372 +16096,117 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var History = function (_React$Component) {
-  _inherits(History, _React$Component);
+    _inherits(History, _React$Component);
 
-  function History(props) {
-    _classCallCheck(this, History);
+    function History(props) {
+        _classCallCheck(this, History);
 
-    var _this = _possibleConstructorReturn(this, (History.__proto__ || Object.getPrototypeOf(History)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (History.__proto__ || Object.getPrototypeOf(History)).call(this, props));
 
-    _this.state = _HistoryStore2.default.getState();
-    _this.onChange = _this.onChange.bind(_this);
-    return _this;
-  }
-
-  _createClass(History, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      _HistoryStore2.default.listen(this.onChange);
+        _this.state = _HistoryStore2.default.getState();
+        _this.onChange = _this.onChange.bind(_this);
+        return _this;
     }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      _HistoryStore2.default.unlisten(this.onChange);
-    }
-  }, {
-    key: 'onChange',
-    value: function onChange(state) {
-      this.setState(state);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'box-b' },
-        _react2.default.createElement(
-          'div',
-          { id: 'in' },
-          _react2.default.createElement(
-            'div',
-            { id: 'meet_list' },
-            _react2.default.createElement(
-              'table',
-              { id: 'list' },
-              _react2.default.createElement(
-                'tbody',
-                null,
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u540D\u7A31\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    'WeMeet'
-                  )
-                ),
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u9577\u5EA6\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '3\u5C0F\u664220\u5206\u9418'
-                  )
-                ),
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u6210\u54E1\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u4F73\u6021\u3001\u5A01\u541B\u3001\u6210\u8CA1\u3001\u9A30\u8F1D'
-                  )
-                ),
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u7D00\u9304\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u9EDE\u6211\u4E0B\u8F09'
-                  )
-                )
-              )
-            ),
-            _react2.default.createElement(
-              'table',
-              { id: 'list' },
-              _react2.default.createElement(
-                'tbody',
-                null,
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u540D\u7A31\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    'WeMeet'
-                  )
-                ),
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u9577\u5EA6\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '3\u5C0F\u664220\u5206\u9418'
-                  )
-                ),
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u6210\u54E1\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u4F73\u6021\u3001\u5A01\u541B\u3001\u6210\u8CA1\u3001\u9A30\u8F1D'
-                  )
-                ),
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u7D00\u9304\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u9EDE\u6211\u4E0B\u8F09'
-                  )
-                )
-              )
-            ),
-            _react2.default.createElement(
-              'table',
-              { id: 'list' },
-              _react2.default.createElement(
-                'tbody',
-                null,
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u540D\u7A31\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    'WeMeet'
-                  )
-                ),
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u9577\u5EA6\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '3\u5C0F\u664220\u5206\u9418'
-                  )
-                ),
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u6210\u54E1\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u4F73\u6021\u3001\u5A01\u541B\u3001\u6210\u8CA1\u3001\u9A30\u8F1D'
-                  )
-                ),
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u7D00\u9304\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u9EDE\u6211\u4E0B\u8F09'
-                  )
-                )
-              )
-            ),
-            _react2.default.createElement(
-              'table',
-              { id: 'list' },
-              _react2.default.createElement(
-                'tbody',
-                null,
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u540D\u7A31\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    'WeMeet'
-                  )
-                ),
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u9577\u5EA6\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '3\u5C0F\u664220\u5206\u9418'
-                  )
-                ),
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u6210\u54E1\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u4F73\u6021\u3001\u5A01\u541B\u3001\u6210\u8CA1\u3001\u9A30\u8F1D'
-                  )
-                ),
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u7D00\u9304\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u9EDE\u6211\u4E0B\u8F09'
-                  )
-                )
-              )
-            ),
-            _react2.default.createElement(
-              'table',
-              { id: 'list' },
-              _react2.default.createElement(
-                'tbody',
-                null,
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u540D\u7A31\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    'WeMeet'
-                  )
-                ),
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u9577\u5EA6\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '3\u5C0F\u664220\u5206\u9418'
-                  )
-                ),
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u6210\u54E1\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u4F73\u6021\u3001\u5A01\u541B\u3001\u6210\u8CA1\u3001\u9A30\u8F1D'
-                  )
-                ),
-                _react2.default.createElement(
-                  'tr',
-                  null,
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u6703\u8B70\u7D00\u9304\uFF1A'
-                  ),
-                  _react2.default.createElement(
-                    'td',
-                    null,
-                    '\u9EDE\u6211\u4E0B\u8F09'
-                  )
-                )
-              )
-            )
-          )
-        )
-      );
-    }
-  }]);
 
-  return History;
+    _createClass(History, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            _HistoryStore2.default.listen(this.onChange);
+            _HistoryActions2.default.getHistory();
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            _HistoryStore2.default.unlisten(this.onChange);
+        }
+    }, {
+        key: 'onChange',
+        value: function onChange(state) {
+            this.setState(state);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'box-b' },
+                _react2.default.createElement(
+                    'div',
+                    { id: 'in' },
+                    _react2.default.createElement(
+                        'div',
+                        { id: 'meet_list' },
+                        _react2.default.createElement(
+                            'table',
+                            { id: 'list' },
+                            _react2.default.createElement(
+                                'tbody',
+                                null,
+                                _react2.default.createElement(
+                                    'tr',
+                                    null,
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        '\u6703\u8B70\u540D\u7A31\uFF1A'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'WeMeet'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'tr',
+                                    null,
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        '\u6703\u8B70\u9577\u5EA6\uFF1A'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        '3\u5C0F\u664220\u5206\u9418'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'tr',
+                                    null,
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        '\u6703\u8B70\u6210\u54E1\uFF1A'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        '\u4F73\u6021\u3001\u5A01\u541B\u3001\u6210\u8CA1\u3001\u9A30\u8F1D'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'tr',
+                                    null,
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        '\u6703\u8B70\u7D00\u9304\uFF1A'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        '\u9EDE\u6211\u4E0B\u8F09'
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return History;
 }(_react2.default.Component);
 
 exports.default = History;
@@ -16508,9 +16273,11 @@ var Main = function (_React$Component) {
             this.setState(state);
         }
     }, {
-        key: 'handleCreate',
-        value: function handleCreate(e) {
+        key: 'handleRoomName',
+        value: function handleRoomName(e) {
             e.preventDefault();
+            var roomName = this.refs.create_input.value;
+            _MainActions2.default.saveName(roomName);
             window.location = 'https://140.123.175.95:8787/meeting#' + this.refs.create_input.value;
         }
     }, {
@@ -16556,7 +16323,7 @@ var Main = function (_React$Component) {
                                 )
                             )
                         ),
-                        _react2.default.createElement('input', { type: 'submit', className: 'myButton', name: 'login', id: 'login', value: 'GO!', onClick: this.handleCreate.bind(this) })
+                        _react2.default.createElement('input', { type: 'submit', className: 'myButton', name: 'login', id: 'login', value: 'GO!', onClick: this.handleRoomName.bind(this) })
                     ),
                     _react2.default.createElement(
                         'div',
@@ -16884,7 +16651,8 @@ var Meeting = function (_React$Component) {
     }, {
         key: 'onClick_backtoindex',
         value: function onClick_backtoindex() {
-            window.location = 'https://140.123.175.95:8787/';
+            this.Recognizer.sendData();
+            window.location = 'https://140.123.175.95:8787/history';
         }
     }, {
         key: 'onClick_agenda',
@@ -17153,7 +16921,7 @@ var Meeting = function (_React$Component) {
                         _react2.default.createElement(
                             'div',
                             { id: 'VideoUser' },
-                            _react2.default.createElement('video', { id: 'videoSrc', width: '220', src: this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹", autoPlay: true })
+                            _react2.default.createElement('video', { id: 'videoSrc', muted: 'muted', width: '220', src: this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹", autoPlay: true })
                         ),
                         remoteVideo,
                         _react2.default.createElement(
@@ -17391,9 +17159,8 @@ var Chat = {
                     });
                 }
             }).catch(function (e) {
-                console.log('沒有影像但是有聲音!');
-                MeetingActions.changeVideoReadyState();
-                socket.emit('newParticipantA', id, room);
+                alert("無法偵測到您的麥克風或鏡頭，請重新授權，WeMeet基於WebRTC連線，必需要其中");
+                window.location.replace('https://140.123.175.95:8787');
             });
         };
 
@@ -17413,7 +17180,7 @@ var Chat = {
             if (localStream) {
                 peerConn.addStream(localStream);
             }
-            peerConn.getRemoteStreams()[0];
+
             for (var id in MeetingStore.state.candidateQueue) {
                 console.log('加回來');
                 if (id == remotePeer) {
@@ -17694,10 +17461,18 @@ var Recognition = {
                 recognition.stop();
                 return;
             }
-
+            var meetingHistory = [];
+            var date = new Date();
+            var time = data.getTime();
             for (var i = event.resultIndex; i < event.results.length; ++i) {
+                var _time = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
                 if (event.results[i].isFinal) {
-                    final_transcript += event.results[i][0].transcript;
+                    meetingHistory.push({
+                        id: '這是假的名字',
+                        time: _time,
+                        result: event.results[i][0].transcript
+                    });
+                    final_transcript = event.results[i][0].transcript;
                 } else {
                     interim_transcript += event.results[i][0].transcript;
                 }
@@ -17708,6 +17483,21 @@ var Recognition = {
                 final: final_transcript
             });
         };
+
+        recognizer.sendData = function () {
+            var xhr = new XMLHttpRequest();
+            var url = "https://140.123.175.95:8787/api/history";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-type", "application/json");
+            var data = JSON.stringify({
+                "id": id,
+                "time": time,
+                "result": result
+            });
+            xhr.send(data);
+            console.log(123);
+        };
+
         return recognizer;
     }
 };
@@ -17930,13 +17720,13 @@ var FriendListStore = function () {
         key: 'setUserList',
         value: function setUserList(data) {
             this.userList = data;
-            console.log(data, this.userList);
+            //console.log(data,this.userList);
         }
     }, {
         key: 'setRoomList',
         value: function setRoomList(data) {
             this.roomList = data;
-            console.log(data, this.roomList);
+            //console.log(data,this.roomList);
         }
     }]);
 
@@ -18014,7 +17804,7 @@ exports.default = _alt2.default.createStore(HeaderStore);
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -18032,22 +17822,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var HistoryStore = function () {
-  function HistoryStore() {
-    _classCallCheck(this, HistoryStore);
-  }
-
-  _createClass(HistoryStore, [{
-    key: 'constrcutor',
-    value: function constrcutor() {
-      this.bindActions(_HistoryActions2.default);
-      //還未完成
+    function HistoryStore() {
+        _classCallCheck(this, HistoryStore);
     }
 
-    //還未完成
+    _createClass(HistoryStore, [{
+        key: 'constrcutor',
+        value: function constrcutor() {
+            this.bindActions(_HistoryActions2.default);
+            this.historyList = [];
+        }
+    }, {
+        key: 'getHistorySuccess',
+        value: function getHistorySuccess(respond) {
+            console.log(respond);
+        }
+    }, {
+        key: 'getHistoryFail',
+        value: function getHistoryFail(respond) {
+            console.log(respond);
+        }
+    }]);
 
-  }]);
-
-  return HistoryStore;
+    return HistoryStore;
 }();
 
 exports.default = _alt2.default.createStore(HistoryStore);
@@ -18060,7 +17857,7 @@ exports.default = _alt2.default.createStore(HistoryStore);
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -18078,22 +17875,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var MainStore = function () {
-  function MainStore() {
-    _classCallCheck(this, MainStore);
-  }
-
-  _createClass(MainStore, [{
-    key: 'constrcutor',
-    value: function constrcutor() {
-      this.bindActions(_MainActions2.default);
-      //還未完成
+    function MainStore() {
+        _classCallCheck(this, MainStore);
     }
 
-    //還未完成
+    _createClass(MainStore, [{
+        key: 'constrcutor',
+        value: function constrcutor() {
+            this.bindActions(_MainActions2.default);
+            this.roomName = '';
+        }
+    }, {
+        key: 'saveRoomName',
+        value: function saveRoomName(name) {
+            this.roomName = name;
+        }
+    }]);
 
-  }]);
-
-  return MainStore;
+    return MainStore;
 }();
 
 exports.default = _alt2.default.createStore(MainStore);
