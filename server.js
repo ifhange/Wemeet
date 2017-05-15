@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ type: 'image/*', extended: false, limit: '50mb' 
 app.use(bodyParser.json({ type: 'application/*', limit: '50mb' }));
 app.use(bodyParser.text({ type: 'text/plain' }));
 const fs = require('fs');
-const db = require('./app/lib/db.js');
+//const db = require('./app/lib/db.js');
 let roomList = [];
 let userInRoom = {};
 let onlineUser = {}; //在線用戶
@@ -63,6 +63,11 @@ app.post("/api/db/save/video", (req, res) => {
 
 io.on('connection', function(socket) {
     //console.log("接收到使用者: " + socket.id + " 的連線");
+
+    //0516 Update
+    socket.on('OpenBrain', function(list) {
+        socket.broadcast.emit('OpenBrainForAll', list);
+    });
 
     socket.on('addAgenda', function(list) {
         socket.broadcast.emit('addAgendaForAll', list);
@@ -184,3 +189,4 @@ app.use(express.static(__dirname + '/public'));
 app.get('*', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
+

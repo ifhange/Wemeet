@@ -47,6 +47,27 @@ class Meeting extends React.Component {
 
     componentDidMount() {
         MeetingStore.listen(this.onChange);
+
+        //0516 更新系統時間
+        MeetingActions.getSystemTime();
+        this.timer = setInterval(MeetingActions.getSystemTime,1000);
+
+        //0516 更新腦力激盪
+        socket.on('OpenBrainForAll', function(agenda){
+            console.log(agenda);
+            MeetingActions.changeBrainstormingState();
+        });
+
+
+        //0516 更新消失的議程
+        socket.on('addAgendaForAll', function(agenda){
+            MeetingActions.listenAgenda(agenda);
+        });
+
+        socket.on('deleteAgendaForAll', function(agenda){
+            MeetingActions.listenAgenda(agenda);
+        });
+
         socket.on('success', (id) => {
             if (!room) {
                 room = Math.floor((1 + Math.random()) * 1e16).toString(16).substring(8);
@@ -149,6 +170,7 @@ class Meeting extends React.Component {
     }
 
     componentWillUnmount() {
+        clearInterval(this.timer);
         window.onbeforeunload = function() {
             var prevent = false;
             events.emit("will-leave", {
@@ -274,6 +296,16 @@ class Meeting extends React.Component {
         }
     }
 
+    onClick_BrainToggle() {
+        MeetingActions.changeBrainstormingState();
+        MeetingActions.get
+        socket.emit('OpenBrain', this.brainImg);
+    }
+
+    onClick_changeHat(){
+        MeetingActions.RandomBrain();
+    }
+
 
     render() {
         let agendalist = Object.keys(this.state.agendaList).map((keyName, keyIndex) => {
@@ -286,9 +318,9 @@ class Meeting extends React.Component {
         let remoteVideo = [];
         for (let id in this.state.connections) {
             if (this.state.remoteStreamURL[id]) {
-                remoteVideo.push(<div id='VideoUser'><video autoPlay={true}  id={"videoSrc"} width="220" key={id}><source src={this.state.remoteStreamURL[id]? this.state.remoteStreamURL[id]:'沒加到啦幹'} /></video></div>);
+                remoteVideo.push(<div id='VideoUser-audio-on'><video autoPlay={true}  id={"videoSrc"} width="220" key={id}><source src={this.state.remoteStreamURL[id]? this.state.remoteStreamURL[id]:'沒加到啦幹'} /></video></div>);
             } else {
-                remoteVideo.push(<div id='VideoUser'><video autoPlay={true}  id={"videoSrc"} width="220" key={id}></video></div>);
+                remoteVideo.push(<div id='VideoUser-audio-on'><video autoPlay={true}  id={"videoSrc"} width="220" key={id}></video></div>);
             }
         }
 
@@ -314,6 +346,14 @@ class Meeting extends React.Component {
             );
             this.state.mychattext.Text = null;
         }
+
+        let brainSuppot = this.state.ColorHat.map((value) => {
+            return (
+                <li>{value}</li>
+            );
+        });
+
+
         //0514 07:39 End
         return (
             <div >
@@ -348,13 +388,15 @@ class Meeting extends React.Component {
                         </div>
 
                         <div className="center">
-                            <button id="invite"  ononClick={this.onClick_invitepage}>邀請</button>
+                            <button id="invite"  onClick={this.onClick_invitepage}>邀請</button>
                             <button id={this.state.agendaImg} onClick={this.onClick_agenda.bind(this)}>議程清單</button>
-                            <button id="brainstorming" onClick={this.state.invite}>腦力激盪</button>
+                            <button id={this.state.brainImg} onClick={this.onClick_BrainToggle.bind(this)}>腦力激盪</button>
                             <button id="collaborative" >共筆</button>
+                            <div id='systemTime'>系統時間：{this.state.systemTime}</div>
                         </div>
 
                         <div className="right">
+
                             <button id="end" onClick={this.onClick_backtoindex}>結束會議</button>
                         </div>
                     </div>
@@ -372,7 +414,7 @@ class Meeting extends React.Component {
                             <div id='meetpage'>網址：</div>
                             <textarea id='pagetext' >{this.meetpage}</textarea>
                         </div>
-                        <div id='VideoUser'><video id='videoSrc' width="220" muted="muted" src={this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹"} autoPlay={true}></video></div>
+                        <div id={this.state.VideoAudio}><video id='videoSrc' width="220" muted="muted" src={this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹"} autoPlay={true}></video></div>
                         {remoteVideo}
 
                         <div id={this.state.agendaState}>
@@ -385,6 +427,24 @@ class Meeting extends React.Component {
                             <input type='text' id='user_input' maxLength="25" ref='agenda_input' />
                             <button id='agenda_button' type="submit" onClick={this.onClick_addAgenda.bind(this)}>新增</button>
                         </div>
+
+                        <div id={this.state.BrainState}>
+                            <div id='BrainText'>腦力激盪</div>
+                            <div id='BraomSupprot'>
+                                玩法說明：<br/>
+                                1. 每個與會者都擁有一頂顏色的帽子<br/>
+                                2. 每頂帽子都扮演著不同的角色<br/>
+                                3. 請根據個各帽子說明文字，盡力扮演其角色
+                            </div>
+                            <div id='BrainHat'>你目前所戴的帽子<br/><img src={this.state.BrainHat}></img></div>
+                            <div id='BarinHatText'>
+                                {brainSuppot}
+                            </div>
+                            <button className='btn' onClick={this.onClick_changeHat.bind(this)}>
+                                全體換帽子
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </div>

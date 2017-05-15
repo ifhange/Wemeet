@@ -36,7 +36,7 @@ class FriendList extends React.Component {
 
         let userList = this.state.userList.map((user) => {
             return (
-                <a href="chatroom">
+                <a href="#">
                     <div id="friend_person">
                         <div id="circle1">
                             <img id="friend_image" src="../img/logo_user.png"></img>
@@ -49,7 +49,7 @@ class FriendList extends React.Component {
 
         let user = this.state.userList.map((user) => {
             return (
-                <a href="chatroom">
+                <a href="#">
                     <div id="friend_person">
                         <div id="circle1">
                             <img id="friend_image" src="../img/logo_user.png"></img>
