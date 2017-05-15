@@ -2,6 +2,7 @@ import React from 'react';
 import FriendListStore from '../stores/FriendListStore';
 import FriendListActions from '../actions/FriendListActions';
 import socket from '../socket';
+import MainStore from '../stores/MainStore';
 
 class FriendList extends React.Component {
     constructor(props) {
@@ -32,14 +33,15 @@ class FriendList extends React.Component {
 
     render() {
         //好友名單上限資料
-        let room = this.state.roomList.map((room) => {
+
+        let userList = this.state.userList.map((user) => {
             return (
                 <a href="chatroom">
                     <div id="friend_person">
                         <div id="circle1">
                             <img id="friend_image" src="../img/logo_user.png"></img>
                         </div>
-                        <div id="friend_name">{room}</div>
+                        <div id="friend_name">{user}</div>
                     </div>
                 </a>
             );

@@ -2,12 +2,23 @@ import alt from '../alt';
 import HistoryActions from '../actions/HistoryActions';
 
 class HistoryStore {
-  constrcutor(){
-    this.bindActions(HistoryActions);
-    //還未完成
-  }
+    constrcutor() {
+        this.bindActions(HistoryActions);
+        this.historyList = [];
+        this.userList = [];
+    }
+    getHistorySuccess(respond) {
+    	console.log(respond)
+    	this.historyList.push()
+    }
 
-  //還未完成
+    getHistoryFail(respond) {
+    	console.log(respond)
+    }
+
+    saveUserList(list){
+    	this.userList = list;
+    }
 
 }
 

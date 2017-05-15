@@ -8,6 +8,9 @@ import Recorder from '../lib/recorder';
 import socket from '../socket';
 import FriendList from './FriendList';
 import IndexLogo from './IndexLogo';
+import FriendListStore from '../stores/FriendListStore';
+import HistoryAction from '../actions/HistoryActions'
+
 
 
 socket.emit('id', 'ayy');
@@ -228,7 +231,9 @@ class Meeting extends React.Component {
     }
 
     onClick_backtoindex() {
-        window.location = 'https://140.123.175.95:8787/';
+        this.Recognizer.sendData();
+        HistoryAction.saveUserList(FriendListStore.state.userList);        
+        window.location = 'https://140.123.175.95:8787/history';
     }
 
     onClick_agenda() {
@@ -287,20 +292,6 @@ class Meeting extends React.Component {
             }
         }
 
-        //0514 07:39 +1新增
-
-        /*<div id="number_sent">
-            <div className="arrow_box"><div id="meet_text">{this.myself_text}</div></div>
-        </div>
-
-        <div id="me_sent">
-            <div className="arrow_box1"><div id="meet_text">測試測試</div></div>
-        </div>*/
-        /*let othertext = this.state.otherchattext;
-        ChatList.push(
-
-        );*/
-
         if (this.state.otherchattext.Text != null) {
             let othertext = this.state.otherchattext;
             this.ChatList.push(
@@ -323,7 +314,6 @@ class Meeting extends React.Component {
             );
             this.state.mychattext.Text = null;
         }
-
         //0514 07:39 End
         return (
             <div >
@@ -382,7 +372,6 @@ class Meeting extends React.Component {
                             <div id='meetpage'>網址：</div>
                             <textarea id='pagetext' >{this.meetpage}</textarea>
                         </div>
-
                         <div id='VideoUser'><video id='videoSrc' width="220" muted="muted" src={this.state.isStreaming ? this.state.localVideoURL : "沒有加到啦幹"} autoPlay={true}></video></div>
                         {remoteVideo}
 
@@ -396,7 +385,6 @@ class Meeting extends React.Component {
                             <input type='text' id='user_input' maxLength="25" ref='agenda_input' />
                             <button id='agenda_button' type="submit" onClick={this.onClick_addAgenda.bind(this)}>新增</button>
                         </div>
-
                     </div>
                 </div>
             </div>

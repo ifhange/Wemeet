@@ -23,8 +23,10 @@ class Main extends React.Component {
         this.setState(state);
     }
 
-    handleCreate(e) {
+    handleRoomName(e) {
         e.preventDefault();
+        let roomName =  this.refs.create_input.value;
+        MainActions.saveName(roomName);
         window.location = 'https://140.123.175.95:8787/meeting#' + this.refs.create_input.value;
     }
 
@@ -50,7 +52,7 @@ class Main extends React.Component {
                                 <span className="input__label-content input__label-content--yoko">輸入朋友名稱</span>
                             </label>
                         </span>
-                        <input type="submit" className="myButton" name="login" id="login" value="GO!" onClick={this.handleCreate.bind(this)}/>
+                        <input type="submit" className="myButton" name="login" id="login" value="GO!" onClick={this.handleRoomName.bind(this)}/>
                     </div>
 
                     <div id="join_meet">
