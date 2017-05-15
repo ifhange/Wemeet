@@ -4,9 +4,11 @@ import socket from '../socket';
 
 class MeetingStore {
     constructor() {
-        this.bindActions(MeetingActions);  
+        this.bindActions(MeetingActions);
+        
         this.connections = {}; //存放連線中的人的socket.id
         this.remoteStreamURL = {}; //存放連線中的人的stream
+
         this.videoIsReady = false;
         this.localStream = '';
         this.localVideoURL = '';
@@ -89,7 +91,7 @@ class MeetingStore {
             ['हिन्दी', ['hi-IN']],
             ['ภาษาไทย', ['th-TH']]
         ];
-        this.interim_result = '';
+        this.interim_result = '這是緩衝辨識的初始值';
         this.final_result = '';
 
         this.isRecognizing = false;

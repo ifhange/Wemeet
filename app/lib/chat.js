@@ -11,7 +11,7 @@ let Chat = {
             localUserID = id;
             navigator.mediaDevices.getUserMedia({
                     audio: true,
-                    video: { frameRate: { min: 24 } }
+                    video: { frameRate: { min: 15 } }
                 })
                 .then((stream) => {
                     if (stream.getVideoTracks().length > 0 && stream.getAudioTracks().length > 0) {

@@ -13,6 +13,7 @@ let roomList = [];
 let userInRoom = {};
 let onlineUser = {}; //在線用戶
 let onlineCount = 0; //在線用戶人數
+let rooms = {};
 
 //HTTPS參數
 const option = {
@@ -26,27 +27,26 @@ const io = require('socket.io')(server);
 server.listen(8787);
 console.log('已啟動伺服器!');
 
-// app.get("/api/db/history", (req, res) => {
-//     db.History.find({ "room": '#53ee66' }, (err, data) => {
-//         if (err) console.log(err);
-//         console.log(data);
-//         res.send('有成功喔!');
-//     });
-// });
+
+//資料庫「查詢」部分
+app.get("/api/db/history", (req, res) => {
+    db.History.find({}, function(err, data) {
+        if (err) throw err;
+        res.send(data);
+    });
+});
 
 //資料庫「新增」部分
 app.post("/api/db/history", (req, res) => {
-    let { roomName, record } = req.body;
+    let { id, time, result } = req.body;
     db.History.create({
-        room: roomName,
-        history: record
+        id: id,
+        time: time,
+        result: result
     }, function(err, data) {
         if (err) {
             console.log(err);
-        } else {
-            res.send('新增成功^^');
         }
-
     });
 });
 
@@ -87,7 +87,7 @@ io.on('connection', function(socket) {
         if (!roomList.includes(room)) {
             //將房間加入"房間"列表
             roomList.push(room);
-            //console.log(roomList, '已經有加ㄌ喔!');
+            console.log(roomList, '已經有加ㄌ喔!');
         }
         //將使用者加入"房間-使用者"列表中
         if (!userInRoom[room]) {
@@ -108,7 +108,7 @@ io.on('connection', function(socket) {
     socket.on('leaveRoom', function(room) {
         //當使用者離開聊天室，就將他移出房間
         socket.leave(room);
-        //console.log('有人離開ㄌ', userInRoom[room])
+        console.log('有人離開ㄌ', userInRoom[room])
         if (userInRoom[room]) {
             //如果那間房存在，就從裡面把這個人移除
             userInRoom[room].splice(userInRoom[room].indexOf(socket.id), 1);
@@ -182,24 +182,6 @@ io.on('connection', function(socket) {
         console.log('received bye');
     });
 
-    socket.on('history', function(_history,room) {
-        console.log(_history);
-        db.History.create({
-            room: room,
-            history: _history
-        }, function(err, data) {
-            if (err) {
-                console.log(err);
-            }
-        });
-    });
-
-    socket.on('getHistory', (room) => {
-        db.History.find({ 'room': room }, function(err, data) {
-            if (err) throw err;
-            socket.emit('onHistoryResult', data);
-        });
-    });
 });
 
 //沒有定義路徑，則接收到請求就執行這個函數

@@ -7,10 +7,18 @@ class HistoryStore {
         this.historyList = [];
         this.userList = [];
     }
-    setHistory(Array) {
-    	this.historyList = Array;
+    getHistorySuccess(respond) {
+    	console.log(respond)
+    	this.historyList.push()
     }
 
+    getHistoryFail(respond) {
+    	console.log(respond)
+    }
+
+    saveUserList(list){
+    	this.userList = list;
+    }
 
 }
 
