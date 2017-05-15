@@ -15810,7 +15810,7 @@ exports.default = App;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -15832,115 +15832,115 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var ChatList = function (_React$Component) {
-  _inherits(ChatList, _React$Component);
+    _inherits(ChatList, _React$Component);
 
-  function ChatList(props) {
-    _classCallCheck(this, ChatList);
+    function ChatList(props) {
+        _classCallCheck(this, ChatList);
 
-    var _this = _possibleConstructorReturn(this, (ChatList.__proto__ || Object.getPrototypeOf(ChatList)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (ChatList.__proto__ || Object.getPrototypeOf(ChatList)).call(this, props));
 
-    _this.state = _FriendListStore2.default.getState();
-    _this.onChange = _this.onChange.bind(_this);
-    return _this;
-  }
-
-  _createClass(ChatList, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      _FriendListStore2.default.listen(this.onChange);
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      _FriendListStore2.default.unlisten(this.onChange);
-    }
-  }, {
-    key: 'onChange',
-    value: function onChange(state) {
-      this.setState(state);
+        _this.state = _FriendListStore2.default.getState();
+        _this.onChange = _this.onChange.bind(_this);
+        return _this;
     }
 
-    //按下enter後的事件處理
+    _createClass(ChatList, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            _FriendListStore2.default.listen(this.onChange);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            _FriendListStore2.default.unlisten(this.onChange);
+        }
+    }, {
+        key: 'onChange',
+        value: function onChange(state) {
+            this.setState(state);
+        }
 
-  }, {
-    key: 'handleTest',
-    value: function handleTest(e) {
-      if (e.charCode == 13) {
-        //按下enter後
-        alert('Enter... (KeyPress, use charCode)');
-      }
-      if (e.keyCode == 13) {}
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var room = this.state.roomList.map(function (room) {
-        var roompage = '/meet' + room;
-        return _react2.default.createElement(
-          'a',
-          { href: roompage },
-          _react2.default.createElement(
-            'div',
-            { id: 'roomProp' },
-            _react2.default.createElement(
-              'div',
-              { id: 'circle3' },
-              _react2.default.createElement('img', { id: 'friend_image', src: '../img/room.png' })
-            ),
-            _react2.default.createElement(
-              'div',
-              { id: 'room_name' },
-              room
-            )
-          )
-        );
-      });
+        //按下enter後的事件處理
 
-      return _react2.default.createElement(
-        'div',
-        { id: 'in' },
-        _react2.default.createElement(
-          'div',
-          { className: 'ChatList' },
-          _react2.default.createElement(
-            'div',
-            { id: 'AddRoom' },
-            _react2.default.createElement(
-              'label',
-              { id: 'Addtext' },
-              '\u5EFA\u7ACB\u623F\u9593\uFF1F\u8ACB\u8F38\u5165\u60F3\u8981\u7684\u623F\u865F'
-            ),
-            _react2.default.createElement(
-              'div',
-              { id: 'AddInput' },
-              _react2.default.createElement('input', { className: 'Addinputsyle', type: 'text', ref: 'roomnum', id: 'input-10', onKeyPress: this.handleTest })
-            ),
-            _react2.default.createElement(
-              'div',
-              { id: 'AddGo' },
-              _react2.default.createElement(
-                'a',
-                { href: '/main' },
-                _react2.default.createElement('img', { id: 'Addgo', src: '../img/index_go1.png' })
-              )
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { id: 'chatlist_text' },
-            '\u73FE\u6709\u623F\u9593\u6E05\u55AE'
-          ),
-          _react2.default.createElement(
-            'div',
-            { id: 'chatlist_online' },
-            room
-          )
-        )
-      );
-    }
-  }]);
+    }, {
+        key: 'handleTest',
+        value: function handleTest(e) {
+            if (e.charCode == 13) {
+                //按下enter後
+                alert('Enter... (KeyPress, use charCode)');
+            }
+            if (e.keyCode == 13) {}
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var room = this.state.roomList.map(function (room) {
+                var roompage = '/meet' + room;
+                return _react2.default.createElement(
+                    'a',
+                    { href: roompage },
+                    _react2.default.createElement(
+                        'div',
+                        { id: 'roomProp' },
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'circle3' },
+                            _react2.default.createElement('img', { id: 'friend_image', src: '../img/room.png' })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'room_name' },
+                            room
+                        )
+                    )
+                );
+            });
 
-  return ChatList;
+            return _react2.default.createElement(
+                'div',
+                { id: 'in' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'ChatList' },
+                    _react2.default.createElement(
+                        'div',
+                        { id: 'AddRoom' },
+                        _react2.default.createElement(
+                            'label',
+                            { id: 'Addtext' },
+                            '\u5EFA\u7ACB\u623F\u9593\uFF1F\u8ACB\u8F38\u5165\u60F3\u8981\u7684\u623F\u865F'
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'AddInput' },
+                            _react2.default.createElement('input', { className: 'Addinputsyle', type: 'text', ref: 'roomnum', id: 'input-10', onKeyPress: this.handleTest })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'AddGo' },
+                            _react2.default.createElement(
+                                'a',
+                                { href: '/main' },
+                                _react2.default.createElement('img', { id: 'Addgo', src: '../img/index_go1.png' })
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { id: 'chatlist_text' },
+                        '\u73FE\u6709\u623F\u9593\u6E05\u55AE'
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { id: 'chatlist_online' },
+                        room
+                    )
+                )
+            );
+        }
+    }]);
+
+    return ChatList;
 }(_react2.default.Component);
 
 exports.default = ChatList;
